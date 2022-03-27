@@ -69,3 +69,11 @@ function getServerData(servers, id){
   for(let i = 0; i < servers.length; i++) if(servers[i].id == id) return servers[i];
   return null;
 }
+
+function toggleMenu(){
+  if(document.getElementById("mobile-menu").className == 'hidden pt-2 pb-3 space-y-1'){
+      document.getElementById("mobile-menu").className = 'pt-2 pb-3 space-y-1';
+  }else{
+      document.getElementById("mobile-menu").className = 'hidden pt-2 pb-3 space-y-1';
+  }
+}

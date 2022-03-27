@@ -35,3 +35,7 @@ if(geth[0] == 'server' && isPositiveInteger(geth[1]) && isIDValid(servers, geth[
 
 	table.innerHTML = data;
 }
+
+document.getElementById("menu-toggle-btn").addEventListener('click', () => {
+  toggleMenu();
+});

@@ -19,9 +19,9 @@
               <img class="h-8 w-auto" src="images/logo.png" alt="Rabbit Server List">
             </div>
             <div class="hidden lg:ml-6 lg:flex lg:space-x-8">
-              <a id="minecraft-servers-link" href="#" class="mainMenuLinkSelected inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Minecraft Servers</a>
-              <!-- Yes you see that right. Discord servers will be available soon! -->
-              <!-- <a id="discord-servers-link" href="#" class="mainMenuLink border-transparent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Discord Servers</a> -->
+              <a href="minecraft.html" class="mainMenuLinkSelected inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Minecraft Servers</a>
+              <a href="discord.html" class="mainMenuLink border-transparent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Discord Servers</a>
+              <a href="discordbot.html" class="mainMenuLink border-transparent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Discord Bots</a>
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end">
@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="flex items-center lg:hidden">
-            <button id="main-menu-toggle-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+            <button id="menu-toggle-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
               <span class="sr-only">Open main menu</span>
               <svg id="mobile-menu-icon" xmlns="http://www.w3.org/2000/svg" class="block h-6 w-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -47,7 +47,9 @@
 
       <div class="lg:hidden">
         <div id="mobile-menu" class="hidden pt-2 pb-3 space-y-1">
-          <a id="minecraft-servers-link-mobile" href="#" class="mainMenuMobileLinkSelected block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Minecraft Servers</a>
+          <a href="minecraft.html" class="mainMenuMobileLinkSelected block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Minecraft Servers</a>
+          <a href="discord.html" class="mainMenuMobileLink block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Discord Servers</a>
+          <a href="discordbot.html" class="mainMenuMobileLink block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Discord Bots</a>
         </div>
       </div>
     </nav>
