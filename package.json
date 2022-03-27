@@ -1,0 +1,22 @@
+{
+  "name": "rabbit-server-list",
+  "version": "1.0.0",
+  "description": "Rabbit Server List",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./tailwind.css -o ./website/css/tailwind.min.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rabbit-Company/Rabbit-Server-List.git"
+  },
+  "author": "Rabbit Company LLC",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Rabbit-Company/Rabbit-Server-List/issues"
+  },
+  "homepage": "https://github.com/Rabbit-Company/Rabbit-Server-List#readme",
+  "dependencies": {
+    "tailwindcss": "^3.0.23"
+  }
+}
