@@ -1,3 +1,4 @@
+var get = window.location.search.substr(1).split("&");
 var servers = ["minecraft"]; 
 
 for(let i = 0; i < servers.length; i++){
@@ -53,4 +54,18 @@ function fetchData(type){
 
   };
   xhr.send();
+}
+
+function isPositiveInteger(s) {
+  return /^\+?[1-9][\d]*$/.test(s);
+}
+
+function isIDValid(servers, id){
+  for(let i = 0; i < servers.length; i++) if(servers[i].id == id) return true;
+  return false;
+}
+
+function getServerData(servers, id){
+  for(let i = 0; i < servers.length; i++) if(servers[i].id == id) return servers[i];
+  return null;
 }
