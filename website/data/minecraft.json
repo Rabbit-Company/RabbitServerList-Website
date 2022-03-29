@@ -1,0 +1,77 @@
+{
+  "servers": [
+    {
+      "id": 1,
+      "name": "Rabbit Craft",
+      "ip": "play.rabbitcraft.net",
+      "port": 25565,
+      "website": "rabbitcraft.net",
+      "discord": "https:\/\/discord.gg\/tzJzj2n",
+      "version": "1.17",
+      "categories": [
+        "Survival",
+        "Economy",
+        "Towny",
+        "Roleplay"
+      ],
+      "country": "Slovenia",
+      "logo": null,
+      "banner": null,
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Test Craft",
+      "ip": "play.test.net",
+      "port": 25565,
+      "website": "rabbitcraft.net",
+      "discord": "https:\/\/discord.gg\/tzJzj2n",
+      "version": "1.8",
+      "categories": [
+        "Survival",
+        "Economy",
+        "Towny"
+      ],
+      "country": "Slovenia",
+      "logo": null,
+      "banner": null,
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Survival Adventures",
+      "ip": "survivaladventures.net",
+      "port": 25565,
+      "website": "rabbitcraft.net",
+      "discord": "https:\/\/discord.gg\/tzJzj2n",
+      "version": "1.8",
+      "categories": [
+        "Survival",
+        "Economy",
+        "Towny"
+      ],
+      "country": "Slovenia",
+      "logo": null,
+      "banner": null,
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Tulip Survival",
+      "ip": "TulipSurvival.com",
+      "port": 25565,
+      "website": "rabbitcraft.net",
+      "discord": "https:\/\/discord.gg\/tzJzj2n",
+      "version": "1.8",
+      "categories": [
+        "Survival",
+        "Economy",
+        "Towny"
+      ],
+      "country": "Slovenia",
+      "logo": null,
+      "banner": null,
+      "description": ""
+    }
+  ]
+}

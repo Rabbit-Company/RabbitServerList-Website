@@ -30,15 +30,13 @@ for(let i = 0; i < servers.length; i++){
 }
 
 function fetchData(type){
-
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "https://raw.githubusercontent.com/Rabbit-Company/RabbitServerList-Data/main/data/" + type + ".json");
+  xhr.open("GET", "data/" + type + ".json");
 
   xhr.setRequestHeader("Accept", "application/json");
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   xhr.onreadystatechange = function () {
-
       if(xhr.readyState === 4){
           if(xhr.status != 200) return;
           try {
@@ -51,7 +49,6 @@ function fetchData(type){
               localStorage.setItem(type + "-time", 0);
           }
       }
-
   };
   xhr.send();
 }
