@@ -180,7 +180,7 @@ textarea{
 }
 
 .passwordsBorderColor{
-    border-color: #111827 !important;
+    border-color: #000000 !important;
 }
 
 /*
@@ -200,18 +200,14 @@ textarea{
     Scroll bar
 */
 
-::-webkit-scrollbar {
-    width: 8px;
-}
-
 ::-webkit-scrollbar-track {
     background: #161B22;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #8580e5;
+    background: #28313e;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #4E47E0;
+    background: #323e4d;
 }
