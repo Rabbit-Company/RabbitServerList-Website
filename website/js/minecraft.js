@@ -1,3 +1,7 @@
+import { fetchServer, fetchServers, isPositiveInteger, clearOldData } from './utils.js';
+
+clearOldData();
+
 const parms = new URLSearchParams(window.location.search);
 
 let page = (parms.get('page') !== null && isPositiveInteger(parms.get('page'))) ? parms.get('page') : 1;
@@ -6,21 +10,40 @@ if(page > 50) page = 50;
 let server = (parms.get('server') !== null && isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
 let serverData = localStorage.getItem('server-minecraft-' + server);
 
-if(server !== null && serverData === null){
-	await fetchServer('minecraft', server);
-}
-
-let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page));
-if(server === null && servers === null){
-	await fetchServers('minecraft', page);
-}
-
 if(server !== null){
+	if(serverData === null){
+		fetchServer('minecraft', server).then(() => {
+			renderServer();
+		});
+	}else{
+		renderServer();
+	}
+}else{
+	let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page));
+	if(server === null && servers === null){
+		fetchServers('minecraft', page).then((response) => response.json()).then((data) => {
+			localStorage.setItem('servers-minecraft-' + page, JSON.stringify(data.data));
+			localStorage.setItem('servers-minecraft-' + page + '-time', Date.now());
+			servers = data.data;
+			console.log(servers);
+			renderServers(servers);
+		}).catch(() => {
+			localStorage.setItem('servers-minecraft-' + page, "[]");
+			localStorage.setItem('servers-minecraft-' + page + '-time', 0);
+			renderServers(servers);
+		});
+	}else{
+		renderServers(servers);
+	}
+}
+
+function renderServer(){
 	document.getElementById('servers').className = "hidden";
 	document.getElementById('server').className = "";
 	document.getElementById("test").innerText = serverData;
-}else{
-	let table = document.getElementById("table_data");
+}
+
+function renderServers(servers){
 	let data = "";
 
 	for(let i = 0; i < servers.length; i++){
@@ -40,7 +63,7 @@ if(server !== null){
 		data += "</tr>";
 	}
 
-	table.innerHTML = data;
+	document.getElementById("table_data").innerHTML = data;
 }
 
 document.getElementById("menu-toggle-btn").addEventListener('click', () => {
