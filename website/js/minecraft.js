@@ -8,39 +8,11 @@ let page = (parms.get('page') !== null && isPositiveInteger(parms.get('page'))) 
 if(page > 50) page = 50;
 
 let server = (parms.get('server') !== null && isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
-let serverData = localStorage.getItem('server-minecraft-' + server);
 
-if(server !== null){
-	if(serverData === null){
-		fetchServer('minecraft', server).then(() => {
-			renderServer();
-		});
-	}else{
-		renderServer();
-	}
-}else{
-	let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page));
-	if(server === null && servers === null){
-		fetchServers('minecraft', page).then((response) => response.json()).then((data) => {
-			localStorage.setItem('servers-minecraft-' + page, JSON.stringify(data.data));
-			localStorage.setItem('servers-minecraft-' + page + '-time', Date.now());
-			servers = data.data;
-			console.log(servers);
-			renderServers(servers);
-		}).catch(() => {
-			localStorage.setItem('servers-minecraft-' + page, "[]");
-			localStorage.setItem('servers-minecraft-' + page + '-time', 0);
-			renderServers(servers);
-		});
-	}else{
-		renderServers(servers);
-	}
-}
-
-function renderServer(){
+function renderServer(serverData){
 	document.getElementById('servers').className = "hidden";
 	document.getElementById('server').className = "";
-	document.getElementById("test").innerText = serverData;
+	document.getElementById("test").innerText = JSON.stringify(serverData);
 }
 
 function renderServers(servers){
@@ -69,3 +41,25 @@ function renderServers(servers){
 document.getElementById("menu-toggle-btn").addEventListener('click', () => {
 	toggleMenu();
 });
+
+async function loadServerPage(){
+	let serverData = JSON.parse(localStorage.getItem('server-minecraft-' + server));
+	if(serverData !== null) return renderServer(serverData);
+
+	let data = await fetchServer('minecraft', server);
+	renderServer(data);
+}
+
+async function loadServersPage(){
+	let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page));
+	if(servers !== null) return renderServers(servers);
+
+	let data = await fetchServers('minecraft', page);
+	renderServers(data);
+}
+
+if(server !== null){
+	loadServerPage();
+}else{
+	loadServersPage();
+}

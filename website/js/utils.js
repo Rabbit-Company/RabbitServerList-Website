@@ -10,17 +10,23 @@ export function clearOldData(){
 }
 
 export async function fetchServer(type, id){
-	return fetch("https://api.rabbitserverlist.com/v1/server/" + type + "/" + id).then((response) => response.json()).then((data) => {
-		localStorage.setItem('server-' + type + '-' + id, JSON.stringify(data.data));
-		localStorage.setItem('server-' + type + '-' + id + '-time', Date.now());
-	}).catch(() => {
-		localStorage.setItem('server-' + type + '-' + id, "{}");
-		localStorage.setItem('server-' + type + '-' + id + '-time', 0);
-	});
+	let req = await fetch("https://api.rabbitserverlist.com/v1/server/" + type + "/" + id);
+	let data = await req.json();
+
+	localStorage.setItem('server-minecraft-' + id, JSON.stringify(data.data));
+	localStorage.setItem('server-minecraft-' + id + '-time', Date.now());
+
+	return data.data;
 }
 
 export async function fetchServers(type, page){
-	return fetch("https://api.rabbitserverlist.com/v1/servers/" + type + "/" + page);
+	let req = await fetch("https://api.rabbitserverlist.com/v1/servers/" + type + "/" + page);
+	let data = await req.json();
+
+	localStorage.setItem('servers-minecraft-' + page, JSON.stringify(data.data));
+	localStorage.setItem('servers-minecraft-' + page + '-time', Date.now());
+
+	return data.data;
 }
 
 export function isPositiveInteger(s) {
