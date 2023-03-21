@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/Rabbit-Company/Rabbit-Server-List#readme",
   "dependencies": {
-    "tailwindcss": "^3.1.6"
+    "tailwindcss": "^3.2.7"
   }
 }
