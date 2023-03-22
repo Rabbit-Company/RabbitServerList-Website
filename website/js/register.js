@@ -6,7 +6,7 @@ document.getElementById("signup-form").addEventListener("submit", e => {
 });
 
 document.getElementById("btn_signin").addEventListener("click", () => {
-	window.location.href = "index.html";
+	window.location.href = "login.html";
 });
 
 document.getElementById("password").addEventListener("input", () => {
