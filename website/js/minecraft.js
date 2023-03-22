@@ -1,4 +1,4 @@
-import { fetchServer, fetchServers, isPositiveInteger, clearOldData } from './utils.js';
+import { fetchServer, fetchServers, isPositiveInteger, clearOldData, toggleMenu } from './utils.js';
 
 clearOldData();
 
