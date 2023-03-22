@@ -82,6 +82,30 @@
 }
 
 /*
+    Badge colors
+*/
+
+.greenBadge{
+	background-color: #dcfce7;
+	color: #2c7648;
+}
+
+.redBadge{
+	background-color: #fee2e2;
+	color: #b04848;
+}
+
+.grayBadge{
+	background-color: #f3f4f6;
+	color: #4f565d;
+}
+
+.blueBadge{
+	background-color: #dbeafe;
+	color: #3353b8;
+}
+
+/*
     Elements
 */
 
