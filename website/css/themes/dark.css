@@ -86,23 +86,23 @@
 */
 
 .greenBadge{
-	background-color: #dcfce7;
-	color: #2c7648;
+	background-color: #6ee096;
+	color: #2a573b;
 }
 
 .redBadge{
-	background-color: #fee2e2;
-	color: #b04848;
+	background-color: #f06e6e;
+	color: #570505;
 }
 
 .grayBadge{
-	background-color: #f3f4f6;
-	color: #4f565d;
+	background-color: #868686;
+	color: #1a1a1a;
 }
 
 .blueBadge{
-	background-color: #dbeafe;
-	color: #3353b8;
+	background-color: #9dc7ff;
+	color: #445079;
 }
 
 /*

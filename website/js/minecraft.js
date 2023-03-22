@@ -24,7 +24,7 @@ function renderServers(servers){
 		let categories = servers[i].categories.split(',');
 
 		data += "<tr>";
-		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800'>" + (i + 1) + "</span></td>";
+		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium greenBadge'>" + (i + 1) + "</span></td>";
 		data += "<td class='tertiaryColor px-4 py-4 whitespace-nowrap'><a href='minecraft.html?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap text-sm text-gray-500' style='text-align: center;'><img class='rounded-t-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/" + servers[i].id + "/banner' /><span class='inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium " + online_color + "' style='width: 100%;'><a href='#'>" + servers[i].ip + "</a></span></td>";
 		data += "<td class='px-4 py-4'><div>";
