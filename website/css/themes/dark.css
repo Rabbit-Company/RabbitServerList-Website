@@ -142,6 +142,7 @@ textarea{
 
 .mainMenuMobileLink{
     background-color: #161B22 !important;
+		border-color: #161B22 !important;
     color: #DFE5EB !important;
 }
 
@@ -156,11 +157,11 @@ textarea{
     color: #6366F1 !important;
 }
 
-#main-menu-toggle-btn{
+.main-menu-toggle-btn{
     color: #9CA3AF !important;
 }
 
-#main-menu-toggle-btn:hover{
+.main-menu-toggle-btn:hover{
     color: #6B7280 !important;
     background-color: #21262D !important;
 }
