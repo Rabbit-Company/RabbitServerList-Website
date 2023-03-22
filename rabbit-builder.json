@@ -1,0 +1,25 @@
+{
+	"code": {
+		"location": "website"
+	},
+	"tasks": {
+		"default": {
+			"location": "dist",
+			"output": ".",
+			"execute": {
+				"copy": {
+					"action": "copy",
+					"location": "../website"
+				},
+				"minifyHTML": {
+					"action": "minifyHTML"
+				},
+				"minifyJS": {
+					"action": "minifyJS",
+					"sourceMap": "linked",
+					"bundle": {}
+				}
+			}
+		}
+	}
+}
