@@ -3,6 +3,15 @@ export default class Utils{
 	static initialize(){
 		this.clearOldData();
 
+		try{
+			let logged = localStorage.getItem('logged');
+			if(logged !== null){
+				document.getElementById('login-nav').innerHTML = `
+				<a href='panel.html' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Panel</a>
+				<a id='logout' href='#' class='tertiaryColor px-3 py-2 rounded-md text-sm font-medium'>Log out</a>`;
+			}
+		}catch{}
+
 		window.setInterval(function() {
 			let logged = localStorage.getItem('logged');
 			if(logged !== null){

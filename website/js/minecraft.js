@@ -42,6 +42,12 @@ document.getElementById("menu-toggle-btn").addEventListener('click', () => {
 	Utils.toggleMenu();
 });
 
+try{
+	document.getElementById('logout').addEventListener('click', () => {
+		Utils.logout();
+	});
+}catch{}
+
 async function loadServerPage(){
 	let serverData = JSON.parse(localStorage.getItem('server-minecraft-' + server));
 	if(serverData !== null) return renderServer(serverData);
