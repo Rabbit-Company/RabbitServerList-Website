@@ -4,6 +4,8 @@ import Errors from './errors.js';
 import PasswordEntropy from "@rabbit-company/password-entropy";
 import Blake2b from "@rabbit-company/blake2b";
 
+Utils.initialize();
+
 document.getElementById("signup-form").addEventListener("submit", e => {
 	e.preventDefault();
 	register();

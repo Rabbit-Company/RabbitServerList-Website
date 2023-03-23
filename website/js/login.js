@@ -4,6 +4,8 @@ import Errors from './errors.js';
 import PasswordEntropy from "@rabbit-company/password-entropy";
 import Blake2b from "@rabbit-company/blake2b";
 
+Utils.initialize();
+
 document.getElementById("login_form").addEventListener("submit", e => {
 	e.preventDefault();
 	login();
@@ -44,8 +46,8 @@ function login(){
 	}).then(result => {
 		return result.json();
 	}).then(response => {
-		Utils.showDialogButtons();
 		if(response.error !== 0){
+			Utils.showDialogButtons();
 			Utils.changeDialog(1, response.info);
 			Utils.show('dialog');
 			return;

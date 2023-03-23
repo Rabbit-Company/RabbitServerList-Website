@@ -1,5 +1,20 @@
 export default class Utils{
 
+	static initialize(){
+		this.clearOldData();
+
+		window.setInterval(function() {
+			let logged = localStorage.getItem('logged');
+			if(logged !== null){
+				if((new Date(logged).getTime() + 3_600_000) < new Date().getTime()){
+					localStorage.removeItem('token');
+					localStorage.removeItem('logged');
+					location.reload();
+				}
+			}
+		}, 5000);
+	}
+
 	static clearOldData(){
 		let keys = Object.keys(localStorage);
 		for(let i = 0; i < keys.length; i++){
@@ -9,6 +24,12 @@ export default class Utils{
 				localStorage.removeItem(keys[i] + '-time');
 			}
 		}
+	}
+
+	static logout(){
+		localStorage.removeItem('token');
+		localStorage.removeItem('logged');
+		location.reload();
 	}
 
 	static async fetchServer(type, id){

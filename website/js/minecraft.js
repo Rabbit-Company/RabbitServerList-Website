@@ -1,6 +1,6 @@
 import Utils from './utils.js';
 
-Utils.clearOldData();
+Utils.initialize();
 
 const parms = new URLSearchParams(window.location.search);
 
