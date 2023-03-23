@@ -1,13 +1,13 @@
-import { fetchServer, fetchServers, isPositiveInteger, clearOldData, toggleMenu } from './utils.js';
+import Utils from './utils.js';
 
-clearOldData();
+Utils.clearOldData();
 
 const parms = new URLSearchParams(window.location.search);
 
-let page = (parms.get('page') !== null && isPositiveInteger(parms.get('page'))) ? parms.get('page') : 1;
+let page = (parms.get('page') !== null && Utils.isPositiveInteger(parms.get('page'))) ? parms.get('page') : 1;
 if(page > 50) page = 50;
 
-let server = (parms.get('server') !== null && isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
+let server = (parms.get('server') !== null && Utils.isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
 
 function renderServer(serverData){
 	document.getElementById('servers').className = "hidden";
@@ -39,14 +39,14 @@ function renderServers(servers){
 }
 
 document.getElementById("menu-toggle-btn").addEventListener('click', () => {
-	toggleMenu();
+	Utils.toggleMenu();
 });
 
 async function loadServerPage(){
 	let serverData = JSON.parse(localStorage.getItem('server-minecraft-' + server));
 	if(serverData !== null) return renderServer(serverData);
 
-	let data = await fetchServer('minecraft', server);
+	let data = await Utils.fetchServer('minecraft', server);
 	renderServer(data);
 }
 
@@ -54,7 +54,7 @@ async function loadServersPage(){
 	let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page));
 	if(servers !== null) return renderServers(servers);
 
-	let data = await fetchServers('minecraft', page);
+	let data = await Utils.fetchServers('minecraft', page);
 	renderServers(data);
 }
 

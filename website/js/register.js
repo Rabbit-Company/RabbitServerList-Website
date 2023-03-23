@@ -1,8 +1,12 @@
+import Utils from './utils.js';
+import Validate from './validate.js';
+import Errors from './errors.js';
 import PasswordEntropy from "@rabbit-company/password-entropy";
+import Blake2b from "@rabbit-company/blake2b";
 
 document.getElementById("signup-form").addEventListener("submit", e => {
 	e.preventDefault();
-	onBtnClick();
+	register();
 });
 
 document.getElementById("btn_signin").addEventListener("click", () => {
@@ -26,3 +30,58 @@ document.getElementById("password-hider").addEventListener("click", () => {
 		document.getElementById("password-hider").innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 secondaryColor' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'><path stroke='none' d='M0 0h24v24H0z' fill='none'></path><circle cx='12' cy='12' r='2'></circle><path d='M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7'></path></svg>";
 	}
 });
+
+function register(){
+	const username = document.getElementById("username").value.toLowerCase();
+	const email = document.getElementById("email").value;
+	const password = document.getElementById("password").value;
+
+	if(!Validate.username(username)){
+		Utils.changeDialog(1, Errors.get(1001));
+		Utils.show('dialog');
+		return;
+	}
+
+	if(!Validate.email(email)){
+		Utils.changeDialog(1, Errors.get(1002));
+		Utils.show('dialog');
+		return;
+	}
+
+	if(PasswordEntropy.calculate(password) < 75){
+		Utils.changeDialog(1, 'Your password is too weak!');
+		Utils.show('dialog');
+		return;
+	}
+
+	Utils.changeDialog(2, 'Signing up...');
+	Utils.show('dialog');
+
+	let hash = Blake2b.hash("rabbitserverlist-" + username + "-" + password);
+
+	let headers = new Headers();
+	headers.set('Authorization', 'Basic ' + btoa(username + ':' + hash));
+	headers.set('Content-Type', 'application/json');
+
+	let data = JSON.stringify({ "email": email });
+	fetch('https://api.rabbitserverlist.com/v1/account', {
+		method: 'POST',
+		headers: headers,
+		body: data
+	}).then(result => {
+		return result.json();
+	}).then(response => {
+		Utils.showDialogButtons();
+		if(response.error !== 0){
+			Utils.changeDialog(1, response.info);
+			Utils.show('dialog');
+			return;
+		}
+		Utils.changeDialog(0, 'Registration is completed!');
+		Utils.show('dialog');
+	}).catch(() => {
+		Utils.showDialogButtons();
+		Utils.changeDialog(1, Errors.get(1009));
+		Utils.show('dialog');
+	});
+}
