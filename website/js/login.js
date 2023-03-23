@@ -16,4 +16,46 @@ document.getElementById("btn_signup").addEventListener("click", () => {
 function login(){
 	const username = document.getElementById("username").value.toLowerCase();
 	const password = document.getElementById("password").value;
+
+	if(!Validate.username(username)){
+		Utils.changeDialog(1, Errors.get(1001));
+		Utils.show('dialog');
+		return;
+	}
+
+	if(PasswordEntropy.calculate(password) < 75){
+		Utils.changeDialog(1, Errors.get(1007));
+		Utils.show('dialog');
+		return;
+	}
+
+	Utils.changeDialog(2, 'Signing in...');
+	Utils.show('dialog');
+
+	let hash = Blake2b.hash("rabbitserverlist-" + username + "-" + password);
+
+	let headers = new Headers();
+	headers.set('Authorization', 'Basic ' + btoa(username + ':' + hash));
+	headers.set('Content-Type', 'application/json');
+
+	fetch('https://api.rabbitserverlist.com/v1/account/token', {
+		method: 'GET',
+		headers: headers,
+	}).then(result => {
+		return result.json();
+	}).then(response => {
+		Utils.showDialogButtons();
+		if(response.error !== 0){
+			Utils.changeDialog(1, response.info);
+			Utils.show('dialog');
+			return;
+		}
+		localStorage.setItem('token', response.token);
+		localStorage.setItem('logged', new Date().toISOString());
+		window.location.href = "index.html";
+	}).catch(() => {
+		Utils.showDialogButtons();
+		Utils.changeDialog(1, Errors.get(1009));
+		Utils.show('dialog');
+	});
 }
