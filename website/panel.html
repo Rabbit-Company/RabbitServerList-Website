@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rabbit Server List</title>
+		<link rel="shortcut icon" type="image/png" href="images/logo.png"/>
+		<link rel="stylesheet" href="css/tailwind.min.css">
+		<link id="css-theme" type="text/css" rel="stylesheet" href="css/themes/dark.css">
+	</head>
+	<body class="primaryBackgroundColor">
+		<nav class="secondaryBackgroundColor shadow">
+			<div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+				<div class="flex justify-between h-16">
+					<div class="flex px-2 lg:px-0">
+						<div class="flex-shrink-0 flex items-center">
+							<img class="h-8 w-auto" src="images/logo.png" alt="Rabbit Server List">
+						</div>
+						<div class="hidden lg:ml-6 lg:flex lg:space-x-8">
+							<a href="index.html" class="mainMenuLink border-transparent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Minecraft Servers</a>
+							<a href="discord.html" class="mainMenuLink border-transparent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Discord Servers</a>
+							<a href="discordbot.html" class="mainMenuLink border-transparent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Discord Bots</a>
+						</div>
+					</div>
+					<div class="hidden flex-1 flex items-center justify-center px-2 lg:ml-6 lg:flex lg:justify-end">
+						<div id="login-nav" class="flex-shrink-0">
+							<a href="login.html" class="tertiaryColor px-3 py-2 rounded-md text-sm font-medium">Log in</a>
+							<a href="register.html" class="primaryButton px-3 py-2 rounded-md text-sm font-medium">Sign up</a>
+						</div>
+					</div>
+					<div class="flex items-center lg:hidden">
+						<button id="menu-toggle-btn" type="button" class="main-menu-toggle-btn inline-flex items-center justify-center p-2 rounded-md focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+							<span class="sr-only">Open main menu</span>
+							<svg id="mobile-menu-icon" xmlns="http://www.w3.org/2000/svg" class="block h-6 w-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+								<line x1="4" y1="6" x2="20" y2="6" />
+								<line x1="4" y1="12" x2="20" y2="12" />
+								<line x1="4" y1="18" x2="20" y2="18" />
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="lg:hidden">
+				<div id="mobile-menu" class="hidden pt-2 pb-3 space-y-1">
+					<a href="index.html" class="mainMenuMobileLink block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Minecraft Servers</a>
+					<a href="discord.html" class="mainMenuMobileLink block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Discord Servers</a>
+					<a href="discordbot.html" class="mainMenuMobileLink block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Discord Bots</a>
+				</div>
+			</div>
+		</nav>
+
+		<div class="mx-auto mt-10 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+
+		</div>
+		</div>
+		<script type="module" src="js/panel.js"></script>
+	</body>
+</html>
