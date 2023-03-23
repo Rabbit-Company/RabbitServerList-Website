@@ -20,7 +20,7 @@ export async function fetchServer(type, id){
 }
 
 export async function fetchServers(type, page){
-	let req = await fetch("https://api.rabbitserverlist.com/v1/servers/" + type + "/" + page);
+	let req = await fetch("https://api.rabbitserverlist.com/v1/servers/" + type + "/page/" + page);
 	let data = await req.json();
 
 	localStorage.setItem('servers-minecraft-' + page, JSON.stringify(data.data));
