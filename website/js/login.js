@@ -1,6 +1,12 @@
+import Utils from './utils.js';
+import Validate from './validate.js';
+import Errors from './errors.js';
+import PasswordEntropy from "@rabbit-company/password-entropy";
+import Blake2b from "@rabbit-company/blake2b";
+
 document.getElementById("login_form").addEventListener("submit", e => {
 	e.preventDefault();
-	login_check();
+	login();
 });
 
 document.getElementById("btn_signup").addEventListener("click", () => {
