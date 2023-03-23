@@ -16,5 +16,4 @@ document.getElementById("btn_signup").addEventListener("click", () => {
 function login(){
 	const username = document.getElementById("username").value.toLowerCase();
 	const password = document.getElementById("password").value;
-	const otp = document.getElementById("otp").value.replace(/\s/g, '');
 }
