@@ -77,7 +77,7 @@ function register(){
 			Utils.show('dialog');
 			return;
 		}
-		Utils.changeDialog(0, 'Registration is completed!');
+		Utils.changeDialog(3, 'Registration is completed!');
 		Utils.show('dialog');
 	}).catch(() => {
 		Utils.showDialogButtons();
