@@ -118,7 +118,7 @@ function renderMyMinecraftServers(){
 					return;
 				}
 
-				Utils.changeDialog(0, 'Banner has been updated.');
+				Utils.changeDialog(5, 'Banner has been updated.');
 				Utils.show('dialog');
 			}).catch(() => {
 				Utils.changeDialog(1, Errors.get(1009));
