@@ -1,6 +1,7 @@
 import Utils from './utils.js';
 
 Utils.initialize();
+Utils.requireAuthentication();
 
 document.getElementById("menu-toggle-btn").addEventListener('click', () => {
 	Utils.toggleMenu();

@@ -41,6 +41,11 @@ export default class Utils{
 		location.reload();
 	}
 
+	static requireAuthentication(){
+		let logged = localStorage.getItem('logged');
+		if(logged === null) window.location.href = 'index.html';
+	}
+
 	static async fetchServer(type, id){
 		let req = await fetch("https://api.rabbitserverlist.com/v1/server/" + type + "/" + id);
 		let data = await req.json();
