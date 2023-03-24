@@ -52,6 +52,7 @@ function login(){
 			Utils.show('dialog');
 			return;
 		}
+		localStorage.setItem('username', username);
 		localStorage.setItem('token', response.token);
 		localStorage.setItem('logged', new Date().toISOString());
 		window.location.href = "index.html";
