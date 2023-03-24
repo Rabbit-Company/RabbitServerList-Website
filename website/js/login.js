@@ -47,7 +47,6 @@ function login(){
 		return result.json();
 	}).then(response => {
 		if(response.error !== 0){
-			Utils.showDialogButtons();
 			Utils.changeDialog(1, response.info);
 			Utils.show('dialog');
 			return;
@@ -57,7 +56,6 @@ function login(){
 		localStorage.setItem('logged', new Date().toISOString());
 		window.location.href = "index.html";
 	}).catch(() => {
-		Utils.showDialogButtons();
 		Utils.changeDialog(1, Errors.get(1009));
 		Utils.show('dialog');
 	});

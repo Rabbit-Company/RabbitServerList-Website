@@ -73,7 +73,6 @@ function register(){
 	}).then(result => {
 		return result.json();
 	}).then(response => {
-		Utils.showDialogButtons();
 		if(response.error !== 0){
 			Utils.changeDialog(1, response.info);
 			Utils.show('dialog');
@@ -82,7 +81,6 @@ function register(){
 		Utils.changeDialog(3, 'Registration is completed!');
 		Utils.show('dialog');
 	}).catch(() => {
-		Utils.showDialogButtons();
 		Utils.changeDialog(1, Errors.get(1009));
 		Utils.show('dialog');
 	});

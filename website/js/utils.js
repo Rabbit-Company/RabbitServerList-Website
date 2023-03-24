@@ -105,6 +105,7 @@ export default class Utils{
 	}
 
 	static changeDialog(style, text){
+		this.showDialogButtons();
 		switch(style){
 			case 0:
 				//Success dialog
