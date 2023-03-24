@@ -18,10 +18,12 @@
   "homepage": "https://github.com/Rabbit-Company/Rabbit-Server-List#readme",
   "dependencies": {
     "@rabbit-company/blake2b": "^1.1.0",
-    "@rabbit-company/password-entropy": "^1.1.2"
+    "@rabbit-company/password-entropy": "^1.1.2",
+    "dompurify": "^3.0.1",
+    "marked": "^4.3.0"
   },
   "devDependencies": {
-		"tailwindcss": "^3.2.7",
-    "@rabbit-company/rabbit-builder": "^1.0.5"
+    "@rabbit-company/rabbit-builder": "^1.0.5",
+    "tailwindcss": "^3.2.7"
   }
 }
