@@ -167,7 +167,7 @@ export default class Utils{
 				document.getElementById('dialog-title').innerText = "Add Minecraft Server";
 				document.getElementById('dialog-text').innerHTML = ``;
 
-				document.getElementById('dialog-button-cancel').style.display = 'block';
+				document.getElementById('dialog-button-cancel').style.display = 'initial';
 
 				document.getElementById('dialog-button').className = "primaryButton inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium focus:outline-none sm:w-auto sm:text-sm";
 				document.getElementById('dialog-button').innerText = 'Add';
@@ -189,7 +189,94 @@ export default class Utils{
 				document.getElementById('dialog-button').innerText = 'Okay';
 				document.getElementById('dialog-button').onclick = () => location.reload();
 			break;
+			case 6:
+				//Delete account dialog
+				document.getElementById('dialog-icon').className = "mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10";
+				document.getElementById('dialog-icon').innerHTML = "<svg class='h-6 w-6 text-red-600' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' /></svg>";
+
+				document.getElementById('dialog-title').innerText = 'Delete account';
+				document.getElementById('dialog-text').innerText = 'Are you sure you want to delete your account? All of your data will be permanently removed. This action can NOT be undone.';
+
+				document.getElementById('dialog-button-cancel').style.display = 'initial';
+
+				document.getElementById('dialog-button').className = "dangerButton inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium focus:outline-none sm:w-auto sm:text-sm";
+				document.getElementById('dialog-button').innerText = 'Delete';
+				document.getElementById('dialog-button').onclick = () => this.deleteAccount();
+
+				document.getElementById('dialog-button-cancel').onclick = () => this.hide("dialog");
+			break;
+			case 7:
+				//Delete server dialog
+				document.getElementById('dialog-icon').className = "mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10";
+				document.getElementById('dialog-icon').innerHTML = "<svg class='h-6 w-6 text-red-600' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' /></svg>";
+
+				document.getElementById('dialog-title').innerText = 'Delete server';
+				document.getElementById('dialog-text').innerText = 'Are you sure you want to delete this server? This action can NOT be undone.';
+
+				document.getElementById('dialog-button-cancel').style.display = 'initial';
+
+				document.getElementById('dialog-button').className = "dangerButton inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium focus:outline-none sm:w-auto sm:text-sm";
+				document.getElementById('dialog-button').innerText = 'Delete';
+				document.getElementById('dialog-button').onclick = () => this.deleteServer(text['type'], text['id']);
+
+				document.getElementById('dialog-button-cancel').onclick = () => this.hide("dialog");
+			break;
 		}
+	}
+
+	static deleteAccount(){
+		this.changeDialog(2, 'Deleting account...');
+		this.show('dialog');
+
+		let headers = new Headers();
+		headers.set('Authorization', 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('token')));
+		headers.set('Content-Type', 'application/json');
+
+		fetch('https://api.rabbitserverlist.com/v1/account', {
+			method: 'DELETE',
+			headers: headers
+		}).then(result => {
+			return result.json();
+		}).then(response => {
+			if(response.error !== 0){
+				this.changeDialog(1, response.info);
+				this.show('dialog');
+				return;
+			}
+
+			this.logout();
+		}).catch(() => {
+			this.changeDialog(1, 'Something went wrong while trying to perform this action. Please try again later.');
+			this.show('dialog');
+		});
+	}
+
+	static deleteServer(type, id){
+		this.changeDialog(2, 'Deleting server...');
+		this.show('dialog');
+
+		let headers = new Headers();
+		headers.set('Authorization', 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('token')));
+		headers.set('Content-Type', 'application/json');
+
+		fetch('https://api.rabbitserverlist.com/v1/server/' + type + '/' + id, {
+			method: 'DELETE',
+			headers: headers
+		}).then(result => {
+			return result.json();
+		}).then(response => {
+			if(response.error !== 0){
+				this.changeDialog(1, response.info);
+				this.show('dialog');
+				return;
+			}
+
+			localStorage.removeItem('my-servers-' + type);
+			location.reload();
+		}).catch(() => {
+			this.changeDialog(1, 'Something went wrong while trying to perform this action. Please try again later.');
+			this.show('dialog');
+		});
 	}
 
 }
