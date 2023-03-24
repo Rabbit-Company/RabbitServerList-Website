@@ -158,6 +158,26 @@ export default class Utils{
 				document.getElementById('dialog-button').innerText = 'Okay';
 				document.getElementById('dialog-button').onclick = () => window.location.href = 'login.html';
 			break;
+			case 4:
+				// Add Minecraft Server
+				document.getElementById('dialog-icon').className = "mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10";
+				document.getElementById('dialog-icon').innerHTML = "<svg class='h-6 w-6 text-blue-600' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'><path stroke='none' d='M0 0h24v24H0z' fill='none'/><line x1='12' y1='5' x2='12' y2='19' /><line x1='5' y1='12' x2='19' y2='12' /></svg>";
+
+				document.getElementById('dialog-title').innerText = "Add Minecraft Server";
+				document.getElementById('dialog-text').innerHTML = `
+
+
+
+				`;
+
+				document.getElementById('dialog-button-cancel').style.display = 'block';
+
+				document.getElementById('dialog-button').className = "primaryButton inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium focus:outline-none sm:w-auto sm:text-sm";
+				document.getElementById('dialog-button').innerText = 'Add';
+				document.getElementById('dialog-button').onclick = () => this.hide("dialog");
+
+				document.getElementById('dialog-button-cancel').onclick = () => this.hide("dialog");
+			break;
 		}
 	}
 

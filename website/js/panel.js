@@ -12,3 +12,8 @@ try{
 		Utils.logout();
 	});
 }catch{}
+
+document.getElementById('addMinecraftServer').addEventListener('click', () => {
+	Utils.changeDialog(4);
+	Utils.show('dialog');
+});
