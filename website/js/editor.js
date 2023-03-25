@@ -321,5 +321,17 @@ function addServer(){
 
 	data['description'] = document.getElementById('description').value;
 
+	if(type === 'minecraft' && !Validate.minecraftServerCategory(data['category'].split(','))){
+		Utils.changeDialog(1, 'Please select between one to five categories.');
+		Utils.show('dialog');
+		return;
+	}
+
+	if(!Validate.description(data['description'])){
+		Utils.changeDialog(1, 'Description needs to be between 150 and 10 000 characters long.');
+		Utils.show('dialog');
+		return;
+	}
+
 	console.log(data);
 }
