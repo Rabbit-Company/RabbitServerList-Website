@@ -92,7 +92,7 @@ function renderMyMinecraftServers(){
 				return;
 			}
 
-			if(file.size > 1_000_000){
+			if(file.size > 3_000_000){
 				fileInput.value = "";
 				Utils.changeDialog(1, Errors.get(1025));
 				Utils.show('dialog');
