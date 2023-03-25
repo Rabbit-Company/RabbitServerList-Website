@@ -37,10 +37,6 @@ document.getElementById("tabs-1-tab-2").addEventListener("click", () => {
 	Utils.fshow("tabs-1-panel-2", "block");
 });
 
-document.getElementById('btn-add').addEventListener('click', () => {
-	addServer();
-});
-
 const parms = new URLSearchParams(window.location.search);
 
 let type = parms.get('type');
@@ -380,3 +376,82 @@ function addServer(){
 		Utils.show('dialog');
 	});
 }
+
+function editServer(){
+	Utils.changeDialog(2, 'Uploading server data...');
+	Utils.show('dialog');
+
+	let data = {};
+	let keys = Object.keys(serverData[type].inputs);
+	let error = false;
+	for(let i = 0; i < keys.length; i++){
+		let id = keys[i].replace('server_', '');
+		let value = document.getElementById(keys[i]).value;
+		data[id] = (value !== '') ? value : null;
+
+		// Validate
+		if(!Validate[serverData[type].inputs[keys[i]].validate?.name](data[id]) && serverData[type].inputs[keys[i]].required){
+			Utils.changeDialog(1, Errors.get(serverData[type].inputs[keys[i]].validate?.errorCode));
+			Utils.show('dialog');
+			error = true;
+			return;
+		}
+	}
+
+	if(error) return;
+
+	data['categories'] = [];
+	let categoryInputs = document.getElementsByName('categories');
+	for(let i = 0; i < categoryInputs.length; i++){
+		if(!categoryInputs[i].checked) continue;
+		data['categories'].push(categoryInputs[i].value);
+	};
+
+	data['description'] = document.getElementById('description').value;
+	data['secretToken'] = editData['secretToken'];
+
+	if(type === 'minecraft' && !Validate.minecraftServerCategory(data['categories'])){
+		Utils.changeDialog(1, 'Please select between one to five categories.');
+		Utils.show('dialog');
+		return;
+	}
+
+	if(!Validate.description(data['description'])){
+		Utils.changeDialog(1, 'Description needs to be between 150 and 10 000 characters long.');
+		Utils.show('dialog');
+		return;
+	}
+
+	let headers = new Headers();
+	headers.set('Authorization', 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('token')));
+	headers.set('Content-Type', 'application/json');
+
+	fetch('https://api.rabbitserverlist.com/v1/server/minecraft/' + id, {
+		method: 'POST',
+		headers: headers,
+		body: JSON.stringify(data)
+	}).then(result => {
+		return result.json();
+	}).then(response => {
+		if(response.error !== 0){
+			Utils.changeDialog(1, response.info);
+			Utils.show('dialog');
+			return;
+		}
+
+		localStorage.removeItem('my-servers-' + type);
+		Utils.changeDialog(8, 'Server edited successfully!');
+		Utils.show('dialog');
+	}).catch(() => {
+		Utils.changeDialog(1, Errors.get(1009));
+		Utils.show('dialog');
+	});
+}
+
+document.getElementById('btn-add').addEventListener('click', () => {
+	if(id === null){
+		addServer();
+	}else{
+		editServer();
+	}
+});
