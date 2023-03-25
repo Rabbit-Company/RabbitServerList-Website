@@ -37,6 +37,10 @@ document.getElementById("tabs-1-tab-2").addEventListener("click", () => {
 	Utils.fshow("tabs-1-panel-2", "block");
 });
 
+document.getElementById('btn-add').addEventListener('click', () => {
+	addServer();
+});
+
 const parms = new URLSearchParams(window.location.search);
 
 let type = parms.get('type');
@@ -135,21 +139,21 @@ let serverData = {
 				'required': true,
 				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><circle cx='12' cy='12' r='9' /><line x1='3.6' y1='9' x2='20.4' y2='9' /><line x1='3.6' y1='15' x2='20.4' y2='15' /><path d='M11.5 3a17 17 0 0 0 0 18' /><path d='M12.5 3a17 17 0 0 1 0 18' />"
 			},
-			'server_votifier_ip': {
+			'server_votifierIP': {
 				'type': 'text',
 				'name': 'votifier_ip',
 				'placeholder': 'Votifier IP (Optional)',
 				'required': false,
 				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><rect x='3' y='12' width='6' height='8' rx='1' /><rect x='9' y='8' width='6' height='12' rx='1' /><rect x='15' y='4' width='6' height='16' rx='1' /><line x1='4' y1='20' x2='18' y2='20' />"
 			},
-			'server_votifier_port': {
+			'server_votifierPort': {
 				'type': 'number',
 				'name': 'votifier_port',
 				'placeholder': 'Votifier Port (Optional)',
 				'required': false,
 				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><rect x='3' y='12' width='6' height='8' rx='1' /><rect x='9' y='8' width='6' height='12' rx='1' /><rect x='15' y='4' width='6' height='16' rx='1' /><line x1='4' y1='20' x2='18' y2='20' />"
 			},
-			'server_votifier_token': {
+			'server_votifierToken': {
 				'type': 'text',
 				'name': 'votifier_token',
 				'placeholder': 'Votifier Token (Optional)',
@@ -224,3 +228,31 @@ if(type === 'minecraft'){
 	});
 }
 document.getElementById('categories').innerHTML = html;
+
+function addServer(){
+
+	let data = {};
+	let keys = Object.keys(serverData[type].inputs);
+	keys.forEach(key =>{
+		let id = key.replace('server_', '');
+		data[id] = document.getElementById(key).value;
+	});
+
+	let categories = "";
+	let categoryInputs = document.getElementsByName('categories');
+	for(let i = 0; i < categoryInputs.length; i++){
+		if(!categoryInputs[i].checked) continue;
+		categories += categoryInputs[i].value + ',';
+	}
+	categories = categories.slice(0, -1);
+	data['category'] = categories;
+
+	data['description'] = document.getElementById('description').value;
+
+	let dataKeys = Object.keys(data);
+	for(let i = 0; i < dataKeys.length; i++){
+		if(data[dataKeys[i]] === '') data[dataKeys[i]] = null;
+	}
+
+	console.log(data);
+}
