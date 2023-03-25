@@ -250,12 +250,16 @@ for(let i = 0; i < inputs.length; i++){
 		let options = "";
 		if(Array.isArray(data.options)){
 			data.options.forEach(option => {
-				options += `<option>${option}</option>`;
+				let selected = '';
+				if(option === editData[inputs[i].replace('server_', '')]) selected = 'selected';
+				options += `<option ${selected}>${option}</option>`;
 			});
 		}else{
 			let keys = Object.keys(data.options);
 			for(let j = 0; j < keys.length; j++){
-				options += `<option value="${keys[j]}">${data.options[keys[j]]}</option>`;
+				let selected = '';
+				if(keys[j] === editData[inputs[i].replace('server_', '')]) selected = 'selected';
+				options += `<option value="${keys[j]}" ${selected}>${data.options[keys[j]]}</option>`;
 			}
 		}
 
