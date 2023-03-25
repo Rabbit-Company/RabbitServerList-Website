@@ -14,11 +14,6 @@ try{
 	});
 }catch{}
 
-document.getElementById('addMinecraftServer').addEventListener('click', () => {
-	Utils.changeDialog(4);
-	Utils.show('dialog');
-});
-
 if(localStorage.getItem('my-servers-minecraft') === null){
 	fetchMyMinecraftServers();
 }else{
