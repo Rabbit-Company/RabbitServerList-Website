@@ -67,7 +67,7 @@ function renderMyMinecraftServers(){
 		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].version + "</span></td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + online + "</span></td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap'><a href='#' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a>";
+		data += "<td class='px-4 py-4 whitespace-nowrap'><a href='editor.html?type=minecraft&id=" + servers[i].id + "' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a>";
 		data += "<td class='px-4 py-4 whitespace-nowrap'><a id='minecraft-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</a>";
 		data += "<input id='minecraft-uploadBanner-" + servers[i].id + "' type='file' accept='image/gif' class='hidden'";
 		data += "</tr>";

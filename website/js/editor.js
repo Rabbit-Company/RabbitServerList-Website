@@ -291,6 +291,9 @@ document.getElementById('categories').innerHTML = html;
 
 function addServer(){
 
+	Utils.changeDialog(2, 'Uploading server data...');
+	Utils.show('dialog');
+
 	let data = {};
 	let keys = Object.keys(serverData[type].inputs);
 	let error = false;
