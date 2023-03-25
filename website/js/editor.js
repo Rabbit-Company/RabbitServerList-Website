@@ -210,7 +210,7 @@ for(let i = 0; i < inputs.length; i++){
 						${data.icon}
 					</svg>
 				</div>
-				<input id="${inputs[i]}" name="${data.name}" type="${data.type}" autocomplete="off" ${required} class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-t-md block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="${data.placeholder}">
+				<input id="${inputs[i]}" name="${data.name}" type="${data.type}" autocomplete="off" ${required} class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-none block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="${data.placeholder}">
 			</div>
 		</div>`;
 	}
