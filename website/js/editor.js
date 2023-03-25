@@ -239,6 +239,7 @@ document.getElementById('desc-1').innerText = serverData[type].desc1;
 
 if(id !== null){
 	document.getElementById('btn-add').innerText = 'Edit';
+	document.getElementById('description').value = editData['description'];
 }
 
 let html = "";
@@ -300,8 +301,11 @@ document.getElementById('inputs').innerHTML = html;
 
 html = "";
 if(type === 'minecraft'){
+	let checkedCategories = editData['categories'].split(',');
 	Validate.minecraftServerCategoryList.forEach(category => {
-		html += "<input type='checkbox' name='categories' value='" + category + "'> " + category + "</br>";
+		let checked = '';
+		if(checkedCategories.includes(category)) checked = 'checked'
+		html += `<input type='checkbox' name='categories' value='${category}' ${checked}> ${category}</br>`;
 	});
 }
 document.getElementById('categories').innerHTML = html;
