@@ -47,6 +47,16 @@ let type = parms.get('type');
 if(type === null || !['minecraft'].includes(type)) location.href = "panel.html";
 
 let id = (parms.get('id') !== null && Utils.isPositiveInteger(parms.get('id'))) ? parms.get('id') : null;
+let editData = {};
+if(id !== null){
+	let servers = JSON.parse(localStorage.getItem('my-servers-' + type));
+	for(let i = 0; i < servers.length; i++){
+		if(servers[i].id === Number(id)){
+			editData = servers[i];
+			break;
+		}
+	}
+}
 
 let serverData = {
 	'minecraft': {
@@ -265,6 +275,9 @@ for(let i = 0; i < inputs.length; i++){
 		</div>`;
 	}else{
 		let required = (data.required) ? 'required' : '';
+		let evalue = editData[inputs[i].replace('server_', '')];
+		if(evalue === null) evalue = '';
+		let value = (id !== null) ? evalue : '';
 		html += `
 		<div>
 			<label for="${data.name}" class="sr-only">Title</label>
@@ -274,7 +287,7 @@ for(let i = 0; i < inputs.length; i++){
 						${data.icon}
 					</svg>
 				</div>
-				<input id="${inputs[i]}" name="${data.name}" type="${data.type}" autocomplete="off" ${required} class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-none block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="${data.placeholder}">
+				<input id="${inputs[i]}" name="${data.name}" type="${data.type}" autocomplete="off" ${required} class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-none block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="${data.placeholder}" value="${value}">
 			</div>
 		</div>`;
 	}
