@@ -310,18 +310,16 @@ function addServer(){
 
 	if(error) return;
 
-	let categories = "";
+	data['categories'] = [];
 	let categoryInputs = document.getElementsByName('categories');
 	for(let i = 0; i < categoryInputs.length; i++){
 		if(!categoryInputs[i].checked) continue;
-		categories += categoryInputs[i].value + ',';
-	}
-	categories = categories.slice(0, -1);
-	data['category'] = categories;
+		data['categories'].push(categoryInputs[i].value);
+	};
 
 	data['description'] = document.getElementById('description').value;
 
-	if(type === 'minecraft' && !Validate.minecraftServerCategory(data['category'].split(','))){
+	if(type === 'minecraft' && !Validate.minecraftServerCategory(data['categories'])){
 		Utils.changeDialog(1, 'Please select between one to five categories.');
 		Utils.show('dialog');
 		return;
@@ -333,5 +331,28 @@ function addServer(){
 		return;
 	}
 
-	console.log(data);
+	let headers = new Headers();
+	headers.set('Authorization', 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('token')));
+	headers.set('Content-Type', 'application/json');
+
+	fetch('https://api.rabbitserverlist.com/v1/servers/minecraft', {
+		method: 'POST',
+		headers: headers,
+		body: JSON.stringify(data)
+	}).then(result => {
+		return result.json();
+	}).then(response => {
+		if(response.error !== 0){
+			Utils.changeDialog(1, response.info);
+			Utils.show('dialog');
+			return;
+		}
+
+		localStorage.removeItem('my-servers-' + type);
+		Utils.changeDialog(8, 'Server added successfully!');
+		Utils.show('dialog');
+	}).catch(() => {
+		Utils.changeDialog(1, Errors.get(1009));
+		Utils.show('dialog');
+	});
 }
