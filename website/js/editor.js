@@ -47,7 +47,116 @@ let id = (parms.get('id') !== null && Utils.isPositiveInteger(parms.get('id'))) 
 let serverData = {
 	'minecraft': {
 		'title1': 'Minecraft Server',
-		'desc1': ''
+		'desc1': '',
+		'inputs': {
+			'server_name': {
+				'type': 'text',
+				'name': 'name',
+				'placeholder': 'Server Name',
+				'required': true,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_ip': {
+				'type': 'text',
+				'name': 'ip',
+				'placeholder': 'IP',
+				'required': true,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_port': {
+				'type': 'number',
+				'name': 'port',
+				'placeholder': 'Port',
+				'required': true,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_bedrock_ip': {
+				'type': 'text',
+				'name': 'bedrock_ip',
+				'placeholder': 'Bedrock IP (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_bedrock_port': {
+				'type': 'number',
+				'name': 'bedrock_port',
+				'placeholder': 'Bedrock Port (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_website': {
+				'type': 'text',
+				'name': 'website',
+				'placeholder': 'Website (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_discord': {
+				'type': 'text',
+				'name': 'discord',
+				'placeholder': 'Discord (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_twitter': {
+				'type': 'text',
+				'name': 'twitter',
+				'placeholder': 'Twitter (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_store': {
+				'type': 'text',
+				'name': 'store',
+				'placeholder': 'Store (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_trailer': {
+				'type': 'text',
+				'name': 'trailer',
+				'placeholder': 'Trailer [Youtube Video] (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_version': {
+				'type': 'select',
+				'name': 'version',
+				'placeholder': 'Version',
+				'options': Validate.minecraftServerVersionList,
+				'required': true,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_country': {
+				'type': 'select',
+				'name': 'country',
+				'placeholder': 'Country',
+				'options': Validate.countryList,
+				'required': true,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_votifier_ip': {
+				'type': 'text',
+				'name': 'votifier_ip',
+				'placeholder': 'Votifier IP (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_votifier_port': {
+				'type': 'number',
+				'name': 'votifier_port',
+				'placeholder': 'Votifier Port (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			},
+			'server_votifier_token': {
+				'type': 'text',
+				'name': 'votifier_token',
+				'placeholder': 'Votifier Token (Optional)',
+				'required': false,
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+			}
+		}
 	}
 }
 
@@ -59,6 +168,56 @@ if(id !== null){
 }
 
 let html = "";
+let inputs = Object.keys(serverData[type].inputs);
+for(let i = 0; i < inputs.length; i++){
+	let data = serverData[type].inputs[inputs[i]];
+	if(data.type === 'select'){
+
+		let options = "";
+		if(Array.isArray(data.options)){
+			data.options.forEach(option => {
+				options += `<option>${option}</option>`;
+			});
+		}else{
+			let keys = Object.keys(data.options);
+			for(let j = 0; j < keys.length; j++){
+				options += `<option value="${keys[j]}">${data.options[keys[j]]}</option>`;
+			}
+		}
+
+		html += `
+		<div>
+			<label for="${data.name}" class="sr-only">${data.placeholder}</label>
+			<div class="relative rounded-md shadow-sm">
+				<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 secondaryColor" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						${data.icon}
+					</svg>
+				</div>
+				<select id="${inputs[i]}" name="${data.name}" required="" class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-none block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm">
+					${options}
+				</select>
+			</div>
+		</div>`;
+	}else{
+		let required = (data.required) ? 'required' : '';
+		html += `
+		<div>
+			<label for="${data.name}" class="sr-only">Title</label>
+			<div class="relative rounded-md shadow-sm">
+				<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 secondaryColor" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						${data.icon}
+					</svg>
+				</div>
+				<input id="${inputs[i]}" name="${data.name}" type="${data.type}" autocomplete="off" ${required} class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-t-md block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="${data.placeholder}">
+			</div>
+		</div>`;
+	}
+}
+document.getElementById('inputs').innerHTML = html;
+
+html = "";
 if(type === 'minecraft'){
 	Validate.minecraftServerCategoryList.forEach(category => {
 		html += "<input type='checkbox' name='categories' value='" + category + "'> " + category + "</br>";
