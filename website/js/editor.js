@@ -75,14 +75,14 @@ let serverData = {
 				'name': 'bedrock_ip',
 				'placeholder': 'Bedrock IP (Optional)',
 				'required': false,
-				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><path d='M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3' /><path d='M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3' /><circle cx='15' cy='9' r='1' />"
 			},
 			'server_bedrock_port': {
 				'type': 'number',
 				'name': 'bedrock_port',
 				'placeholder': 'Bedrock Port (Optional)',
 				'required': false,
-				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><path d='M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3' /><path d='M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3' /><circle cx='15' cy='9' r='1' />"
 			},
 			'server_website': {
 				'type': 'text',
@@ -140,14 +140,14 @@ let serverData = {
 				'name': 'votifier_ip',
 				'placeholder': 'Votifier IP (Optional)',
 				'required': false,
-				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><rect x='3' y='12' width='6' height='8' rx='1' /><rect x='9' y='8' width='6' height='12' rx='1' /><rect x='15' y='4' width='6' height='16' rx='1' /><line x1='4' y1='20' x2='18' y2='20' />"
 			},
 			'server_votifier_port': {
 				'type': 'number',
 				'name': 'votifier_port',
 				'placeholder': 'Votifier Port (Optional)',
 				'required': false,
-				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z'></path><path d='M19 16h-12a2 2 0 0 0 -2 2'></path><path d='M9 8h6'></path>"
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><rect x='3' y='12' width='6' height='8' rx='1' /><rect x='9' y='8' width='6' height='12' rx='1' /><rect x='15' y='4' width='6' height='16' rx='1' /><line x1='4' y1='20' x2='18' y2='20' />"
 			},
 			'server_votifier_token': {
 				'type': 'text',
