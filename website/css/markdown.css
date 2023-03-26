@@ -1,33 +1,33 @@
 .markdown{
-	font-size: 20px;
+	font-size: 16px;
 	line-height: 1.5;
 	word-wrap: break-word;
 	color: #222836;
 }
 
 .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6{
-	margin-top: 24px;
-	margin-bottom: 16px;
+	margin-top: 16px;
+	margin-bottom: 12px;
 	font-weight: 600;
 	line-height: 1.25;
 }
 
 .markdown h1{
-	padding-bottom: 0.3em;
-	font-size: 2em;
-}
-
-.markdown h2{
-	padding-bottom: 0.3em;
+	padding-bottom: 0.15em;
 	font-size: 1.5em;
 }
 
+.markdown h2{
+	padding-bottom: 0.15em;
+	font-size: 1em;
+}
+
 .markdown h3{
-	font-size: 1.25em;
+	font-size: 0.75em;
 }
 
 .markdown h4{
-	font-size: 1em;
+	font-size: 0.75em;
 }
 
 .markdown p{
@@ -77,7 +77,7 @@
 }
 
 .markdown pre{
-	padding: 16px;
+	padding: 12px;
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
@@ -92,7 +92,7 @@
 
 .markdown td, .markdown th{
 	border: 2px solid #1f2937;
-	padding: 8px;
+	padding: 6px;
 }
 
 .markdown tr:nth-child(even){

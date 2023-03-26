@@ -1,4 +1,6 @@
 import Utils from './utils.js';
+import DOMPurify from 'dompurify';
+import { marked } from 'marked';
 
 Utils.initialize();
 
@@ -12,7 +14,16 @@ let server = (parms.get('server') !== null && Utils.isPositiveInteger(parms.get(
 function renderServer(serverData){
 	document.getElementById('servers').className = "hidden";
 	document.getElementById('server').className = "";
-	document.getElementById("test").innerText = JSON.stringify(serverData);
+
+	document.getElementById('server-title').innerText = serverData.name;
+
+	let html = marked.parse(serverData.description, {
+		gfm: true,
+		breaks: true,
+		sanitizer: DOMPurify.sanitize
+	});
+
+	document.getElementById('description').innerHTML = html;
 }
 
 function renderServers(servers){
