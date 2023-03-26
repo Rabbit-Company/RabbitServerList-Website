@@ -297,12 +297,18 @@ document.getElementById('inputs').innerHTML = html;
 
 html = "";
 if(type === 'minecraft'){
-	let checkedCategories = editData['categories'].split(',');
-	Validate.minecraftServerCategoryList.forEach(category => {
-		let checked = '';
-		if(checkedCategories.includes(category)) checked = 'checked'
-		html += `<input type='checkbox' name='categories' value='${category}' ${checked}> ${category}</br>`;
-	});
+	if(id === null){
+		Validate.minecraftServerCategoryList.forEach(category => {
+			html += `<input type='checkbox' name='categories' value='${category}'> ${category}</br>`;
+		});
+	}else{
+		let checkedCategories = editData['categories'].split(',');
+		Validate.minecraftServerCategoryList.forEach(category => {
+			let checked = '';
+			if(checkedCategories.includes(category)) checked = 'checked'
+			html += `<input type='checkbox' name='categories' value='${category}' ${checked}> ${category}</br>`;
+		});
+	}
 }
 document.getElementById('categories').innerHTML = html;
 
