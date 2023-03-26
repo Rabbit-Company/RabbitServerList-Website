@@ -28,7 +28,7 @@ export default class Utils{
 		let keys = Object.keys(localStorage);
 		for(let i = 0; i < keys.length; i++){
 			let time = localStorage.getItem(keys[i] + '-time');
-			if(time !== null && Number(time) + 1_800_000 < Date.now()){
+			if(time !== null && Number(time) + 300_000 < Date.now()){
 				localStorage.removeItem(keys[i]);
 				localStorage.removeItem(keys[i] + '-time');
 			}
