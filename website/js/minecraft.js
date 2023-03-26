@@ -19,8 +19,8 @@ function renderServers(servers){
 	let data = "";
 
 	for(let i = 0; i < servers.length; i++){
-		let online = (servers[i].online) ? "Online" : "Offline";
-		let online_color = (servers[i].online) ? "greenBadge" : "redBadge";
+		let online = (servers[i].online === servers[i].updated) ? "Online" : "Offline";
+		let online_color = (servers[i].online === servers[i].updated) ? "greenBadge" : "redBadge";
 		let categories = servers[i].categories.split(',');
 
 		data += "<tr>";
