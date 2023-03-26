@@ -361,7 +361,7 @@ function addServer(){
 	headers.set('Authorization', 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('token')));
 	headers.set('Content-Type', 'application/json');
 
-	fetch('https://api.rabbitserverlist.com/v1/servers/minecraft', {
+	fetch('https://api.rabbitserverlist.com/v1/account/servers/minecraft', {
 		method: 'POST',
 		headers: headers,
 		body: JSON.stringify(data)
