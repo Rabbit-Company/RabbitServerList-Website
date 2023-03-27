@@ -79,6 +79,10 @@ export default class Utils{
 		return diffDays + ' day(s) ago';
 	}
 
+	static async copyToClipboard(text){
+		await navigator.clipboard.writeText(text);
+	}
+
 	static isPositiveInteger(s) {
 		return /^\+?[1-9][\d]*$/.test(s);
 	}
