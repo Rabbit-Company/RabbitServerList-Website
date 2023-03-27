@@ -28,6 +28,9 @@ function renderServer(serverData){
 
 	let tableHtml = "";
 
+	let online = (serverData.online === serverData.updated) ? "Online" : "Offline";
+	let online_color = (serverData.online === serverData.updated) ? "greenBadge" : "redBadge";
+
 	// IP
 	let ip = (serverData.port !== 25565) ? serverData.ip + ':' + serverData.port : serverData.ip;
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${ip}</td></tr>`;
@@ -36,6 +39,12 @@ function renderServer(serverData){
 		let bedrock_ip = (serverData.bedrock_port !== 19132) ? serverData.bedrock_ip + ':' + serverData.bedrock_port : serverData.bedrock_ip;
 		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock IP</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${bedrock_ip}</td></tr>`;
 	}
+	// Status
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Status</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span></td></tr>`;
+	// Version
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Version</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${serverData.version}</span></td></tr>`;
+	// Players
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Players</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.players} / ${serverData.players_max}</td></tr>`;
 	// Owner
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Owner</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.owner}</td></tr>`;
 	// Location
@@ -46,6 +55,15 @@ function renderServer(serverData){
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Last Check</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${Utils.durationBetween(new Date(serverData.updated), new Date())}</td></tr>`;
 	// Total Votes
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Total Votes</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.votes_total}</td></tr>`;
+
+	let categoryBadges = "";
+	let categories = serverData.categories.split(',');
+	categories.forEach(category => {
+		categoryBadges += `<span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>${category}</span>`;
+	});
+
+	// Categories
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4'>Categories</td><td class='tertiaryColor px-4 py-4'>${categoryBadges}</td></tr>`;
 
 	document.getElementById('server_table_data').innerHTML = tableHtml;
 
