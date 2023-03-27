@@ -92,17 +92,17 @@ function renderServers(servers){
 	for(let i = 0; i < copyElements.length; i++){
 
 		copyElements[i].addEventListener('mouseover', () => {
-			let text = copyElements[i].innerText.replace(' (Click to copy)', '');
-			copyElements[i].innerText = text + ' (Click to copy)';
+			let text = copyElements[i].innerText.replace(' (click to copy)', '');
+			copyElements[i].innerText = text + ' (click to copy)';
 		});
 
 		copyElements[i].addEventListener('mouseout', () => {
-			let text = copyElements[i].innerText.replace(' (Click to copy)', '');
+			let text = copyElements[i].innerText.replace(' (click to copy)', '');
 			copyElements[i].innerText = text;
 		});
 
 		copyElements[i].addEventListener('click', () => {
-			let text = copyElements[i].innerText.replace(' (Click to copy)', '');
+			let text = copyElements[i].innerText.replace(' (click to copy)', '');
 			if(text === 'Copied!') return;
 			Utils.copyToClipboard(text);
 			copyElements[i].innerText = "Copied!";
