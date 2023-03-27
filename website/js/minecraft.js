@@ -29,7 +29,7 @@ function renderServer(serverData){
 	let tableHtml = "";
 
 	// IP
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.ip}</td></tr>`;
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.ip}</td></tr>`;
 	// Port
 	if(serverData.port !== 25565)
 		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Port</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.port}</td></tr>`;
@@ -51,6 +51,19 @@ function renderServer(serverData){
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Total Votes</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.votes_total}</td></tr>`;
 
 	document.getElementById('server_table_data').innerHTML = tableHtml;
+
+	let copyElements = document.getElementsByClassName('copyText');
+	for(let i = 0; i < copyElements.length; i++){
+		copyElements[i].addEventListener('click', () => {
+			let text = copyElements[i].innerText;
+			if(text === 'Copied!') return;
+			Utils.copyToClipboard(text);
+			copyElements[i].innerText = "Copied!";
+			window.setTimeout(() => {
+				copyElements[i].innerText = text;
+			}, 1000);
+		});
+	}
 }
 
 function renderServers(servers){
