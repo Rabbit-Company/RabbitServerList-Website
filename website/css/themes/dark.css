@@ -88,6 +88,7 @@
 .greenBadge{
 	background-color: #035a2e;
 	color: #ffffff;
+	border: solid 1px #1d8953;
 }
 
 .redBadge{
@@ -103,6 +104,7 @@
 .blueBadge{
 	background-color: #3b5d89;
 	color: #ffffff;
+	border: solid 1px #7094c2;
 }
 
 /*
