@@ -66,6 +66,19 @@ export default class Utils{
 		return data.data;
 	}
 
+	static durationBetween(date, date2){
+		const diffTime = Math.abs(date2 - date);
+		const diffSeconds = Math.ceil(diffTime / (1000));
+		const diffMinutes = Math.ceil(diffTime / (1000 * 60));
+		const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+		if(diffSeconds < 60) return diffSeconds + ' second(s) ago';
+		if(diffMinutes < 60) return diffMinutes + ' minute(s) ago';
+		if(diffHours < 24) return diffHours + ' hour(s) ago';
+		return diffDays + ' day(s) ago';
+	}
+
 	static isPositiveInteger(s) {
 		return /^\+?[1-9][\d]*$/.test(s);
 	}

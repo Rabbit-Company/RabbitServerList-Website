@@ -1,4 +1,5 @@
 import Utils from './utils.js';
+import Validate from './validate.js';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 
@@ -24,6 +25,32 @@ function renderServer(serverData){
 	});
 
 	document.getElementById('description').innerHTML = html;
+
+	let tableHtml = "";
+
+	// IP
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.ip}</td></tr>`;
+	// Port
+	if(serverData.port !== 25565)
+		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Port</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.port}</td></tr>`;
+	// Bedrock IP
+	if(serverData.bedrock_ip !== null)
+		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock IP</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.bedrock_ip}</td></tr>`;
+	// Bedrock Port
+	if(serverData.bedrock_port !== null && serverData.bedrock_port !== 19132)
+		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock Port</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.bedrock_port}</td></tr>`;
+	// Owner
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Owner</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.owner}</td></tr>`;
+	// Location
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Location</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${Validate.countryList[serverData.country]}</td></tr>`;
+	// Uptime
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Uptime</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>100%</td></tr>`;
+	// Last Check
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Last Check</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${Utils.durationBetween(new Date(serverData.updated), new Date())}</td></tr>`;
+	// Total Votes
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Total Votes</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.votes_total}</td></tr>`;
+
+	document.getElementById('server_table_data').innerHTML = tableHtml;
 }
 
 function renderServers(servers){
