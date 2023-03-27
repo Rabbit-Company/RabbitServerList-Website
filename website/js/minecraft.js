@@ -29,16 +29,13 @@ function renderServer(serverData){
 	let tableHtml = "";
 
 	// IP
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.ip}</td></tr>`;
-	// Port
-	if(serverData.port !== 25565)
-		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Port</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.port}</td></tr>`;
+	let ip = (serverData.port !== 25565) ? serverData.ip + ':' + serverData.port : serverData.ip;
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${ip}</td></tr>`;
 	// Bedrock IP
-	if(serverData.bedrock_ip !== null)
-		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock IP</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.bedrock_ip}</td></tr>`;
-	// Bedrock Port
-	if(serverData.bedrock_port !== null && serverData.bedrock_port !== 19132)
-		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock Port</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.bedrock_port}</td></tr>`;
+	if(serverData.bedrock_ip !== null && serverData.bedrock_port !== null){
+		let bedrock_ip = (serverData.bedrock_port !== 19132) ? serverData.bedrock_ip + ':' + serverData.bedrock_port : serverData.bedrock_ip;
+		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock IP</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${bedrock_ip}</td></tr>`;
+	}
 	// Owner
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Owner</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.owner}</td></tr>`;
 	// Location
