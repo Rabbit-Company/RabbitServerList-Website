@@ -94,11 +94,13 @@
 .redBadge{
 	background-color: #bd3a3a;
 	color: #ffffff;
+	border: solid 1px #d57676;
 }
 
 .grayBadge{
 	background-color: #525252;
 	color: #ffffff;
+	border: solid 1px #737373;
 }
 
 .blueBadge{
