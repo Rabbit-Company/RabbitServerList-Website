@@ -32,7 +32,7 @@ function renderServer(serverData){
 	let online_color = (serverData.online === serverData.updated) ? "greenBadge" : "redBadge";
 
 	let uptimeBadge = 'greenBadge';
-	if(serverData.uptime < 95) uptimeBadge = 'orangeBadge';
+	if(serverData.uptime < 90) uptimeBadge = 'orangeBadge';
 	if(serverData.uptime < 80) uptimeBadge = 'redBadge';
 
 	// IP
