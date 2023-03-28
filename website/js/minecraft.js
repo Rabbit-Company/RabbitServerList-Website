@@ -102,11 +102,13 @@ function renderServerDescription(description){
 async function renderServerStats(id){
 	document.getElementById('description').innerHTML = "Loading data...";
 
+	let date = new Date().toISOString().split('T')[0];
 	let stats = await Utils.fetchServerStats('minecraft', id);
 
 	Chart.defaults.color = '#a7abb3';
 
 	document.getElementById('description').innerHTML = `
+	<input id="stats-date-picker" type="date" value="${date}" class="border" />
 	<canvas id="serverPlayerChart" class="mt-3"></canvas>
 	<canvas id="serverUptimeChart" class="mt-6"></canvas>
 	`;
@@ -114,14 +116,16 @@ async function renderServerStats(id){
 	let playerDates = [];
 	let players = [];
 	stats.players.forEach(value => {
-		playerDates.push(value.hour);
+		if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
+		playerDates.push(value.hour.replace(date, ''));
 		players.push(Math.round(value.players));
 	});
 
 	let uptimeDates = [];
 	let uptimes = [];
 	stats.uptime.forEach(value => {
-		uptimeDates.push(value.hour);
+		if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
+		uptimeDates.push(value.hour.replace(date, ''));
 		uptimes.push(value.uptime);
 	});
 
@@ -180,7 +184,10 @@ async function renderServerStats(id){
 		}
 	});
 
-	//document.getElementById('description').innerHTML = JSON.stringify(stats);
+	document.getElementById('stats-date-picker').addEventListener('input', () => {
+		let date = document.getElementById('stats-date-picker').value;
+	});
+
 }
 
 function renderServers(servers){
