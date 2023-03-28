@@ -31,6 +31,10 @@ function renderServer(serverData){
 	let online = (serverData.online === serverData.updated) ? "Online" : "Offline";
 	let online_color = (serverData.online === serverData.updated) ? "greenBadge" : "redBadge";
 
+	let uptimeBadge = 'greenBadge';
+	if(serverData.uptime < 95) uptimeBadge = 'orangeBadge';
+	if(serverData.uptime < 80) uptimeBadge = 'redBadge';
+
 	// IP
 	let ip = (serverData.port !== 25565) ? serverData.ip + ':' + serverData.port : serverData.ip;
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${ip}</td></tr>`;
@@ -50,7 +54,7 @@ function renderServer(serverData){
 	// Location
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Location</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${Validate.countryList[serverData.country]}</td></tr>`;
 	// Uptime
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Uptime</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>100%</td></tr>`;
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Uptime</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${uptimeBadge}'>${Math.round(serverData.uptime, 2)}%</span></td></tr>`;
 	// Last Check
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Last Check</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${Utils.durationBetween(new Date(serverData.updated), new Date())}</td></tr>`;
 	// Total Votes

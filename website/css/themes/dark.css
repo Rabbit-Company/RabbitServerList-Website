@@ -91,6 +91,12 @@
 	border: solid 1px #047c40;
 }
 
+.orangeBadge{
+	background-color: #c95d3d;
+	color: #ffffff;
+	border: solid 1px #c97c4e;
+}
+
 .redBadge{
 	background-color: #bd3a3a;
 	color: #ffffff;
