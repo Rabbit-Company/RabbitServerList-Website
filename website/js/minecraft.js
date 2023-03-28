@@ -190,6 +190,32 @@ async function renderServerStats(id){
 
 	document.getElementById('stats-date-picker').addEventListener('input', () => {
 		let date = document.getElementById('stats-date-picker').value;
+
+		players = [];
+		uptimes = [];
+		playerDates = [];
+		uptimeDates = [];
+
+		sortedPlayers.forEach(value => {
+			if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
+			playerDates.push(value.hour.replace(date, ''));
+			players.push(Math.round(value.players));
+		});
+
+		sortedUptimes.forEach(value => {
+			if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
+			uptimeDates.push(value.hour.replace(date, ''));
+			uptimes.push(value.uptime);
+		});
+
+		serverPlayersChart.data.labels = playerDates;
+		serverPlayersChart.data.datasets[0].data = players;
+
+		serverUptimeChart.data.labels = uptimeDates;
+		serverUptimeChart.data.datasets[0].data = uptimes;
+
+		serverPlayersChart.update();
+		serverUptimeChart.update();
 	});
 
 }
