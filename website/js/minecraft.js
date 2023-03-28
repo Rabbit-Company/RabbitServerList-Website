@@ -2,7 +2,9 @@ import Utils from './utils.js';
 import Validate from './validate.js';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
+import { Chart, registerables } from 'chart.js';
 
+Chart.register(...registerables);
 Utils.initialize();
 
 const parms = new URLSearchParams(window.location.search);
@@ -18,13 +20,7 @@ function renderServer(serverData){
 
 	document.getElementById('server-title').innerText = serverData.name;
 
-	let html = marked.parse(serverData.description, {
-		gfm: true,
-		breaks: true,
-		sanitizer: DOMPurify.sanitize
-	});
-
-	document.getElementById('description').innerHTML = html;
+	renderServerDescription(serverData.description);
 
 	let tableHtml = "";
 
@@ -83,6 +79,108 @@ function renderServer(serverData){
 			}, 1000);
 		});
 	}
+
+	document.getElementById('tabs-1-tab-1').addEventListener('click', () => {
+		renderServerDescription(serverData.description);
+	});
+
+	document.getElementById('tabs-1-tab-3').addEventListener('click', () => {
+		renderServerStats(serverData.id);
+	});
+}
+
+function renderServerDescription(description){
+	let html = marked.parse(description, {
+		gfm: true,
+		breaks: true,
+		sanitizer: DOMPurify.sanitize
+	});
+
+	document.getElementById('description').innerHTML = html;
+}
+
+async function renderServerStats(id){
+	document.getElementById('description').innerHTML = "Loading data...";
+
+	let stats = await Utils.fetchServerStats('minecraft', id);
+
+	Chart.defaults.color = '#a7abb3';
+
+	document.getElementById('description').innerHTML = `
+	<canvas id="serverPlayerChart" class="mt-3"></canvas>
+	<canvas id="serverUptimeChart" class="mt-6"></canvas>
+	`;
+
+	let playerDates = [];
+	let players = [];
+	stats.players.forEach(value => {
+		playerDates.push(value.hour);
+		players.push(value.players);
+	});
+
+	let uptimeDates = [];
+	let uptimes = [];
+	stats.uptime.forEach(value => {
+		uptimeDates.push(value.hour);
+		uptimes.push(value.uptime);
+	});
+
+	const ctxPlayers = document.getElementById('serverPlayerChart');
+	const ctxUptime = document.getElementById('serverUptimeChart');
+
+	let serverPlayersChart = new Chart(ctxPlayers, {
+		type: 'line',
+		data: {
+			labels: playerDates,
+			datasets: [{
+				label: 'Players',
+				data: players,
+				borderColor: '#2563eb',
+				backgroundColor: '#2563eb',
+				borderWidth: 2
+			}]
+		},
+		options: {
+			scales: {
+				y: {
+					beginAtZero: true
+				}
+			},
+			scale: {
+				ticks: {
+					precision: 0
+				}
+			}
+		}
+	});
+
+	let serverUptimeChart = new Chart(ctxUptime, {
+		type: 'line',
+		data: {
+			labels: uptimeDates,
+			datasets: [{
+				label: 'Uptime',
+				data: uptimes,
+				borderColor: '#2563eb',
+				backgroundColor: '#2563eb',
+				borderWidth: 2
+			}]
+		},
+		options: {
+			scales: {
+				y: {
+					beginAtZero: true
+				}
+			},
+			scale: {
+				ticks: {
+					precision: 0
+				}
+			}
+		}
+	});
+
+	//document.getElementById('description').innerHTML = JSON.stringify(stats);
 }
 
 function renderServers(servers){

@@ -19,6 +19,7 @@
   "dependencies": {
     "@rabbit-company/blake2b": "^1.1.0",
     "@rabbit-company/password-entropy": "^1.1.2",
+    "chart.js": "^4.2.1",
     "dompurify": "^3.0.1",
     "marked": "^4.3.0"
   },

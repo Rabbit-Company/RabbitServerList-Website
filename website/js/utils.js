@@ -56,6 +56,16 @@ export default class Utils{
 		return data.data;
 	}
 
+	static async fetchServerStats(type, id){
+		let req = await fetch("https://api.rabbitserverlist.com/v1/server/" + type + "/" + id + "/stats");
+		let data = await req.json();
+
+		localStorage.setItem('server-minecraft-' + id + '-stats', JSON.stringify(data.data));
+		localStorage.setItem('server-minecraft-' + id + '-stats-time', Date.now());
+
+		return data.data;
+	}
+
 	static async fetchServers(type, page){
 		let req = await fetch("https://api.rabbitserverlist.com/v1/servers/" + type + "/page/" + page);
 		let data = await req.json();
