@@ -85,7 +85,7 @@ function renderServer(serverData){
 	});
 
 	document.getElementById('tabs-1-tab-2').addEventListener('click', () => {
-		renderServerVote();
+		renderServerVote(serverData.id);
 	});
 
 	document.getElementById('tabs-1-tab-3').addEventListener('click', () => {
@@ -103,11 +103,38 @@ function renderServerDescription(description){
 	document.getElementById('description').innerHTML = html;
 }
 
-function renderServerVote(){
+function renderServerVote(id){
 	document.getElementById('description').innerHTML = `
+		<div class="mt-6 mb-6 mx-auto max-w-sm text-center">
+			<form>
+				<b>YOU CAN VOTE ONCE A DAY!</b>
+				<img class='rounded-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/${id}/banner' />
 
+				<div class="mt-3">
+					<label for="minecraft-username" class="sr-only">Minecraft Username</label>
+					<div class="relative rounded-md shadow-sm">
+						<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 secondaryColor" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+								<circle cx="12" cy="7" r="4"></circle>
+								<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+							</svg>
+						</div>
+						<input id="minecraft-username" name="minecraft-username" type="text" autocomplete="minecraft-username" required class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-md block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="Minecraft Username">
+					</div>
+				</div>
 
+				<div id="cf-furnstile" class="cf-turnstile" data-sitekey="0x4AAAAAAADkDTSJrhqVLN33" data-action="vote" data-theme="dark" data-language="en" data-callback="onloadTurnstileCallback"></div>
+
+				<button id="btn_vote" type="submit" class="primaryButton w-full py-2 px-4 mt-3 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none">
+					Submit Vote
+				</button>
+
+			</form>
+		</div>
 	`;
+
+	turnstile.render('#cf-furnstile');
 }
 
 async function renderServerStats(id){
