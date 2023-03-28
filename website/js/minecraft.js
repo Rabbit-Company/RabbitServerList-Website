@@ -115,7 +115,7 @@ async function renderServerStats(id){
 	let players = [];
 	stats.players.forEach(value => {
 		playerDates.push(value.hour);
-		players.push(value.players);
+		players.push(Math.round(value.players));
 	});
 
 	let uptimeDates = [];
