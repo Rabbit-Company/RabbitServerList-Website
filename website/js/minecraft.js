@@ -84,6 +84,10 @@ function renderServer(serverData){
 		renderServerDescription(serverData.description);
 	});
 
+	document.getElementById('tabs-1-tab-2').addEventListener('click', () => {
+		renderServerVote();
+	});
+
 	document.getElementById('tabs-1-tab-3').addEventListener('click', () => {
 		renderServerStats(serverData.id);
 	});
@@ -97,6 +101,13 @@ function renderServerDescription(description){
 	});
 
 	document.getElementById('description').innerHTML = html;
+}
+
+function renderServerVote(){
+	document.getElementById('description').innerHTML = `
+
+
+	`;
 }
 
 async function renderServerStats(id){
