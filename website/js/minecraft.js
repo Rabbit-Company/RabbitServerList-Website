@@ -113,17 +113,21 @@ async function renderServerStats(id){
 	<canvas id="serverUptimeChart" class="mt-6"></canvas>
 	`;
 
-	let playerDates = [];
 	let players = [];
-	stats.players.forEach(value => {
+	let uptimes = [];
+	let playerDates = [];
+	let uptimeDates = [];
+
+	let sortedPlayers = stats.players.sort((p1, p2) => (p1.hour > p2.hour) ? 1 : (p1.hour < p2.hour) ? -1 : 0);
+	let sortedUptimes = stats.uptime.sort((p1, p2) => (p1.hour > p2.hour) ? 1 : (p1.hour < p2.hour) ? -1 : 0);
+
+	sortedPlayers.forEach(value => {
 		if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
 		playerDates.push(value.hour.replace(date, ''));
 		players.push(Math.round(value.players));
 	});
 
-	let uptimeDates = [];
-	let uptimes = [];
-	stats.uptime.forEach(value => {
+	sortedUptimes.forEach(value => {
 		if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
 		uptimeDates.push(value.hour.replace(date, ''));
 		uptimes.push(value.uptime);
