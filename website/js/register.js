@@ -37,6 +37,7 @@ function register(){
 	const username = document.getElementById("username").value.toLowerCase();
 	const email = document.getElementById("email").value;
 	const password = document.getElementById("password").value;
+	const turnstile = document.getElementsByName('cf-turnstile-response')[0].value;
 
 	if(!Validate.username(username)){
 		Utils.changeDialog(1, Errors.get(1001));
@@ -65,7 +66,7 @@ function register(){
 	headers.set('Authorization', 'Basic ' + btoa(username + ':' + hash));
 	headers.set('Content-Type', 'application/json');
 
-	let data = JSON.stringify({ "email": email });
+	let data = JSON.stringify({ "email": email, "turnstile": turnstile });
 	fetch('https://api.rabbitserverlist.com/v1/account', {
 		method: 'POST',
 		headers: headers,
