@@ -124,7 +124,7 @@ function renderServerVote(id){
 					</div>
 				</div>
 
-				<div id="cf-furnstile" class="cf-turnstile mt-3" data-sitekey="0x4AAAAAAADkDTSJrhqVLN33" data-action="vote" data-theme="dark" data-language="en" data-callback="onloadTurnstileCallback"></div>
+				<div id="cf-turnstile" class="cf-turnstile mt-3" data-sitekey="0x4AAAAAAADkDTSJrhqVLN33" data-action="vote" data-theme="dark" data-language="en" data-callback="onloadTurnstileCallback"></div>
 
 				<button id="btn_vote" type="submit" class="primaryButton w-full py-2 px-4 mt-3 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none">
 					Submit Vote
@@ -134,11 +134,40 @@ function renderServerVote(id){
 		</div>
 	`;
 
-	turnstile.render('#cf-furnstile');
+	turnstile.render('#cf-turnstile');
 
 	document.getElementById("vote-form").addEventListener("submit", e => {
 		e.preventDefault();
-		console.log(document.getElementById('minecraft-username').value);
+
+		let username = document.getElementById('minecraft-username').value;
+		let turnstile = document.getElementsByName('cf-turnstile-response')[0].value;
+
+		Utils.changeDialog(2, 'Sending vote...');
+		Utils.show('dialog');
+
+		let headers = new Headers();
+		headers.set('Content-Type', 'application/json');
+
+		let data = JSON.stringify({ "username": username, "turnstile": turnstile });
+		fetch('https://api.rabbitserverlist.com/v1/server/minecraft/' + id + '/vote', {
+			method: 'POST',
+			headers: headers,
+			body: data
+		}).then(result => {
+			return result.json();
+		}).then(response => {
+			if(response.error !== 0){
+				Utils.changeDialog(1, response.info);
+				Utils.show('dialog');
+				return;
+			}
+			Utils.changeDialog(0, 'Vote sent!');
+			Utils.show('dialog');
+		}).catch(() => {
+			Utils.changeDialog(1, Errors.get(1009));
+			Utils.show('dialog');
+		});
+
 	});
 }
 
