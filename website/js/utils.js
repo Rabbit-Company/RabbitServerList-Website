@@ -38,6 +38,7 @@ export default class Utils{
 	static logout(){
 		localStorage.removeItem('token');
 		localStorage.removeItem('logged');
+		localStorage.removeItem('my-servers-minecraft');
 		location.reload();
 	}
 
