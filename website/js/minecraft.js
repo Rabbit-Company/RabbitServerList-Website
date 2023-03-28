@@ -106,7 +106,7 @@ function renderServerDescription(description){
 function renderServerVote(id){
 	document.getElementById('description').innerHTML = `
 		<div class="mt-6 mb-6 mx-auto max-w-sm text-center">
-			<form>
+			<form id="vote-form">
 				<b>YOU CAN VOTE ONCE A DAY!</b>
 				<img class='rounded-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/${id}/banner' />
 
@@ -126,7 +126,7 @@ function renderServerVote(id){
 
 				<div id="cf-furnstile" class="cf-turnstile mt-3" data-sitekey="0x4AAAAAAADkDTSJrhqVLN33" data-action="vote" data-theme="dark" data-language="en" data-callback="onloadTurnstileCallback"></div>
 
-				<button id="btn_vote" type="button" class="primaryButton w-full py-2 px-4 mt-3 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none">
+				<button id="btn_vote" type="submit" class="primaryButton w-full py-2 px-4 mt-3 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none">
 					Submit Vote
 				</button>
 
@@ -135,6 +135,11 @@ function renderServerVote(id){
 	`;
 
 	turnstile.render('#cf-furnstile');
+
+	document.getElementById("vote-form").addEventListener("submit", e => {
+		e.preventDefault();
+		console.log(document.getElementById('minecraft-username').value);
+	});
 }
 
 async function renderServerStats(id){
