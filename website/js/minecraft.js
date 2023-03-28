@@ -145,7 +145,9 @@ async function loadServerPage(){
 	if(serverData !== null) return renderServer(serverData);
 
 	let data = await Utils.fetchServer('minecraft', server);
-	renderServer(data);
+	if(data !== null) return renderServer(data);
+
+	window.location.href = '/';
 }
 
 async function loadServersPage(){
