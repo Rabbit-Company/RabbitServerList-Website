@@ -1,4 +1,5 @@
 import Utils from './utils.js';
+import Errors from './errors.js';
 import Validate from './validate.js';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
