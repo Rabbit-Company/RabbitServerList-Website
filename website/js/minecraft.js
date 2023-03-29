@@ -161,6 +161,7 @@ function renderServerVote(id){
 				Utils.show('dialog');
 				return;
 			}
+			console.log(response);
 			Utils.changeDialog(0, 'Vote sent!');
 			Utils.show('dialog');
 		}).catch(() => {
