@@ -35,6 +35,8 @@ export default class Errors{
 		1030: 'Bedrock IP is invalid.',
 		1031: 'Bedrock Port is invalid.',
 		1032: 'Server is already on the website.',
+		3001: 'You have already voted today.',
+		3002: 'You have already voted today.',
 		9999: 'Your do not have permission to perform this action.'
 	};
 
