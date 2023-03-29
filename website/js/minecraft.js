@@ -56,8 +56,6 @@ function renderServer(serverData){
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Last Check</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${Utils.durationBetween(new Date(serverData.updated), new Date())}</td></tr>`;
 	// Monthly Votes
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Monthly Votes</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.votes}</td></tr>`;
-	// Total Votes
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Total Votes</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.votes_total}</td></tr>`;
 
 	let categoryBadges = "";
 	let categories = serverData.categories.split(',');
