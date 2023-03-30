@@ -222,24 +222,24 @@ async function renderServerStats(id){
 			labels: playerDates,
 			datasets: [
 				{
-					label: 'Average Players',
-					data: players,
-					borderColor: '#2563eb',
-					backgroundColor: '#2563eb',
-					borderWidth: 2
-				},
-				{
-					label: 'Max Players',
+					label: 'Max. Players',
 					data: maxPlayers,
-					borderColor: '#2563eb',
-					backgroundColor: '#2563eb',
+					borderColor: '#035a2e',
+					backgroundColor: '#035a2e',
 					borderWidth: 2
 				},
 				{
-					label: 'Min Players',
+					label: 'Avg. Players',
+					data: players,
+					borderColor: '#6ba0e4',
+					backgroundColor: '#6ba0e4',
+					borderWidth: 2
+				},
+				{
+					label: 'Min. Players',
 					data: minPlayers,
-					borderColor: '#2563eb',
-					backgroundColor: '#2563eb',
+					borderColor: '#4f46e5',
+					backgroundColor: '#4f46e5',
 					borderWidth: 2
 				}
 			]
