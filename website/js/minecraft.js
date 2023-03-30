@@ -190,6 +190,8 @@ async function renderServerStats(id){
 	`;
 
 	let players = [];
+	let minPlayers = [];
+	let maxPlayers = [];
 	let uptimes = [];
 	let playerDates = [];
 	let uptimeDates = [];
@@ -200,7 +202,9 @@ async function renderServerStats(id){
 	sortedPlayers.forEach(value => {
 		if(value.hour.split(' ')[0] !== date) return;
 		playerDates.push(value.hour.split(' ')[1]);
-		players.push(Math.round(value.players));
+		players.push(Math.round(value.avg));
+		minPlayers.push(value.min);
+		maxPlayers.push(value.max);
 	});
 
 	sortedUptimes.forEach(value => {
@@ -216,13 +220,29 @@ async function renderServerStats(id){
 		type: 'line',
 		data: {
 			labels: playerDates,
-			datasets: [{
-				label: 'Players',
-				data: players,
-				borderColor: '#2563eb',
-				backgroundColor: '#2563eb',
-				borderWidth: 2
-			}]
+			datasets: [
+				{
+					label: 'Average Players',
+					data: players,
+					borderColor: '#2563eb',
+					backgroundColor: '#2563eb',
+					borderWidth: 2
+				},
+				{
+					label: 'Max Players',
+					data: maxPlayers,
+					borderColor: '#2563eb',
+					backgroundColor: '#2563eb',
+					borderWidth: 2
+				},
+				{
+					label: 'Min Players',
+					data: minPlayers,
+					borderColor: '#2563eb',
+					backgroundColor: '#2563eb',
+					borderWidth: 2
+				}
+			]
 		},
 		options: {
 			scales: {
