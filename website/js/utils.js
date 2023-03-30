@@ -117,20 +117,12 @@ export default class Utils{
 		}
 	}
 
-	static fhide(element){
+	static hide(element){
 		document.getElementById(element).style.display = 'none';
 	}
 
-	static fshow(element, method = 'block'){
+	static show(element, method = 'flex'){
 		document.getElementById(element).style.display = method;
-	}
-
-	static hide(element){
-		document.getElementById(element).style.visibility = 'hidden';
-	}
-
-	static show(element){
-		document.getElementById(element).style.visibility = 'visible';
 	}
 
 	static showDialogButtons(){

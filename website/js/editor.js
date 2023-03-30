@@ -19,12 +19,12 @@ try{
 }catch{}
 
 document.getElementById("tabs-1-tab-1").addEventListener("click", () => {
-	Utils.fhide("tabs-1-panel-2");
-	Utils.fshow("tabs-1-panel-1", "block");
+	Utils.hide("tabs-1-panel-2");
+	Utils.show("tabs-1-panel-1", "block");
 });
 
 document.getElementById("tabs-1-tab-2").addEventListener("click", () => {
-	Utils.fhide("tabs-1-panel-1");
+	Utils.hide("tabs-1-panel-1");
 
 	let description = document.getElementById("description").value;
 	let html = marked.parse(description, {
@@ -34,7 +34,7 @@ document.getElementById("tabs-1-tab-2").addEventListener("click", () => {
 	});
 	document.getElementById('preview').innerHTML = html;
 
-	Utils.fshow("tabs-1-panel-2", "block");
+	Utils.show("tabs-1-panel-2", "block");
 });
 
 const parms = new URLSearchParams(window.location.search);
