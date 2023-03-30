@@ -196,14 +196,14 @@ async function renderServerStats(id){
 	let sortedUptimes = stats.uptime.sort((p1, p2) => (p1.hour > p2.hour) ? 1 : (p1.hour < p2.hour) ? -1 : 0);
 
 	sortedPlayers.forEach(value => {
-		if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
-		playerDates.push(value.hour.replace(date, ''));
+		if(value.hour.split(' ')[0] !== date) return;
+		playerDates.push(value.hour.split(' ')[1]);
 		players.push(Math.round(value.players));
 	});
 
 	sortedUptimes.forEach(value => {
-		if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
-		uptimeDates.push(value.hour.replace(date, ''));
+		if(value.hour.split(' ')[0] !== date) return;
+		uptimeDates.push(value.hour.split(' ')[1]);
 		uptimes.push(value.uptime);
 	});
 
@@ -271,14 +271,14 @@ async function renderServerStats(id){
 		uptimeDates = [];
 
 		sortedPlayers.forEach(value => {
-			if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
-			playerDates.push(value.hour.replace(date, ''));
+			if(value.hour.split(' ')[0] !== date) return;
+			playerDates.push(value.hour.split(' ')[1]);
 			players.push(Math.round(value.players));
 		});
 
 		sortedUptimes.forEach(value => {
-			if(new Date(value.hour).toISOString().split('T')[0] !== date) return;
-			uptimeDates.push(value.hour.replace(date, ''));
+			if(value.hour.split(' ')[0] !== date) return;
+			uptimeDates.push(value.hour.split(' ')[1]);
 			uptimes.push(value.uptime);
 		});
 
