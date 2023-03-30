@@ -337,7 +337,7 @@ function renderServers(servers){
 		data += `<td class='text-center px-2 py-4 whitespace-nowrap md:px-4 text-sm text-gray-500'>
 			<div class='hidden sm:block'>
 				<a href='?server=${servers[i].id}'>
-					<img class='rounded-t-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' />
+					<img class='rounded-t-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
 				</a>
 				<span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium ${online_color}'>
 					<a class='copyText cursor-pointer'>${ip}</a>
@@ -345,7 +345,7 @@ function renderServers(servers){
 			</div>
 			<div class='sm:hidden'>
 				<a href='?server=${servers[i].id}'>
-					<img class='rounded-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' />
+					<img class='rounded-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
 				</a>
 
 				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span>
