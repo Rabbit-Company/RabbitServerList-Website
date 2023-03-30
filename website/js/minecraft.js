@@ -326,7 +326,7 @@ function renderServers(servers){
 				<a href='?version=${servers[i].version}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].version}</span></a>
 				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].players} / ${servers[i].players_max}</span>
 				<br>
-				<span class='mt-2 w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-md font-medium ${online_color}'>
+				<span class='mt-2 w-full inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium ${online_color}'>
 					<a class='copyText cursor-pointer'>${ip}</a>
 				</span>
 			</div>
