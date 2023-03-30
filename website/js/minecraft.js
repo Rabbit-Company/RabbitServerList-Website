@@ -10,7 +10,7 @@ Utils.initialize();
 
 const parms = new URLSearchParams(window.location.search);
 
-let page = (parms.get('page') !== null && Utils.isPositiveInteger(parms.get('page'))) ? parms.get('page') : 1;
+let page = (parms.get('page') !== null && Utils.isPositiveInteger(parms.get('page'))) ? Number(parms.get('page')) : 1;
 if(page > 50) page = 50;
 
 let server = (parms.get('server') !== null && Utils.isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
@@ -365,6 +365,42 @@ function renderServers(servers){
 		});
 
 	}
+
+	// Pagination
+	if(page !== 1 || servers.length >= 20){
+		document.getElementById('pagination').style = 'display: block;';
+	}
+
+	if(servers.length !== 20){
+		document.getElementById('pagination-right').style = 'display: none;';
+	}
+
+	if(page == 1){
+		document.getElementById('pagination-left').style = 'display: none;';
+	}
+
+	let startFrom = ((page - 1) * 20) + 1;
+	const parms = new URLSearchParams(window.location.search);
+	document.getElementById('page').value = page;
+
+	parms.set('page', page - 1);
+	document.getElementById('pagination-left').href = '?' + parms;
+
+	parms.set('page', page + 1);
+	document.getElementById('pagination-right').href = '?' + parms;
+
+	document.getElementById('label-startFrom').innerText = startFrom;
+	document.getElementById('label-stopOn').innerText = (page === 1) ? ((startFrom + servers.length) - 1) : startFrom + servers.length;
+
+	document.getElementById("page").addEventListener("keypress", (event) => {
+		if (event.key !== "Enter") return;
+		event.preventDefault();
+
+		const parms = new URLSearchParams(window.location.search);
+		parms.set('page', document.getElementById("page").value);
+
+		window.location.assign('?' + parms);
+	});
 }
 
 document.getElementById("menu-toggle-btn").addEventListener('click', () => {
