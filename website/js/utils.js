@@ -61,18 +61,29 @@ export default class Utils{
 		let req = await fetch("https://api.rabbitserverlist.com/v1/server/" + type + "/" + id + "/stats");
 		let data = await req.json();
 
-		localStorage.setItem('server-minecraft-' + id + '-stats', JSON.stringify(data.data));
-		localStorage.setItem('server-minecraft-' + id + '-stats-time', Date.now());
+		localStorage.setItem('server-' + type + '-' + id + '-stats', JSON.stringify(data.data));
+		localStorage.setItem('server-' + type + '-' + id + '-stats-time', Date.now());
 
 		return data.data;
 	}
 
-	static async fetchServers(type, page){
+	static async fetchServers(type, page, filter = null, value = null){
+
+		if(filter !== null && value !== null){
+			let req = await fetch("https://api.rabbitserverlist.com/v1/servers/" + type + "/page/" + page + "/filter/" + filter + "/" + value);
+			let data = await req.json();
+
+			localStorage.setItem('servers-' + type + '-' + page + '-filter-' + filter + '-' + value, JSON.stringify(data.data));
+			localStorage.setItem('servers-' + type + '-' + page + '-filter-' + filter + '-' + value + '-time', Date.now());
+
+			return data.data;
+		}
+
 		let req = await fetch("https://api.rabbitserverlist.com/v1/servers/" + type + "/page/" + page);
 		let data = await req.json();
 
-		localStorage.setItem('servers-minecraft-' + page, JSON.stringify(data.data));
-		localStorage.setItem('servers-minecraft-' + page + '-time', Date.now());
+		localStorage.setItem('servers-' + type + '-' + page, JSON.stringify(data.data));
+		localStorage.setItem('servers-' + type + '-' + page + '-time', Date.now());
 
 		return data.data;
 	}

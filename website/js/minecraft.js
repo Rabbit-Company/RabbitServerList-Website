@@ -14,6 +14,8 @@ let page = (parms.get('page') !== null && Utils.isPositiveInteger(parms.get('pag
 if(page > 50) page = 50;
 
 let server = (parms.get('server') !== null && Utils.isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
+let version = (parms.get('version') !== null && Validate.minecraftServerVersion(parms.get('version'))) ? parms.get('version') : null;
+let category = (parms.get('category') !== null && Validate.minecraftServerCategoryList.includes(parms.get('category'))) ? parms.get('category') : null;
 
 function renderServer(serverData){
 	document.getElementById('servers').className = "hidden";
@@ -43,7 +45,7 @@ function renderServer(serverData){
 	// Status
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Status</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span></td></tr>`;
 	// Version
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Version</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${serverData.version}</span></td></tr>`;
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Version</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><a href='?version=${serverData.version}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${serverData.version}</span></a></td></tr>`;
 	// Players
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Players</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.players} / ${serverData.players_max}</td></tr>`;
 	// Owner
@@ -60,7 +62,7 @@ function renderServer(serverData){
 	let categoryBadges = "";
 	let categories = serverData.categories.split(',');
 	categories.forEach(category => {
-		categoryBadges += `<span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>${category}</span>`;
+		categoryBadges += `<a href='?category=${category}'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>${category}</span></a>`;
 	});
 
 	// Categories
@@ -308,9 +310,9 @@ function renderServers(servers){
 		data += "<td class='tertiaryColor px-4 py-4 whitespace-nowrap'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
 		data += "<td class='text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'><a href='?server=" + servers[i].id + "'><img class='rounded-t-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/" + servers[i].id + "/banner' /></a><span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium " + online_color + "'><a class='copyText cursor-pointer'>" + ip + "</a></span></td>";
 		data += "<td class='px-4 py-4'><div>";
-		for(let j = 0; j < categories.length; j++) data += "<span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + categories[j] + "</span>";
+		for(let j = 0; j < categories.length; j++) data += "<a href='?category=" + categories[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + categories[j] + "</span></a>";
 		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].version + "</span></td>";
+		data += "<td class='px-4 py-4 whitespace-nowrap'><a href='?version=" + servers[i].version + "'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].version + "</span></a></td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + online + "</span></td>";
 		data += "</tr>";
 	}
@@ -364,6 +366,23 @@ async function loadServerPage(){
 }
 
 async function loadServersPage(){
+
+	if(version !== null){
+		let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page + '-filter-version-' + version));
+		if(servers !== null) return renderServers(servers);
+
+		let data = await Utils.fetchServers('minecraft', page, 'version', version);
+		renderServers(data);
+		return;
+	}else if(category !== null){
+		let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page + '-filter-category-' + category));
+		if(servers !== null) return renderServers(servers);
+
+		let data = await Utils.fetchServers('minecraft', page, 'category', category);
+		renderServers(data);
+		return;
+	}
+
 	let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page));
 	if(servers !== null) return renderServers(servers);
 
