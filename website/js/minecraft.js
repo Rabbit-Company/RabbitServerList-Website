@@ -159,6 +159,12 @@ function renderServerVote(id){
 		}).then(result => {
 			return result.json();
 		}).then(response => {
+			if(response.error === 3001 || response.error === 3002){
+				Utils.changeDialog(9, response.info);
+				Utils.show('dialog');
+				return;
+			}
+
 			if(response.error !== 0){
 				Utils.changeDialog(1, response.info);
 				Utils.show('dialog');
