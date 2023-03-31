@@ -16,6 +16,7 @@ if(page > 50) page = 50;
 let server = (parms.get('server') !== null && Utils.isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
 let version = (parms.get('version') !== null && Validate.minecraftServerVersion(parms.get('version'))) ? parms.get('version') : null;
 let category = (parms.get('category') !== null && Validate.minecraftServerCategoryList.includes(parms.get('category'))) ? parms.get('category') : null;
+let country = (parms.get('country') !== null && Validate.country(parms.get('country'))) ? parms.get('country') : null;
 
 function renderServer(serverData){
 	document.getElementById('servers').className = "hidden";
@@ -51,7 +52,7 @@ function renderServer(serverData){
 	// Owner
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Owner</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.owner}</td></tr>`;
 	// Location
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Location</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${Validate.countryList[serverData.country]}</td></tr>`;
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Location</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><a href='?country=${serverData.country}'>${Validate.countryList[serverData.country]}</a></td></tr>`;
 	// Uptime
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Uptime</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${uptimeBadge}'>${serverData.uptime}%</span></td></tr>`;
 	// Last Check
@@ -463,6 +464,13 @@ async function loadServersPage(){
 		if(servers !== null) return renderServers(servers);
 
 		let data = await Utils.fetchServers('minecraft', page, 'category', category);
+		renderServers(data);
+		return;
+	}else if(country !== null){
+		let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page + '-filter-country-' + country));
+		if(servers !== null) return renderServers(servers);
+
+		let data = await Utils.fetchServers('minecraft', page, 'country', country);
 		renderServers(data);
 		return;
 	}
