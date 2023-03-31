@@ -112,7 +112,7 @@ function renderServerVote(id){
 		<div class="mt-6 mb-6 mx-auto max-w-sm text-center">
 			<form id="vote-form">
 				<b>YOU CAN VOTE ONCE A DAY!</b>
-				<img class='rounded-md w-full h-[60px]' height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${id}/banner' />
+				<img class='rounded-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${id}/banner' />
 
 				<div class="mt-3">
 					<label for="minecraft-username" class="sr-only">Minecraft Username</label>
@@ -333,12 +333,12 @@ function renderServers(servers){
 		let categories = servers[i].categories.split(',');
 
 		data += "<tr class='passwordsBorderColor'>";
-		data += "<td class='px-2 py-4 whitespace-nowrap md:px-4 hidden md:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + (i + 1) + "</span></td>";
+		data += "<td class='px-2 py-4 whitespace-nowrap md:px-4 hidden lg:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + (i + 1) + "</span></td>";
 		data += "<td class='tertiaryColor px-2 py-4 whitespace-nowrap md:px-4 hidden xl:table-cell'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
-		data += `<td class='text-center px-2 py-4 whitespace-nowrap md:px-4 text-sm text-gray-500'>
+		data += `<td class='w-[468px] text-center px-2 py-4 whitespace-nowrap md:px-4 text-sm text-gray-500'>
 			<div class='hidden sm:block'>
 				<a href='?server=${servers[i].id}'>
-					<img class='rounded-t-md w-full h-[60px]' height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
+					<img class='rounded-t-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
 				</a>
 				<span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium ${online_color}'>
 					<a class='copyText cursor-pointer'>${ip}</a>
@@ -346,7 +346,7 @@ function renderServers(servers){
 			</div>
 			<div class='sm:hidden'>
 				<a href='?server=${servers[i].id}'>
-					<img class='rounded-md w-full h-[60px]' height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
+					<img class='rounded-md w-full h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
 				</a>
 
 				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span>
