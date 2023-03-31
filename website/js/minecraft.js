@@ -295,6 +295,8 @@ async function renderServerStats(id){
 		let date = document.getElementById('stats-date-picker').value;
 
 		players = [];
+		minPlayers = [];
+		maxPlayers = [];
 		uptimes = [];
 		playerDates = [];
 		uptimeDates = [];
@@ -302,7 +304,9 @@ async function renderServerStats(id){
 		sortedPlayers.forEach(value => {
 			if(value.hour.split(' ')[0] !== date) return;
 			playerDates.push(value.hour.split(' ')[1]);
-			players.push(Math.round(value.players));
+			players.push(Math.round(value.avg));
+			minPlayers.push(value.min);
+			maxPlayers.push(value.max);
 		});
 
 		sortedUptimes.forEach(value => {
@@ -312,7 +316,9 @@ async function renderServerStats(id){
 		});
 
 		serverPlayersChart.data.labels = playerDates;
-		serverPlayersChart.data.datasets[0].data = players;
+		serverPlayersChart.data.datasets[0].data = maxPlayers;
+		serverPlayersChart.data.datasets[1].data = players;
+		serverPlayersChart.data.datasets[2].data = minPlayers;
 
 		serverUptimeChart.data.labels = uptimeDates;
 		serverUptimeChart.data.datasets[0].data = uptimes;
