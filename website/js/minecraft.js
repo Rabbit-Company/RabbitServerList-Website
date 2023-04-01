@@ -49,6 +49,16 @@ function renderServer(serverData){
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Version</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><a href='?version=${serverData.version}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${serverData.version}</span></a></td></tr>`;
 	// Players
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Players</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.players} / ${serverData.players_max}</td></tr>`;
+	// Links
+	if(serverData.website || serverData.store || serverData.discord || serverData.twitter || serverData.trailer){
+		tableHtml += `<tr><td class='secondaryColor px-4 py-4'>Links</td><td class='tertiaryColor px-4 py-4'>`;
+		if(serverData.website) tableHtml += `<a href='${serverData.website}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Website</span></a>`;
+		if(serverData.store) tableHtml += `<a href='${serverData.store}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Store</span></a>`;
+		if(serverData.discord) tableHtml += `<a href='${serverData.discord}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Discord</span></a>`;
+		if(serverData.twitter) tableHtml += `<a href='${serverData.twitter}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Twitter</span></a>`;
+		if(serverData.trailer) tableHtml += `<a href='${serverData.trailer}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Trailer</span></a>`;
+		tableHtml += `</td></tr>`;
+	}
 	// Owner
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Owner</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.owner}</td></tr>`;
 	// Location
