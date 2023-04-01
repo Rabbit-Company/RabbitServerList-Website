@@ -1,5 +1,6 @@
 import Utils from './utils.js';
 import Errors from './errors.js';
+import Validate from './validate.js';
 
 Utils.initialize();
 Utils.requireAuthentication();
@@ -64,7 +65,7 @@ function renderMyMinecraftServers(){
 		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + online + "</span></td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap'><a href='editor.html?type=minecraft&id=" + servers[i].id + "' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a>";
 		data += "<td class='px-4 py-4 whitespace-nowrap'><a id='minecraft-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</a>";
-		data += "<input id='minecraft-uploadBanner-" + servers[i].id + "' type='file' accept='image/gif' class='hidden'";
+		data += "<input id='minecraft-uploadBanner-" + servers[i].id + "' type='file' accept='image/gif, image/png, image/jpeg' class='hidden'";
 		data += "</tr>";
 	}
 
@@ -85,7 +86,7 @@ function renderMyMinecraftServers(){
 			let fileInput = document.getElementById('minecraft-uploadBanner-' + servers[i].id);
 			let file = fileInput.files[0];
 
-			if(file.type !== 'image/gif'){
+			if(!Validate.bannerType(file.type)){
 				fileInput.value = "";
 				Utils.changeDialog(1, Errors.get(1024));
 				Utils.show('dialog');
