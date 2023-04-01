@@ -40,8 +40,8 @@ function renderServer(serverData){
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${ip}</td></tr>`;
 	// Bedrock IP
 	if(serverData.bedrock_ip !== null && serverData.bedrock_port !== null){
-		let bedrock_ip = (serverData.bedrock_port !== 19132) ? serverData.bedrock_ip + ':' + serverData.bedrock_port : serverData.bedrock_ip;
-		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${bedrock_ip}</td></tr>`;
+		if(serverData.ip !== serverData.bedrock_ip || serverData.port !== 25565) tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.bedrock_ip}</td></tr>`;
+		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock Port</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.bedrock_port}</td></tr>`;
 	}
 	// Status
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Status</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span></td></tr>`;
