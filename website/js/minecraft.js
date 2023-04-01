@@ -195,7 +195,7 @@ function renderServerVote(id){
 async function renderServerStats(id){
 	document.getElementById('description').innerHTML = "Loading data...";
 
-	let date = new Date().toISOString().split('T')[0];
+	let date = Utils.fancyDate(new Date()).split(' ')[0];
 	let stats = await Utils.fetchServerStats('minecraft', id);
 
 	Chart.defaults.color = '#a7abb3';
@@ -217,16 +217,18 @@ async function renderServerStats(id){
 	let sortedUptimes = stats.uptime.sort((p1, p2) => (p1.hour > p2.hour) ? 1 : (p1.hour < p2.hour) ? -1 : 0);
 
 	sortedPlayers.forEach(value => {
-		if(value.hour.split(' ')[0] !== date) return;
-		playerDates.push(value.hour.split(' ')[1]);
+		let date2 = Utils.fancyDate(new Date(value.hour + 'Z')).split(' ');
+		if(date2[0] !== date) return;
+		playerDates.push(date2[1]);
 		players.push(Math.round(value.avg));
 		minPlayers.push(value.min);
 		maxPlayers.push(value.max);
 	});
 
 	sortedUptimes.forEach(value => {
-		if(value.hour.split(' ')[0] !== date) return;
-		uptimeDates.push(value.hour.split(' ')[1]);
+		let date2 = Utils.fancyDate(new Date(value.hour + 'Z')).split(' ');
+		if(date2[0] !== date) return;
+		uptimeDates.push(date2[1]);
 		uptimes.push(value.uptime);
 	});
 
@@ -312,16 +314,18 @@ async function renderServerStats(id){
 		uptimeDates = [];
 
 		sortedPlayers.forEach(value => {
-			if(value.hour.split(' ')[0] !== date) return;
-			playerDates.push(value.hour.split(' ')[1]);
+			let date2 = Utils.fancyDate(new Date(value.hour + 'Z')).split(' ');
+			if(date2[0] !== date) return;
+			playerDates.push(date2[1]);
 			players.push(Math.round(value.avg));
 			minPlayers.push(value.min);
 			maxPlayers.push(value.max);
 		});
 
 		sortedUptimes.forEach(value => {
-			if(value.hour.split(' ')[0] !== date) return;
-			uptimeDates.push(value.hour.split(' ')[1]);
+			let date2 = Utils.fancyDate(new Date(value.hour + 'Z')).split(' ');
+			if(date2[0] !== date) return;
+			uptimeDates.push(date2[1]);
 			uptimes.push(value.uptime);
 		});
 
