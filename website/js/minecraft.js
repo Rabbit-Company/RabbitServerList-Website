@@ -354,7 +354,7 @@ function renderServers(servers){
 
 		data += "<tr class='passwordsBorderColor'>";
 		data += "<td class='px-2 py-4 whitespace-nowrap md:px-4 hidden lg:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + (i + 1) + "</span></td>";
-		data += "<td class='tertiaryColor px-2 py-4 whitespace-nowrap md:px-4 hidden xl:table-cell'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
+		data += "<td class='tertiaryColor px-2 py-4 md:px-4 hidden xl:table-cell'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
 		data += `<td class='w-[468px] text-center px-2 py-4 whitespace-nowrap md:px-4 text-sm text-gray-500'>
 			<div class='hidden sm:block'>
 				<a href='?server=${servers[i].id}'>
