@@ -353,9 +353,9 @@ function renderServers(servers){
 		let categories = servers[i].categories.split(',');
 
 		data += "<tr class='passwordsBorderColor'>";
-		data += "<td class='px-2 py-4 whitespace-nowrap md:px-4 hidden lg:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + (i + 1) + "</span></td>";
-		data += "<td class='tertiaryColor px-2 py-4 md:px-4 hidden xl:table-cell'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
-		data += `<td class='w-[468px] text-center px-2 py-4 whitespace-nowrap md:px-4 text-sm text-gray-500'>
+		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + (i + 1) + "</span></td>";
+		data += "<td class='tertiaryColor px-4 py-4 hidden 2xl:table-cell'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
+		data += `<td class='sm:w-[500px] text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'>
 			<div class='hidden sm:block'>
 				<a href='?server=${servers[i].id}'>
 					<img class='rounded-t-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
@@ -366,23 +366,23 @@ function renderServers(servers){
 			</div>
 			<div class='sm:hidden'>
 				<a href='?server=${servers[i].id}'>
-					<img class='rounded-md w-full h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
+					<img class='rounded-md m-auto h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
 				</a>
 
 				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span>
 				<a href='?version=${servers[i].version}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].version}</span></a>
 				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].players} / ${servers[i].players_max}</span>
 				<br>
-				<span class='mt-2 w-full inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium ${online_color}'>
+				<span class='mt-2 w-full max-w-[468px] inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium ${online_color}'>
 					<a class='copyText cursor-pointer'>${ip}</a>
 				</span>
 			</div>
 		</td>`;
-		data += "<td class='px-2 py-4 md:px-4 hidden lg:table-cell'><div>";
+		data += "<td class='px-4 py-4 hidden lg:table-cell'><div>";
 		for(let j = 0; j < categories.length; j++) data += "<a href='?category=" + categories[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + categories[j] + "</span></a>";
-		data += "</div></td><td class='tertiaryColor px-2 py-4 md:px-4 whitespace-nowrap hidden sm:table-cell'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
-		data += "<td class='px-2 py-4 whitespace-nowrap md:px-4 hidden sm:table-cell'><a href='?version=" + servers[i].version + "'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].version + "</span></a></td>";
-		data += "<td class='px-2 py-4 whitespace-nowrap md:px-4 hidden sm:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + online + "</span></td>";
+		data += "</div></td><td class='tertiaryColor py-4 px-4 whitespace-nowrap hidden sm:table-cell'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
+		data += "<td class='px-4 py-4 whitespace-nowrap hidden md:table-cell'><a href='?version=" + servers[i].version + "'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].version + "</span></a></td>";
+		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + online + "</span></td>";
 		data += "</tr>";
 	}
 
