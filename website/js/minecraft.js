@@ -351,6 +351,7 @@ function renderServers(servers){
 		let online = (servers[i].online === servers[i].updated) ? "Online" : "Offline";
 		let online_color = (servers[i].online === servers[i].updated) ? "greenBadge" : "redBadge";
 		let categories = servers[i].categories.split(',');
+		let lazyLoading = (i >= 10) ? "loading='lazy'" : "";
 
 		data += "<tr class='passwordsBorderColor'>";
 		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + (i + 1) + "</span></td>";
@@ -358,7 +359,7 @@ function renderServers(servers){
 		data += `<td class='sm:w-[500px] text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'>
 			<div class='hidden sm:block'>
 				<a href='?server=${servers[i].id}'>
-					<img class='rounded-t-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
+					<img class='rounded-t-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' ${lazyLoading} />
 				</a>
 				<span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium ${online_color}'>
 					<a class='copyText cursor-pointer'>${ip}</a>
@@ -366,7 +367,7 @@ function renderServers(servers){
 			</div>
 			<div class='sm:hidden'>
 				<a href='?server=${servers[i].id}'>
-					<img class='rounded-md m-auto h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
+					<img class='rounded-md m-auto h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' ${lazyLoading} />
 				</a>
 
 				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span>
