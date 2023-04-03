@@ -50,26 +50,70 @@ function renderMyMinecraftServers(){
 	let servers = JSON.parse(localStorage.getItem('my-servers-minecraft'));
 
 	for(let i = 0; i < servers.length; i++){
+		let ip = (servers[i].port !== 25565) ? servers[i].ip + ':' + servers[i].port : servers[i].ip;
 		let online = (servers[i].online === servers[i].updated) ? "Online" : "Offline";
 		let online_color = (servers[i].online === servers[i].updated) ? "greenBadge" : "redBadge";
 		let categories = servers[i].categories.split(',');
 
-		data += "<tr>";
-		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + servers[i].id + "</span></td>";
-		data += "<td class='tertiaryColor px-4 py-4 whitespace-nowrap'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
-		data += "<td class='text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'><a id='minecraft-banner-" + servers[i].id + "' class='cursor-pointer'><img class='rounded-t-md w-full' src='https://api.rabbitserverlist.com/v1/server/minecraft/" + servers[i].id + "/banner' /></a><span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium " + online_color + "'><a href='#'>" + servers[i].ip + "</a></span></td>";
-		data += "<td class='px-4 py-4'><div>";
-		for(let j = 0; j < categories.length; j++) data += "<span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + categories[j] + "</span>";
-		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].version + "</span></td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + online + "</span></td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap'><a href='editor.html?type=minecraft&id=" + servers[i].id + "' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a>";
-		data += "<td class='px-4 py-4 whitespace-nowrap'><a id='minecraft-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</a>";
+		data += "<tr class='passwordsBorderColor'>";
+		data += "<td class='px-4 py-4 whitespace-nowarp hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + servers[i].id + "</span></td>";
+		data += "<td class='tertiaryColor px-4 py-4 hidden 2xl:table-cell'><a href='/?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
+		data += `<td class='sm:w-[500px] text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'>
+			<div class='hidden sm:block'>
+				<a id='minecraft-banner-${servers[i].id}' class='cursor-pointer'>
+					<img class='rounded-t-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
+				</a>
+				<span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium ${online_color}'>
+					<a class='copyText cursor-pointer'>${ip}</a>
+				</span>
+			</div>
+			<div class='sm:hidden'>
+				<a href='/?server=${servers[i].id}'>
+					<img class='rounded-md m-auto h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
+				</a>
+
+				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span>
+				<a href='/?version=${servers[i].version}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].version}</span></a>
+				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].players} / ${servers[i].players_max}</span>
+				<br>
+				<span class='mt-2 w-full max-w-[468px] inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium ${online_color}'>
+					<a class='copyText cursor-pointer'>${ip}</a>
+				</span>
+			</div>
+		</td>`;
+		data += "<td class='px-4 py-4 hidden lg:table-cell'><div>";
+		for(let j = 0; j < categories.length; j++) data += "<a href='/?category=" + categories[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + categories[j] + "</span></a>";
+		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
+		data += "<td class='px-4 py-4 whitespace-nowrap hidden md:table-cell'><a href='editor.html?type=minecraft&id=" + servers[i].id + "' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a></td>";
+		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><a id='minecraft-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</a></td>";
 		data += "<input id='minecraft-uploadBanner-" + servers[i].id + "' type='file' accept='image/gif, image/png, image/jpeg' class='hidden'";
 		data += "</tr>";
 	}
 
 	document.getElementById("minecraft_table_data").innerHTML = data;
+
+	let copyElements = document.getElementsByClassName('copyText');
+	for(let i = 0; i < copyElements.length; i++){
+		copyElements[i].addEventListener('mouseover', () => {
+			let text = copyElements[i].innerText.replace(' (click to copy)', '');
+			copyElements[i].innerText = text + ' (click to copy)';
+		});
+
+		copyElements[i].addEventListener('mouseout', () => {
+			let text = copyElements[i].innerText.replace(' (click to copy)', '');
+			copyElements[i].innerText = text;
+		});
+
+		copyElements[i].addEventListener('click', () => {
+			let text = copyElements[i].innerText.replace(' (click to copy)', '');
+			if(text === 'Copied!') return;
+			Utils.copyToClipboard(text);
+			copyElements[i].innerText = "Copied!";
+			window.setTimeout(() => {
+				copyElements[i].innerText = text;
+			}, 1000);
+		});
+	}
 
 	for(let i = 0; i < servers.length; i++){
 
