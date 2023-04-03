@@ -120,7 +120,7 @@ function renderServerDescription(description){
 function renderServerVote(id){
 	document.getElementById('description').innerHTML = `
 		<div class="mt-6 mb-6 mx-auto max-w-[468px] text-center">
-			<form id="vote-form w-full">
+			<form id="vote-form" class="w-full">
 				<b>YOU CAN VOTE ONCE A DAY!</b>
 				<img class='rounded-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${id}/banner' />
 
