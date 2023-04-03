@@ -82,7 +82,10 @@ function renderMyMinecraftServers(){
 			</div>
 		</td>`;
 		data += "<td class='px-4 py-4 hidden lg:table-cell'><div>";
-		for(let j = 0; j < categories.length; j++) data += "<a href='/?category=" + categories[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + categories[j] + "</span></a>";
+		for(let j = 0; j < categories.length; j++){
+			if(j >= 5) break;
+			data += "<a href='/?category=" + categories[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + categories[j] + "</span></a>";
+		}
 		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap hidden md:table-cell'><a href='editor.html?type=minecraft&id=" + servers[i].id + "' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a></td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><a id='minecraft-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</a></td>";
