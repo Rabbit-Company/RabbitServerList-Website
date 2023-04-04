@@ -209,7 +209,7 @@ function renderServerVote(id){
 		let html = `<tr><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>TOP 10 VOTERS</td></tr>`;
 		for(let i = 0; i < usernames.length; i++){
 			if(i > 10) break;
-			html += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'><div class="flex items-center gap-x-4"><img class="h-10 w-10 rounded-md" src="https://mc-heads.net/avatar/${usernames[i]}/40" alt="${usernames[i]}"><div class="secondaryColor">${usernames[i]}</div></div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${data[usernames[i]]}</td></tr>`;
+			html += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'><div class="flex items-center gap-x-4"><img class="h-10 w-10 rounded-md" width="40" height="40" src="https://mc-heads.net/avatar/${usernames[i]}/40" alt="${usernames[i]}"><div class="secondaryColor">${usernames[i]}</div></div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${data[usernames[i]]}</td></tr>`;
 		}
 
 		document.getElementById('server_table_data').innerHTML = html;
