@@ -54,7 +54,7 @@ function login(){
 		localStorage.setItem('username', username);
 		localStorage.setItem('token', response.token);
 		localStorage.setItem('logged', new Date().toISOString());
-		window.location.href = "index.html";
+		window.location.href = "panel.html";
 	}).catch(() => {
 		Utils.changeDialog(1, Errors.get(1009));
 		Utils.show('dialog');

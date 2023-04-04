@@ -44,7 +44,7 @@ export default class Utils{
 
 	static requireAuthentication(){
 		let logged = localStorage.getItem('logged');
-		if(logged === null) window.location.href = 'index.html';
+		if(logged === null) window.location.href = 'login.html';
 	}
 
 	static async fetchServer(type, id){
