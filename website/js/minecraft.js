@@ -18,14 +18,7 @@ let version = (parms.get('version') !== null && Validate.minecraftServerVersion(
 let category = (parms.get('category') !== null && Validate.minecraftServerCategoryList.includes(parms.get('category'))) ? parms.get('category') : null;
 let country = (parms.get('country') !== null && Validate.country(parms.get('country'))) ? parms.get('country') : null;
 
-function renderServer(serverData){
-	document.getElementById('servers').className = "hidden";
-	document.getElementById('server').className = "";
-
-	document.getElementById('server-title').innerText = serverData.name;
-
-	renderServerDescription(serverData.description);
-
+function renderServerTableStats(serverData){
 	let tableHtml = "";
 
 	let online = (serverData.online === serverData.updated) ? "Online" : "Offline";
@@ -79,7 +72,18 @@ function renderServer(serverData){
 	// Categories
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4'>Categories</td><td class='tertiaryColor px-4 py-4'>${categoryBadges}</td></tr>`;
 
-	document.getElementById('server_table_data').innerHTML = tableHtml;
+	return tableHtml;
+}
+
+function renderServer(serverData){
+	document.getElementById('servers').className = "hidden";
+	document.getElementById('server').className = "";
+
+	document.getElementById('server-title').innerText = serverData.name;
+
+	renderServerDescription(serverData.description);
+
+	document.getElementById('server_table_data').innerHTML = renderServerTableStats(serverData);
 
 	let copyElements = document.getElementsByClassName('copyText');
 	for(let i = 0; i < copyElements.length; i++){
@@ -95,6 +99,7 @@ function renderServer(serverData){
 	}
 
 	document.getElementById('tabs-1-tab-1').addEventListener('click', () => {
+		document.getElementById('server_table_data').innerHTML = renderServerTableStats(serverData);
 		renderServerDescription(serverData.description);
 	});
 
@@ -103,6 +108,7 @@ function renderServer(serverData){
 	});
 
 	document.getElementById('tabs-1-tab-3').addEventListener('click', () => {
+		document.getElementById('server_table_data').innerHTML = renderServerTableStats(serverData);
 		renderServerStats(serverData.id);
 	});
 }
@@ -190,6 +196,24 @@ function renderServerVote(id){
 		});
 
 	});
+
+	fetch(`https://api.rabbitserverlist.com/v1/server/minecraft/${id}/vote`).then(result => {
+		return result.json();
+	}).then(response => {
+		if(response.error !== 0) return;
+		if(response.data.length === 0) return;
+
+		let data = response.data;
+		let usernames = Object.keys(data).sort((u1,u2) => data[u1] - data[u2]);
+
+		let html = `<tr><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>TOP 10 VOTERS</td></tr>`;
+		for(let i = 0; i < usernames.length; i++){
+			if(i > 10) break;
+			html += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'><div class="flex items-center gap-x-4"><img class="h-10 w-10 rounded-md" src="https://mc-heads.net/avatar/${usernames[i]}/40" alt="${usernames[i]}"><div class="secondaryColor">${usernames[i]}</div></div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${data[usernames[i]]}</td></tr>`;
+		}
+
+		document.getElementById('server_table_data').innerHTML = html;
+	}).catch(() => {});
 }
 
 async function renderServerStats(id){
