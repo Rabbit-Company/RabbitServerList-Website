@@ -386,7 +386,7 @@ function renderServers(servers){
 					<img class='rounded-t-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' ${lazyLoading} />
 				</a>
 				<span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium ${online_color}'>
-					<a class='copyText cursor-pointer'>${ip}</a>
+					<span class='copyText cursor-pointer'>${ip}</span>
 				</span>
 			</div>
 			<div class='sm:hidden'>
@@ -399,7 +399,7 @@ function renderServers(servers){
 				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].players} / ${servers[i].players_max}</span>
 				<br>
 				<span class='mt-2 w-full max-w-[468px] inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium ${online_color}'>
-					<a class='copyText cursor-pointer'>${ip}</a>
+					<span class='copyText cursor-pointer'>${ip}</span>
 				</span>
 			</div>
 		</td>`;
