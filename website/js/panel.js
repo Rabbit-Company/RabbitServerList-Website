@@ -64,7 +64,7 @@ function renderMyMinecraftServers(){
 					<img class='rounded-t-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' />
 				</a>
 				<span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium ${online_color}'>
-					<a class='copyText cursor-pointer'>${ip}</a>
+					<span class='copyText cursor-pointer'>${ip}</span>
 				</span>
 			</div>
 			<div class='sm:hidden'>
@@ -77,7 +77,7 @@ function renderMyMinecraftServers(){
 				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].players} / ${servers[i].players_max}</span>
 				<br>
 				<span class='mt-2 w-full max-w-[468px] inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium ${online_color}'>
-					<a class='copyText cursor-pointer'>${ip}</a>
+					<span class='copyText cursor-pointer'>${ip}</span>
 				</span>
 			</div>
 		</td>`;
@@ -88,7 +88,7 @@ function renderMyMinecraftServers(){
 		}
 		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap hidden md:table-cell'><a href='editor.html?type=minecraft&id=" + servers[i].id + "' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a></td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><a id='minecraft-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</a></td>";
+		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span id='minecraft-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</span></td>";
 		data += "<input id='minecraft-uploadBanner-" + servers[i].id + "' type='file' accept='image/gif, image/png, image/jpeg' class='hidden'";
 		data += "</tr>";
 	}
