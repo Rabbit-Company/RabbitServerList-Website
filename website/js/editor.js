@@ -338,6 +338,12 @@ if(type === 'minecraft'){
 	}
 }else if(type === 'discord'){
 	Utils.hide('categoriesSection');
+
+	document.getElementById("server_keywords").addEventListener("input", () => {
+		let keywords = document.getElementById("server_keywords").value;
+		keywords = keywords.replaceAll(' ', ',');
+		document.getElementById("server_keywords").value = keywords.toLowerCase();
+	});
 }
 document.getElementById('categories').innerHTML = html;
 
