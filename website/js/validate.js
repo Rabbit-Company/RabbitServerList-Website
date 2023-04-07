@@ -79,7 +79,8 @@ export default class Validate{
 	}
 
 	static keywords(keywords){
-		if(typeof(keywords) !== 'object') return false;
+		if(typeof(keywords) !== 'string') return false;
+		keywords = keywords.split(',');
 		if(!(keywords.length >= 1 && keywords.length <= 10)) return false;
 		return true;
 	}

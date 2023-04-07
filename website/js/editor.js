@@ -378,6 +378,10 @@ function addServer(){
 		data['categories'].push(categoryInputs[i].value);
 	};
 
+	if(type === 'discord'){
+		data['keywords'] = document.getElementById('server_keywords').value.split(',');
+	}
+
 	data['description'] = document.getElementById('description').value;
 
 	if(type === 'minecraft' && !Validate.minecraftServerCategory(data['categories'])){
