@@ -41,6 +41,7 @@ export default class Errors{
 		1036: 'Invalid invite link',
 		1037: 'Invite link can not have an expiration date',
 		1038: 'You need to choose between 1 and 10 keywords',
+		1039: 'Server category is invalid.',
 		3001: 'You have already voted today.',
 		3002: 'You have already voted today.',
 		9999: 'Your do not have permission to perform this action.'

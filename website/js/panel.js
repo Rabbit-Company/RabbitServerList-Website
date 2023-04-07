@@ -220,26 +220,34 @@ function renderMyDiscordServers(){
 		data += `<td class='sm:w-[96px] text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'>
 			<div class='hidden sm:block'>
 				<a id='minecraft-banner-${servers[i].id}' class='cursor-pointer'>
-					<img class='rounded-t-md w-[96px]' width="96" height="96" src='https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}' alt='${servers[i].name}' />
+					<img class='rounded-full primaryBackgroundColor w-[96px]' width="96" height="96" src='https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}' alt='${servers[i].name}' />
 				</a>
 			</div>
 			<div class='sm:hidden'>
 				<a href='discord.html?server=${servers[i].id}'>
-					<img class='rounded-md m-auto w-[96px]' width="96" height="96" src='https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}' alt='${servers[i].name}' />
+					<img class='rounded-full primaryBackgroundColor m-auto w-[96px]' width="96" height="96" src='https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}' alt='${servers[i].name}' />
 				</a>
 
-				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium greenBadge'>Online</span>
-				<a href='discord.html?version=${servers[i].version}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].version}</span></a>
-				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].members} / ${servers[i].members_total}</span>
+				<h2 class='tertiaryColor mt-2 text-lg'>${servers[i].name}</h2>
+
+				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium greenBadge'>${servers[i].members}</span>
+				<a href='discord.html?version=${keywords[0]}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium grayBadge'>${servers[i].category}</span></a>
+				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].members_total}</span>
+				<br>
+				<span class='mt-2 w-full max-w-[468px] inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium greenBadge'>
+					<span class='copyText cursor-pointer'>https://discord.gg/${servers[i].invite_code}</span>
+				</span>
 			</div>
 		</td>`;
 		data += "<td class='tertiaryColor px-4 py-4 hidden sm:table-cell'><a href='discord.html?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
+		data += "<td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium grayBadge'>" + servers[i].category + "</span></td>";
 		data += "<td class='px-4 py-4 hidden lg:table-cell'><div>";
 		for(let j = 0; j < keywords.length; j++){
 			if(j >= 10) break;
 			data += "<a href='discord.html?category=" + keywords[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + keywords[j] + "</span></a>";
 		}
-		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'>" + servers[i].members + " / " + servers[i].members_total + "</td>";
+		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium greenBadge'>" + servers[i].members + "</span></td>";
+		data += "<td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].members_total + "</span></td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap hidden md:table-cell'><a href='editor.html?type=discord&id=" + servers[i].id + "' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a></td>";
 		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span id='discord-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</span></td>";
 		data += "</tr>";
