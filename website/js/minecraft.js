@@ -169,7 +169,7 @@ function renderServerVote(id){
 		headers.set('Content-Type', 'application/json');
 
 		let data = JSON.stringify({ "username": username, "turnstile": turnstile });
-		fetch('https://api.rabbitserverlist.com/v2/server/minecraft/' + id + '/vote', {
+		fetch('https://api.rabbitserverlist.com/v1/server/minecraft/' + id + '/vote', {
 			method: 'POST',
 			headers: headers,
 			body: data
