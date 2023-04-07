@@ -246,4 +246,11 @@ function renderMyDiscordServers(){
 	}
 
 	document.getElementById("discord_table_data").innerHTML = data;
+
+	for(let i = 0; i < servers.length; i++){
+		document.getElementById('discord-delete-' + servers[i].id).addEventListener('click', () => {
+			Utils.changeDialog(7, { type: 'discord', id: servers[i].id });
+			Utils.show('dialog');
+		});
+	}
 }
