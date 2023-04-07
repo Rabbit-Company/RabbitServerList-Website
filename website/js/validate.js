@@ -38,6 +38,14 @@ export default class Validate{
 		return isInteger && isPositive;
 	}
 
+	static snowflake(snowflake){
+		try{
+			return BigInt(snowflake).toString() === snowflake;
+		}catch{
+			return false;
+		}
+	}
+
 	static URL(url){
 		try{
 			new URL(url);
@@ -68,6 +76,12 @@ export default class Validate{
 			if(video.startsWith(validLinks[i])) return true;
 		}
 		return false;
+	}
+
+	static keywords(keywords){
+		if(typeof(keywords) !== 'object') return false;
+		if(!(keywords.length >= 1 && keywords.length <= 10)) return false;
+		return true;
 	}
 
 	static ip(ip){
@@ -121,6 +135,11 @@ export default class Validate{
 		if(typeof(token) !== 'string') return false;
 		if(!(token.length >= 4 && token.length <= 40)) return false;
 		return true;
+	}
+
+	static discordInviteCode(code){
+		if(typeof(code) !== 'string') return false;
+		return /^([a-zA-Z0-9]{3,29})$/.test(code);
 	}
 
 }
