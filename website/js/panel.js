@@ -236,7 +236,7 @@ function renderMyDiscordServers(){
 		data += "<td class='tertiaryColor px-4 py-4 hidden sm:table-cell'><a href='discord.html?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
 		data += "<td class='px-4 py-4 hidden lg:table-cell'><div>";
 		for(let j = 0; j < keywords.length; j++){
-			if(j >= 5) break;
+			if(j >= 10) break;
 			data += "<a href='discord.html?category=" + keywords[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + keywords[j] + "</span></a>";
 		}
 		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'>" + servers[i].members + " / " + servers[i].members_total + "</td>";
