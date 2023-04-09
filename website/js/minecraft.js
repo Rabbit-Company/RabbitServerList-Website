@@ -204,11 +204,11 @@ function renderServerVote(id){
 		if(response.data.length === 0) return;
 
 		let data = response.data;
-		let usernames = Object.keys(data).sort((u1,u2) => data[u1] - data[u2]);
+		let usernames = Object.keys(data).sort((u1,u2) => data[u2] - data[u1]);
 
 		let html = `<tr><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>TOP 10 VOTERS</td></tr>`;
 		for(let i = 0; i < usernames.length; i++){
-			if(i > 10) break;
+			if(i >= 10) break;
 			html += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'><div class="flex items-center gap-x-4"><img class="h-10 w-10 rounded-md" width="40" height="40" src="https://mc-heads.net/avatar/${usernames[i]}/40" alt="${usernames[i]}"><div class="secondaryColor">${usernames[i]}</div></div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${data[usernames[i]]}</td></tr>`;
 		}
 
