@@ -221,7 +221,7 @@ function renderMyDiscordServers(){
 		}
 
 		data += `<li class="secondaryBackgroundColor col-span-1 flex flex-col divide-y passwordsBorderColor rounded-lg text-center shadow bg-[url('https://cdn.discordapp.com/banners/844641040006774804/09d7ad29375ad31b53804d9c3c1ad3b5')] bg-no-repeat bg-center bg-cover">
-		<div class="flex flex-1 flex-col p-8 bg-gradient-to-t from-[#161b22] via-[#161b22]">
+		<div class="flex flex-1 flex-col p-8 bg-gradient-to-t from-[#161b22] via-[#1e252e]">
 			<img class="bg-gradient-to-b from-[#161b22] to-[#28313e] mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}">
 			<h3 class="mt-6 text-sm font-medium tertiaryColor">${servers[i].name}</h3>
 			<dl class="mt-1 flex flex-grow flex-col justify-between">
