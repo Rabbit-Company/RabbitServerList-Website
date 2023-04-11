@@ -18,6 +18,8 @@ export default class Utils{
 				if((new Date(logged).getTime() + 3_600_000) < new Date().getTime()){
 					localStorage.removeItem('token');
 					localStorage.removeItem('logged');
+					localStorage.removeItem('my-servers-minecraft');
+					localStorage.removeItem('my-servers-discord');
 					location.reload();
 				}
 			}
@@ -35,11 +37,12 @@ export default class Utils{
 		}
 	}
 
-	static logout(){
+	static logout(reload = true){
 		localStorage.removeItem('token');
 		localStorage.removeItem('logged');
 		localStorage.removeItem('my-servers-minecraft');
-		location.reload();
+		localStorage.removeItem('my-servers-discord');
+		if(reload) location.reload();
 	}
 
 	static requireAuthentication(){

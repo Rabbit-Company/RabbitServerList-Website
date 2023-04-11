@@ -217,11 +217,11 @@ function renderMyDiscordServers(){
 		let keywords = servers[i].keywords.split(',');
 		let keywordsHTML = "";
 		for(let j = 0; j < keywords.length; j++){
-			if(j >= 10) break;
+			if(j >= 5) break;
 			keywordsHTML += "<a href='discord.html?q=" + keywords[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + keywords[j] + "</span></a>";
 		}
 
-		data += `<li class="secondaryBackgroundColor col-span-1 flex flex-col divide-y passwordsBorderColor rounded-lg text-center shadow bg-[url('https://cdn.discordapp.com/banners/844641040006774804/09d7ad29375ad31b53804d9c3c1ad3b5')] bg-no-repeat bg-center bg-cover">
+		data += `<li id="discord-server-${servers[i].id}" class="secondaryBackgroundColor col-span-1 flex flex-col divide-y passwordsBorderColor rounded-lg text-center shadow bg-no-repeat bg-center bg-cover">
 		<div class="flex flex-1 flex-col p-8 bg-gradient-to-t from-[#161b22] via-[#1e252e]">
 			<img id="discord-server-${servers[i].id}-logo" crossorigin="anonymous" class="bg-gradient-to-b from-[#161b22] to-[#28313e] border tertiaryBorderColor mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}">
 			<h3 class="mt-6 text-sm font-medium tertiaryColor">${servers[i].name}</h3>
@@ -275,6 +275,11 @@ function renderMyDiscordServers(){
 
 	const colorThief = new ColorThief();
 	for(let i = 0; i < servers.length; i++){
+
+		if(servers[i].banner !== null){
+			document.getElementById('discord-server-' + servers[i].id).style = `background-image: url('https://cdn.discordapp.com/banners/${servers[i].guild_id}/${servers[i].banner}');`;
+		}
+
 		/*
 		document.getElementById('discord-delete-' + servers[i].id).addEventListener('click', () => {
 			Utils.changeDialog(7, { type: 'discord', id: servers[i].id });
