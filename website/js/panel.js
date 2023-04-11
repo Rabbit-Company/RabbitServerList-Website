@@ -214,51 +214,69 @@ function renderMyDiscordServers(){
 
 	for(let i = 0; i < servers.length; i++){
 		let keywords = servers[i].keywords.split(',');
-
-		data += "<tr class='passwordsBorderColor'>";
-		data += "<td class='px-4 py-4 whitespace-nowarp hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium greenBadge'>" + servers[i].id + "</span></td>";
-		data += `<td class='sm:w-[96px] text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'>
-			<div class='hidden sm:block'>
-				<a id='minecraft-banner-${servers[i].id}' class='cursor-pointer'>
-					<img class='rounded-full primaryBackgroundColor w-[96px]' width="96" height="96" src='https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}' alt='${servers[i].name}' />
-				</a>
-			</div>
-			<div class='sm:hidden'>
-				<a href='discord.html?server=${servers[i].id}'>
-					<img class='rounded-full primaryBackgroundColor m-auto w-[96px]' width="96" height="96" src='https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}' alt='${servers[i].name}' />
-				</a>
-
-				<h2 class='tertiaryColor mt-2 text-lg'>${servers[i].name}</h2>
-
-				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium greenBadge'>${servers[i].members}</span>
-				<a href='discord.html?version=${keywords[0]}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium grayBadge'>${servers[i].category}</span></a>
-				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].members_total}</span>
-				<br>
-				<span class='mt-2 w-full max-w-[468px] inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium greenBadge'>
-					<span class='copyText cursor-pointer'>https://discord.gg/${servers[i].invite_code}</span>
-				</span>
-			</div>
-		</td>`;
-		data += "<td class='tertiaryColor px-4 py-4 hidden sm:table-cell'><a href='discord.html?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
-		data += "<td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium grayBadge'>" + servers[i].category + "</span></td>";
-		data += "<td class='px-4 py-4 hidden lg:table-cell'><div>";
+		let keywordsHTML = "";
 		for(let j = 0; j < keywords.length; j++){
 			if(j >= 10) break;
-			data += "<a href='discord.html?category=" + keywords[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + keywords[j] + "</span></a>";
+			keywordsHTML += "<a href='discord.html?q=" + keywords[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + keywords[j] + "</span></a>";
 		}
-		data += "</div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium greenBadge'>" + servers[i].members + "</span></td>";
-		data += "<td class='tertiaryColor px-4 py-4 whitespace-nowrap hidden sm:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].members_total + "</span></td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap hidden md:table-cell'><a href='editor.html?type=discord&id=" + servers[i].id + "' class='primaryButton px-3 py-2 rounded-md text-sm font-medium'>Edit</a></td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span id='discord-delete-" + servers[i].id + "' class='dangerButton cursor-pointer px-3 py-2 rounded-md text-sm font-medium'>Delete</span></td>";
-		data += "</tr>";
+
+		data += `<li class="secondaryBackgroundColor col-span-1 flex flex-col divide-y passwordsBorderColor rounded-lg text-center shadow bg-[url('https://cdn.discordapp.com/banners/844641040006774804/09d7ad29375ad31b53804d9c3c1ad3b5')] bg-no-repeat bg-center bg-cover">
+		<div class="flex flex-1 flex-col p-8 bg-gradient-to-t from-[#161b22] via-[#161b22]">
+			<img class="bg-gradient-to-b from-[#161b22] to-[#28313e] mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}">
+			<h3 class="mt-6 text-sm font-medium tertiaryColor">${servers[i].name}</h3>
+			<dl class="mt-1 flex flex-grow flex-col justify-between">
+				<dd class="mt-3">
+					<span class="inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium greenBadge">
+						<svg class="h-4 w-4" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+							<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+						</svg>
+						${servers[i].members} / ${servers[i].members_total}
+					</span>
+				</dd>
+				<dd>
+					${keywordsHTML}
+				</dd>
+			</dl>
+		</div>
+		<div class="secondaryBackgroundColor rounded-b-lg">
+			<div class="-mt-px flex">
+				<div class="flex w-0 flex-1">
+					<a href="discord.html?server=${servers[i].id}" class="tertiaryColor passwordsBorderColor relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border-t border-r border-transparent py-4 text-sm font-semibold">
+						<svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+							<path d="M12 9h.01"></path>
+							<path d="M11 12h1v4h1"></path>
+						</svg>
+						INFO
+					</a>
+				</div>
+				<div class="-ml-px flex w-0 flex-1">
+					<a href="https://discord.gg/${servers[i].invite_code}" target="_blank" class="tertiaryColor passwordsBorderColor relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border-t border-transparent py-4 text-sm font-semibold">
+						<svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
+							<path d="M14 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
+							<path d="M8.5 17c0 1 -1.356 3 -1.832 3c-1.429 0 -2.698 -1.667 -3.333 -3c-.635 -1.667 -.476 -5.833 1.428 -11.5c1.388 -1.015 2.782 -1.34 4.237 -1.5l.975 1.923a11.913 11.913 0 0 1 4.053 0l.972 -1.923c1.5 .16 3.043 .485 4.5 1.5c2 5.667 2.167 9.833 1.5 11.5c-.667 1.333 -2 3 -3.5 3c-.5 0 -2 -2 -2 -3"></path>
+							<path d="M7 16.5c3.5 1 6.5 1 10 0"></path>
+						</svg>
+						JOIN
+					</a>
+				</div>
+			</div>
+		</div>
+	</li>`;
 	}
 
 	document.getElementById("discord_table_data").innerHTML = data;
-
+	/*
 	for(let i = 0; i < servers.length; i++){
 		document.getElementById('discord-delete-' + servers[i].id).addEventListener('click', () => {
 			Utils.changeDialog(7, { type: 'discord', id: servers[i].id });
 			Utils.show('dialog');
 		});
 	}
+	*/
 }
