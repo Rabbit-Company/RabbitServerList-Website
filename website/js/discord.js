@@ -113,7 +113,13 @@ function renderServerVote(id, guild_id, icon){
 	document.getElementById("vote-form").addEventListener("submit", e => {
 		e.preventDefault();
 
-		let username = document.getElementById('discord-username').value;
+		if(localStorage.getItem('discord-oauth-code') === null){
+			Utils.changeDialog(2, 'Loading...');
+			Utils.show('dialog');
+			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=code&scope=identify";
+			return;
+		}
+
 		let turnstile = document.getElementsByName('cf-turnstile-response')[0].value;
 
 		Utils.changeDialog(2, 'Sending vote...');
