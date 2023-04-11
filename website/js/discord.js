@@ -113,14 +113,15 @@ function renderServerVote(id, guild_id, icon){
 	document.getElementById("vote-form").addEventListener("submit", e => {
 		e.preventDefault();
 
-		if(localStorage.getItem('discord-oauth-code') === null){
+		let code = localStorage.getItem('discord-oauth-code');
+		let turnstile = document.getElementsByName('cf-turnstile-response')[0].value;
+
+		if(code === null){
 			Utils.changeDialog(2, 'Loading...');
 			Utils.show('dialog');
 			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=code&scope=identify";
 			return;
 		}
-
-		let turnstile = document.getElementsByName('cf-turnstile-response')[0].value;
 
 		Utils.changeDialog(2, 'Sending vote...');
 		Utils.show('dialog');
@@ -128,7 +129,7 @@ function renderServerVote(id, guild_id, icon){
 		let headers = new Headers();
 		headers.set('Content-Type', 'application/json');
 
-		let data = JSON.stringify({ "username": username, "turnstile": turnstile });
+		let data = JSON.stringify({ "code": code, "turnstile": turnstile });
 		fetch('https://api.rabbitserverlist.com/v1/server/discord/' + id + '/vote', {
 			method: 'POST',
 			headers: headers,
