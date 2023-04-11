@@ -1,6 +1,7 @@
 import Utils from './utils.js';
 import Errors from './errors.js';
 import Validate from './validate.js';
+import ColorThief from 'colorthief';
 
 Utils.initialize();
 Utils.requireAuthentication();
@@ -222,7 +223,7 @@ function renderMyDiscordServers(){
 
 		data += `<li class="secondaryBackgroundColor col-span-1 flex flex-col divide-y passwordsBorderColor rounded-lg text-center shadow bg-[url('https://cdn.discordapp.com/banners/844641040006774804/09d7ad29375ad31b53804d9c3c1ad3b5')] bg-no-repeat bg-center bg-cover">
 		<div class="flex flex-1 flex-col p-8 bg-gradient-to-t from-[#161b22] via-[#1e252e]">
-			<img class="bg-gradient-to-b from-[#161b22] to-[#28313e] mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}">
+			<img id="discord-server-${servers[i].id}-logo" crossorigin="anonymous" class="bg-gradient-to-b from-[#161b22] to-[#28313e] border tertiaryBorderColor mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}">
 			<h3 class="mt-6 text-sm font-medium tertiaryColor">${servers[i].name}</h3>
 			<dl class="mt-1 flex flex-grow flex-col justify-between">
 				<dd class="mt-3">
@@ -271,12 +272,29 @@ function renderMyDiscordServers(){
 	}
 
 	document.getElementById("discord_table_data").innerHTML = data;
-	/*
+
+	const colorThief = new ColorThief();
 	for(let i = 0; i < servers.length; i++){
+		/*
 		document.getElementById('discord-delete-' + servers[i].id).addEventListener('click', () => {
 			Utils.changeDialog(7, { type: 'discord', id: servers[i].id });
 			Utils.show('dialog');
 		});
+		*/
+
+		let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
+		if(img.complete){
+			let colors = colorThief.getColor(img);
+			let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
+
+			img.style = `border-color: ${hex} !important;`;
+		}else{
+			img.addEventListener('load', () => {
+				let colors = colorThief.getColor(img);
+				let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
+
+				img.style = `border-color: ${hex} !important;`;
+			});
+		}
 	}
-	*/
 }

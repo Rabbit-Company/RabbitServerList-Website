@@ -114,6 +114,11 @@ export default class Utils{
 		return /^\+?[1-9][\d]*$/.test(s);
 	}
 
+	static rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+		const hex = x.toString(16);
+		return hex.length === 1 ? '0' + hex : hex;
+	}).join('');
+
 	static toggleMenu(){
 		if(document.getElementById("mobile-menu").className == 'hidden pt-2 pb-3 space-y-1'){
 			document.getElementById("mobile-menu").className = 'pt-2 pb-3 space-y-1';
