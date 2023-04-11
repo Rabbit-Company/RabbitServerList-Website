@@ -20,56 +20,25 @@ let query = parms.get('q');
 function renderServerTableStats(serverData){
 	let tableHtml = "";
 
-	let online = (serverData.online === serverData.updated) ? "Online" : "Offline";
-	let online_color = (serverData.online === serverData.updated) ? "greenBadge" : "redBadge";
-
-	let uptimeBadge = 'greenBadge';
-	if(serverData.uptime < 90) uptimeBadge = 'orangeBadge';
-	if(serverData.uptime < 80) uptimeBadge = 'redBadge';
-
-	// IP
-	let ip = (serverData.port !== 25565) ? serverData.ip + ':' + serverData.port : serverData.ip;
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${ip}</td></tr>`;
-	// Bedrock IP
-	if(serverData.bedrock_ip !== null && serverData.bedrock_port !== null){
-		if(serverData.ip !== serverData.bedrock_ip || serverData.port !== 25565) tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock IP</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.bedrock_ip}</td></tr>`;
-		tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Bedrock Port</td><td class='copyText cursor-pointer tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.bedrock_port}</td></tr>`;
-	}
-	// Status
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Status</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span></td></tr>`;
-	// Version
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Version</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><a href='?version=${serverData.version}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${serverData.version}</span></a></td></tr>`;
-	// Players
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Players</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.players} / ${serverData.players_max}</td></tr>`;
-	// Links
-	if(serverData.website || serverData.store || serverData.discord || serverData.twitter || serverData.trailer){
-		tableHtml += `<tr><td class='secondaryColor px-4 py-4'>Links</td><td class='tertiaryColor px-4 py-4'>`;
-		if(serverData.website) tableHtml += `<a href='${serverData.website}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Website</span></a>`;
-		if(serverData.store) tableHtml += `<a href='${serverData.store}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Store</span></a>`;
-		if(serverData.discord) tableHtml += `<a href='${serverData.discord}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Discord</span></a>`;
-		if(serverData.twitter) tableHtml += `<a href='${serverData.twitter}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Twitter</span></a>`;
-		if(serverData.trailer) tableHtml += `<a href='${serverData.trailer}' target='_blank'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>Trailer</span></a>`;
-		tableHtml += `</td></tr>`;
-	}
+	// Link
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Invite Code</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><a href='https://discord.gg/${serverData.invite_code}' target='_blank'>${serverData.invite_code}</a></td></tr>`;
+	// Members
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Members</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.members} / ${serverData.members_total}</td></tr>`;
 	// Owner
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Owner</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.owner}</td></tr>`;
-	// Location
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Location</td><td class='tertiaryColor px-4 py-4'><a href='?country=${serverData.country}'>${Validate.countryList[serverData.country]}</a></td></tr>`;
-	// Uptime
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Uptime</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${uptimeBadge}'>${serverData.uptime}%</span></td></tr>`;
 	// Last Check
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Last Check</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${Utils.durationBetween(new Date(serverData.updated), new Date())}</td></tr>`;
 	// Votes
 	tableHtml += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'>Votes</td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${serverData.votes}</td></tr>`;
 
-	let categoryBadges = "";
-	let categories = serverData.categories.split(',');
-	categories.forEach(category => {
-		categoryBadges += `<a href='?category=${category}'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>${category}</span></a>`;
+	let keywordsBadges = "";
+	let keywords = serverData.keywords.split(',');
+	keywords.forEach(keyword => {
+		keywordsBadges += `<a href='discord.html?q=${keyword}'><span class='inline-flex items-center px-2.5 py-0.5 m-0.5 rounded-md text-sm font-medium grayBadge'>${keyword}</span></a>`;
 	});
 
-	// Categories
-	tableHtml += `<tr><td class='secondaryColor px-4 py-4'>Categories</td><td class='tertiaryColor px-4 py-4'>${categoryBadges}</td></tr>`;
+	// Keywords
+	tableHtml += `<tr><td class='secondaryColor px-4 py-4'>Keywords</td><td class='tertiaryColor px-4 py-4'>${keywordsBadges}</td></tr>`;
 
 	return tableHtml;
 }
@@ -103,7 +72,7 @@ function renderServer(serverData){
 	});
 
 	document.getElementById('tabs-1-tab-2').addEventListener('click', () => {
-		renderServerVote(serverData.id);
+		renderServerVote(serverData.id, serverData.guild_id, serverData.icon);
 	});
 
 	document.getElementById('tabs-1-tab-3').addEventListener('click', () => {
@@ -122,26 +91,12 @@ function renderServerDescription(description){
 	document.getElementById('description').innerHTML = html;
 }
 
-function renderServerVote(id){
+function renderServerVote(id, guild_id, icon){
 	document.getElementById('description').innerHTML = `
 		<div class="mt-6 mb-6 mx-auto max-w-[468px] text-center">
 			<form id="vote-form" class="w-full">
 				<b>YOU CAN VOTE ONCE A DAY!</b>
-				<img class='rounded-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/discord/${id}/banner' />
-
-				<div class="mt-3">
-					<label for="discord-username" class="sr-only">Minecraft Username</label>
-					<div class="relative rounded-md shadow-sm">
-						<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 secondaryColor" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-								<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-								<circle cx="12" cy="7" r="4"></circle>
-								<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-							</svg>
-						</div>
-						<input id="discord-username" name="discord-username" type="text" autocomplete="discord-username" required class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-md block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="Minecraft Username">
-					</div>
-				</div>
+				<img class='rounded-md w-[96px] h-[96px]' width="96" height="96" src='https://cdn.discordapp.com/icons/${guild_id}/${icon}' />
 
 				<div id="cf-turnstile" class="cf-turnstile mt-3" data-sitekey="0x4AAAAAAADkDTSJrhqVLN33" data-action="vote" data-theme="dark" data-language="en" data-callback="onloadTurnstileCallback"></div>
 
