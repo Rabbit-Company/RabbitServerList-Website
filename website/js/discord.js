@@ -14,7 +14,8 @@ let page = (parms.get('page') !== null && Utils.isPositiveInteger(parms.get('pag
 if(page > 50) page = 50;
 
 let server = (parms.get('server') !== null && Utils.isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
-let category = parms.get('q') !== null;
+let category = (parms.get('category') !== null && Validate.discordServerCategory(parms.get('category'))) ? parms.get('category') : null;
+let query = parms.get('q');
 
 function renderServerTableStats(serverData){
 	let tableHtml = "";
@@ -126,10 +127,10 @@ function renderServerVote(id){
 		<div class="mt-6 mb-6 mx-auto max-w-[468px] text-center">
 			<form id="vote-form" class="w-full">
 				<b>YOU CAN VOTE ONCE A DAY!</b>
-				<img class='rounded-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${id}/banner' />
+				<img class='rounded-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/discord/${id}/banner' />
 
 				<div class="mt-3">
-					<label for="minecraft-username" class="sr-only">Minecraft Username</label>
+					<label for="discord-username" class="sr-only">Minecraft Username</label>
 					<div class="relative rounded-md shadow-sm">
 						<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 secondaryColor" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -138,7 +139,7 @@ function renderServerVote(id){
 								<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
 							</svg>
 						</div>
-						<input id="minecraft-username" name="minecraft-username" type="text" autocomplete="minecraft-username" required class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-md block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="Minecraft Username">
+						<input id="discord-username" name="discord-username" type="text" autocomplete="discord-username" required class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-md block w-full pl-10 px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="Minecraft Username">
 					</div>
 				</div>
 
@@ -157,7 +158,7 @@ function renderServerVote(id){
 	document.getElementById("vote-form").addEventListener("submit", e => {
 		e.preventDefault();
 
-		let username = document.getElementById('minecraft-username').value;
+		let username = document.getElementById('discord-username').value;
 		let turnstile = document.getElementsByName('cf-turnstile-response')[0].value;
 
 		Utils.changeDialog(2, 'Sending vote...');
@@ -167,7 +168,7 @@ function renderServerVote(id){
 		headers.set('Content-Type', 'application/json');
 
 		let data = JSON.stringify({ "username": username, "turnstile": turnstile });
-		fetch('https://api.rabbitserverlist.com/v1/server/minecraft/' + id + '/vote', {
+		fetch('https://api.rabbitserverlist.com/v1/server/discord/' + id + '/vote', {
 			method: 'POST',
 			headers: headers,
 			body: data
@@ -195,7 +196,7 @@ function renderServerVote(id){
 
 	});
 
-	fetch(`https://api.rabbitserverlist.com/v1/server/minecraft/${id}/vote`).then(result => {
+	fetch(`https://api.rabbitserverlist.com/v1/server/discord/${id}/vote`).then(result => {
 		return result.json();
 	}).then(response => {
 		if(response.error !== 0) return;
@@ -218,7 +219,7 @@ async function renderServerStats(id){
 	document.getElementById('description').innerHTML = "Loading data...";
 
 	let date = Utils.fancyDate(new Date()).split(' ')[0];
-	let stats = await Utils.fetchServerStats('minecraft', id);
+	let stats = await Utils.fetchServerStats('discord', id);
 
 	Chart.defaults.color = '#a7abb3';
 
@@ -369,50 +370,64 @@ function renderServers(servers){
 	let data = "";
 
 	for(let i = 0; i < servers.length; i++){
-		let ip = (servers[i].port !== 25565) ? servers[i].ip + ':' + servers[i].port : servers[i].ip;
-		let online = (servers[i].online === servers[i].updated) ? "Online" : "Offline";
-		let online_color = (servers[i].online === servers[i].updated) ? "greenBadge" : "redBadge";
-		let categories = servers[i].categories.split(',');
-		let lazyLoading = (i >= 10) ? "loading='lazy'" : "";
-
-		data += "<tr class='passwordsBorderColor'>";
-		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + (i + 1) + "</span></td>";
-		data += "<td class='tertiaryColor px-4 py-4 hidden 2xl:table-cell'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
-		data += `<td class='sm:w-[500px] text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'>
-			<div class='hidden sm:block'>
-				<a href='?server=${servers[i].id}'>
-					<img class='rounded-t-md w-[468px] h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' ${lazyLoading} />
-				</a>
-				<span class='w-full inline-flex items-center px-2.5 py-0.5 text-sm rounded-b-md font-medium ${online_color}'>
-					<span class='copyText cursor-pointer'>${ip}</span>
-				</span>
-			</div>
-			<div class='sm:hidden'>
-				<a href='?server=${servers[i].id}'>
-					<img class='rounded-md m-auto h-[60px]' width="468" height="60" src='https://api.rabbitserverlist.com/v1/server/minecraft/${servers[i].id}/banner' alt='${servers[i].name}' ${lazyLoading} />
-				</a>
-
-				<span class='mt-2 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${online_color}'>${online}</span>
-				<a href='?version=${servers[i].version}'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].version}</span></a>
-				<span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>${servers[i].players} / ${servers[i].players_max}</span>
-				<br>
-				<span class='mt-2 w-full max-w-[468px] inline-flex items-center justify-center px-2.5 py-0.5 text-sm rounded-md font-medium ${online_color}'>
-					<span class='copyText cursor-pointer'>${ip}</span>
-				</span>
-			</div>
-		</td>`;
-		data += "<td class='px-4 py-4 hidden lg:table-cell'><div>";
-		for(let j = 0; j < categories.length; j++){
+		let keywords = servers[i].keywords.split(',');
+		let keywordsHTML = "";
+		for(let j = 0; j < keywords.length; j++){
 			if(j >= 5) break;
-			data += "<a href='?category=" + categories[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + categories[j] + "</span></a>";
+			keywordsHTML += "<a href='discord.html?q=" + keywords[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + keywords[j] + "</span></a>";
 		}
-		data += "</div></td><td class='tertiaryColor py-4 px-4 whitespace-nowrap hidden sm:table-cell'>" + servers[i].players + " / " + servers[i].players_max + "</td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap hidden md:table-cell'><a href='?version=" + servers[i].version + "'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium blueBadge'>" + servers[i].version + "</span></a></td>";
-		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + online + "</span></td>";
-		data += "</tr>";
+
+		data += `<li id="discord-server-${servers[i].id}" class="secondaryBackgroundColor col-span-1 flex flex-col divide-y passwordsBorderColor rounded-lg text-center shadow bg-no-repeat bg-center bg-cover">
+		<div class="flex flex-1 flex-col p-8 bg-gradient-to-t from-[#161b22] via-[#1e252e]">
+			<img id="discord-server-${servers[i].id}-logo" crossorigin="anonymous" class="bg-gradient-to-b from-[#161b22] to-[#28313e] border tertiaryBorderColor mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}">
+			<h3 class="mt-6 text-sm font-medium tertiaryColor">${servers[i].name}</h3>
+			<dl class="mt-1 flex flex-grow flex-col justify-between">
+				<dd class="mt-3">
+					<span class="inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium greenBadge">
+						<svg class="h-4 w-4" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+							<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+						</svg>
+						${servers[i].members} / ${servers[i].members_total}
+					</span>
+				</dd>
+				<dd>
+					${keywordsHTML}
+				</dd>
+			</dl>
+		</div>
+		<div class="secondaryBackgroundColor rounded-b-lg">
+			<div class="-mt-px flex">
+				<div class="flex w-0 flex-1">
+					<a href="discord.html?server=${servers[i].id}" class="tertiaryColor passwordsBorderColor relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border-t border-r border-transparent py-4 text-sm font-semibold">
+						<svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+							<path d="M12 9h.01"></path>
+							<path d="M11 12h1v4h1"></path>
+						</svg>
+						INFO
+					</a>
+				</div>
+				<div class="-ml-px flex w-0 flex-1">
+					<a href="https://discord.gg/${servers[i].invite_code}" target="_blank" class="tertiaryColor passwordsBorderColor relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border-t border-transparent py-4 text-sm font-semibold">
+						<svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
+							<path d="M14 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
+							<path d="M8.5 17c0 1 -1.356 3 -1.832 3c-1.429 0 -2.698 -1.667 -3.333 -3c-.635 -1.667 -.476 -5.833 1.428 -11.5c1.388 -1.015 2.782 -1.34 4.237 -1.5l.975 1.923a11.913 11.913 0 0 1 4.053 0l.972 -1.923c1.5 .16 3.043 .485 4.5 1.5c2 5.667 2.167 9.833 1.5 11.5c-.667 1.333 -2 3 -3.5 3c-.5 0 -2 -2 -2 -3"></path>
+							<path d="M7 16.5c3.5 1 6.5 1 10 0"></path>
+						</svg>
+						JOIN
+					</a>
+				</div>
+			</div>
+		</div>
+	</li>`;
 	}
 
-	document.getElementById("table_data").innerHTML = data;
+	document.getElementById("discord_table_data").innerHTML = data;
 
 	let copyElements = document.getElementsByClassName('copyText');
 	for(let i = 0; i < copyElements.length; i++){
@@ -487,10 +502,10 @@ try{
 }catch{}
 
 async function loadServerPage(){
-	let serverData = JSON.parse(localStorage.getItem('server-minecraft-' + server));
+	let serverData = JSON.parse(localStorage.getItem('server-discord-' + server));
 	if(serverData !== null) return renderServer(serverData);
 
-	let data = await Utils.fetchServer('minecraft', server);
+	let data = await Utils.fetchServer('discord', server);
 	if(data !== null) return renderServer(data);
 
 	window.location.href = '/';
@@ -498,33 +513,26 @@ async function loadServerPage(){
 
 async function loadServersPage(){
 
-	if(version !== null){
-		let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page + '-filter-version-' + version));
+	if(query !== null){
+		let servers = JSON.parse(localStorage.getItem('servers-discord-' + page + '-filter-query-' + query));
 		if(servers !== null) return renderServers(servers);
 
-		let data = await Utils.fetchServers('minecraft', page, 'version', version);
+		let data = await Utils.fetchServers('discord', page, 'query', query);
 		renderServers(data);
 		return;
 	}else if(category !== null){
-		let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page + '-filter-category-' + category));
+		let servers = JSON.parse(localStorage.getItem('servers-discord-' + page + '-filter-category-' + category));
 		if(servers !== null) return renderServers(servers);
 
-		let data = await Utils.fetchServers('minecraft', page, 'category', category);
-		renderServers(data);
-		return;
-	}else if(country !== null){
-		let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page + '-filter-country-' + country));
-		if(servers !== null) return renderServers(servers);
-
-		let data = await Utils.fetchServers('minecraft', page, 'country', country);
+		let data = await Utils.fetchServers('discord', page, 'category', category);
 		renderServers(data);
 		return;
 	}
 
-	let servers = JSON.parse(localStorage.getItem('servers-minecraft-' + page));
+	let servers = JSON.parse(localStorage.getItem('servers-discord-' + page));
 	if(servers !== null) return renderServers(servers);
 
-	let data = await Utils.fetchServers('minecraft', page);
+	let data = await Utils.fetchServers('discord', page);
 	renderServers(data);
 }
 

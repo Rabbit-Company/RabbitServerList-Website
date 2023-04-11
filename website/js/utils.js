@@ -54,8 +54,8 @@ export default class Utils{
 		let req = await fetch("https://api.rabbitserverlist.com/v1/server/" + type + "/" + id);
 		let data = await req.json();
 
-		localStorage.setItem('server-minecraft-' + id, JSON.stringify(data.data));
-		localStorage.setItem('server-minecraft-' + id + '-time', Date.now());
+		localStorage.setItem('server-' + type + '-' + id, JSON.stringify(data.data));
+		localStorage.setItem('server-' + type +'-' + id + '-time', Date.now());
 
 		return data.data;
 	}
