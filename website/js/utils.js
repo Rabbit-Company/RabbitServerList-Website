@@ -12,6 +12,12 @@ export default class Utils{
 			}
 		}catch{}
 
+		let userToken = localStorage.getItem('userToken');
+		if(userToken === null){
+			localStorage.setItem('userToken', crypto.randomUUID().replaceAll('-', ''));
+			localStorage.setItem('userToken-time', Date.now());
+		}
+
 		window.setInterval(function() {
 			let logged = localStorage.getItem('logged');
 			if(logged !== null){

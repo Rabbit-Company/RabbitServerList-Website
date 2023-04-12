@@ -133,14 +133,14 @@ function renderServerVote(id, guild_id, icon){
 	document.getElementById("vote-form").addEventListener("submit", e => {
 		e.preventDefault();
 
-		let code = localStorage.getItem('discord-oauth-code');
+		let access_token = localStorage.getItem('discord-oauth-token');
 		let turnstile = document.getElementsByName('cf-turnstile-response')[0].value;
 
-		if(code === null){
+		if(access_token === null){
 			Utils.changeDialog(2, 'Loading...');
 			Utils.show('dialog');
-			//window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=code&scope=identify";
-			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=code&scope=identify";
+			//window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=token&scope=identify&state=" + localStorage.getItem('userToken');
+			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=token&scope=identify&state=" + localStorage.getItem('userToken');
 			return;
 		}
 
@@ -150,7 +150,7 @@ function renderServerVote(id, guild_id, icon){
 		let headers = new Headers();
 		headers.set('Content-Type', 'application/json');
 
-		let data = JSON.stringify({ "code": code, "turnstile": turnstile });
+		let data = JSON.stringify({ "token": access_token, "turnstile": turnstile });
 		fetch('https://api.rabbitserverlist.com/v1/server/discord/' + id + '/vote', {
 			method: 'POST',
 			headers: headers,
@@ -191,7 +191,7 @@ function renderServerVote(id, guild_id, icon){
 		let html = `<tr><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>TOP 10 VOTERS</td></tr>`;
 		for(let i = 0; i < ids.length; i++){
 			if(i > 10) break;
-			html += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'><div class="flex items-center gap-x-4"><img class="h-10 w-10 rounded-full" width="40" height="40" src="https://cdn.discordapp.com/avatars/${ids[i]}/${data[ids[i]].avatar}" alt="${data[ids[i]].username}#${data[ids[i]].discriminator}"><div class="tertiaryColor">${data[ids[i]].username}<span class="secondaryColor">#${data[ids[i]].discriminator}</span></div></div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${data[ids[i]].votes}</td></tr>`;
+			html += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'><a href='https://discord.com/users/${ids[i]}' target='_blank'><div class="flex items-center gap-x-4"><img class="h-10 w-10 rounded-full" width="40" height="40" src="https://cdn.discordapp.com/avatars/${ids[i]}/${data[ids[i]].avatar}" alt="${data[ids[i]].username}#${data[ids[i]].discriminator}"><div class="tertiaryColor">${data[ids[i]].username}<span class="secondaryColor">#${data[ids[i]].discriminator}</span></div></div></a></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${data[ids[i]].votes}</td></tr>`;
 		}
 
 		document.getElementById('server_table_data').innerHTML = html;
