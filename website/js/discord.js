@@ -187,61 +187,67 @@ async function renderServerStats(id){
 
 	document.getElementById('description').innerHTML = `
 	<input id="stats-date-picker" type="date" value="${date}" class="border" />
-	<canvas id="serverPlayerChart" class="mt-3"></canvas>
-	<canvas id="serverUptimeChart" class="mt-6"></canvas>
+	<canvas id="serverMemberChart" class="mt-3"></canvas>
+	<canvas id="serverMemberTotalChart" class="mt-6"></canvas>
 	`;
 
-	let players = [];
-	let minPlayers = [];
-	let maxPlayers = [];
-	let uptimes = [];
-	let playerDates = [];
-	let uptimeDates = [];
+	let members = [];
+	let minMembers = [];
+	let maxMembers = [];
 
-	let sortedPlayers = stats.players.sort((p1, p2) => (p1.hour > p2.hour) ? 1 : (p1.hour < p2.hour) ? -1 : 0);
-	let sortedUptimes = stats.uptime.sort((p1, p2) => (p1.hour > p2.hour) ? 1 : (p1.hour < p2.hour) ? -1 : 0);
+	let members_total = [];
+	let minMembersTotal = [];
+	let maxMembersTotal = [];
 
-	sortedPlayers.forEach(value => {
+	let memberDates = [];
+	let membersTotalDates = [];
+
+	let sortedMembers = stats.members.sort((p1, p2) => (p1.hour > p2.hour) ? 1 : (p1.hour < p2.hour) ? -1 : 0);
+	let sortedMembersTotal = stats.members_total.sort((p1, p2) => (p1.hour > p2.hour) ? 1 : (p1.hour < p2.hour) ? -1 : 0);
+
+	sortedMembers.forEach(value => {
 		let date2 = Utils.fancyDate(new Date(value.hour + 'Z')).split(' ');
 		if(date2[0] !== date) return;
-		playerDates.push(date2[1]);
-		players.push(Math.round(value.avg));
-		minPlayers.push(value.min);
-		maxPlayers.push(value.max);
+		memberDates.push(date2[1]);
+		members.push(Math.round(value.avg));
+		minMembers.push(value.min);
+		maxMembers.push(value.max);
 	});
 
-	sortedUptimes.forEach(value => {
+	sortedMembersTotal.forEach(value => {
 		let date2 = Utils.fancyDate(new Date(value.hour + 'Z')).split(' ');
 		if(date2[0] !== date) return;
-		uptimeDates.push(date2[1]);
-		uptimes.push(value.uptime);
+		membersTotalDates.push(date2[1]);
+		members_total.push(Math.round(value.avg));
+		minMembersTotal.push(value.min);
+		maxMembersTotal.push(value.max);
 	});
 
-	const ctxPlayers = document.getElementById('serverPlayerChart');
-	const ctxUptime = document.getElementById('serverUptimeChart');
+	const ctxMembers = document.getElementById('serverMemberChart');
+	const ctxMemberTotal = document.getElementById('serverMemberTotalChart');
 
-	let serverPlayersChart = new Chart(ctxPlayers, {
+	let serverMembersChart = new Chart(ctxMembers, {
 		type: 'line',
 		data: {
-			labels: playerDates,
+			labels: memberDates,
 			datasets: [
 				{
-					label: 'Max. Players',
-					data: maxPlayers,
+					label: 'Max. Active Members',
+					data: maxMembers,
 					borderColor: '#035a2e',
 					backgroundColor: '#035a2e',
 					borderWidth: 2
 				},
 				{
-					label: 'Avg. Players',
-					data: players,
+					label: 'Avg. Active Members',
+					data: members,
 					borderColor: '#6ba0e4',
 					backgroundColor: '#6ba0e4',
 					borderWidth: 2
 				},
 				{
-					label: 'Min. Players',
-					data: minPlayers,
+					label: 'Min. Active Members',
+					data: minMembers,
 					borderColor: '#4f46e5',
 					backgroundColor: '#4f46e5',
 					borderWidth: 2
@@ -249,11 +255,6 @@ async function renderServerStats(id){
 			]
 		},
 		options: {
-			scales: {
-				y: {
-					beginAtZero: true
-				}
-			},
 			scale: {
 				ticks: {
 					precision: 0
@@ -262,24 +263,35 @@ async function renderServerStats(id){
 		}
 	});
 
-	let serverUptimeChart = new Chart(ctxUptime, {
+	let serverMembersTotalChart = new Chart(ctxMemberTotal, {
 		type: 'line',
 		data: {
-			labels: uptimeDates,
-			datasets: [{
-				label: 'Uptime',
-				data: uptimes,
-				borderColor: '#2563eb',
-				backgroundColor: '#2563eb',
-				borderWidth: 2
-			}]
+			labels: membersTotalDates,
+			datasets: [
+				{
+					label: 'Max. Members',
+					data: maxMembersTotal,
+					borderColor: '#035a2e',
+					backgroundColor: '#035a2e',
+					borderWidth: 2
+				},
+				{
+					label: 'Avg. Members',
+					data: members_total,
+					borderColor: '#6ba0e4',
+					backgroundColor: '#6ba0e4',
+					borderWidth: 2
+				},
+				{
+					label: 'Min. Members',
+					data: minMembersTotal,
+					borderColor: '#4f46e5',
+					backgroundColor: '#4f46e5',
+					borderWidth: 2
+				}
+			]
 		},
 		options: {
-			scales: {
-				y: {
-					beginAtZero: true
-				}
-			},
 			scale: {
 				ticks: {
 					precision: 0
@@ -291,39 +303,47 @@ async function renderServerStats(id){
 	document.getElementById('stats-date-picker').addEventListener('input', () => {
 		let date = document.getElementById('stats-date-picker').value;
 
-		players = [];
-		minPlayers = [];
-		maxPlayers = [];
-		uptimes = [];
-		playerDates = [];
-		uptimeDates = [];
+		members = [];
+		minMembers = [];
+		maxMembers = [];
 
-		sortedPlayers.forEach(value => {
+		members_total = [];
+		minMembersTotal = [];
+		maxMembersTotal = [];
+
+		memberDates = [];
+		membersTotalDates = [];
+
+		sortedMembers.forEach(value => {
 			let date2 = Utils.fancyDate(new Date(value.hour + 'Z')).split(' ');
 			if(date2[0] !== date) return;
-			playerDates.push(date2[1]);
-			players.push(Math.round(value.avg));
-			minPlayers.push(value.min);
-			maxPlayers.push(value.max);
+			memberDates.push(date2[1]);
+			members.push(Math.round(value.avg));
+			minMembers.push(value.min);
+			maxMembers.push(value.max);
 		});
 
-		sortedUptimes.forEach(value => {
+		sortedMembersTotal.forEach(value => {
 			let date2 = Utils.fancyDate(new Date(value.hour + 'Z')).split(' ');
 			if(date2[0] !== date) return;
-			uptimeDates.push(date2[1]);
-			uptimes.push(value.uptime);
+			membersTotalDates.push(date2[1]);
+			members_total.push(Math.round(value.avg));
+			minMembersTotal.push(value.min);
+			maxMembersTotal.push(value.max);
 		});
 
-		serverPlayersChart.data.labels = playerDates;
-		serverPlayersChart.data.datasets[0].data = maxPlayers;
-		serverPlayersChart.data.datasets[1].data = players;
-		serverPlayersChart.data.datasets[2].data = minPlayers;
+		serverMembersChart.data.labels = memberDates;
+		serverMembersChart.data.datasets[0].data = maxMembers;
+		serverMembersChart.data.datasets[1].data = members;
+		serverMembersChart.data.datasets[2].data = minMembers;
 
-		serverUptimeChart.data.labels = uptimeDates;
-		serverUptimeChart.data.datasets[0].data = uptimes;
+		serverMembersTotalChart.data.labels = membersTotalDates;
+		serverMembersTotalChart.data.datasets[0].data = maxMembersTotal;
+		serverMembersTotalChart.data.datasets[1].data = members_total;
+		serverMembersTotalChart.data.datasets[2].data = minMembersTotal;
 
-		serverPlayersChart.update();
-		serverUptimeChart.update();
+		serverMembersChart.update();
+		serverMembersTotalChart.update();
 	});
 
 }
