@@ -139,7 +139,8 @@ function renderServerVote(id, guild_id, icon){
 		if(code === null){
 			Utils.changeDialog(2, 'Loading...');
 			Utils.show('dialog');
-			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=code&scope=identify";
+			//window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=code&scope=identify";
+			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=code&scope=identify";
 			return;
 		}
 
@@ -185,12 +186,12 @@ function renderServerVote(id, guild_id, icon){
 		if(response.data.length === 0) return;
 
 		let data = response.data;
-		let usernames = Object.keys(data).sort((u1,u2) => data[u1] - data[u2]);
+		let ids = Object.keys(data).sort((u1,u2) => data[u1].votes - data[u2].votes);
 
 		let html = `<tr><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>TOP 10 VOTERS</td></tr>`;
-		for(let i = 0; i < usernames.length; i++){
+		for(let i = 0; i < ids.length; i++){
 			if(i > 10) break;
-			html += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'><div class="flex items-center gap-x-4"><img class="h-10 w-10 rounded-md" width="40" height="40" src="https://mc-heads.net/avatar/${usernames[i]}/40" alt="${usernames[i]}"><div class="secondaryColor">${usernames[i]}</div></div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${data[usernames[i]]}</td></tr>`;
+			html += `<tr><td class='secondaryColor px-4 py-4 whitespace-nowrap'><div class="flex items-center gap-x-4"><img class="h-10 w-10 rounded-full" width="40" height="40" src="https://cdn.discordapp.com/avatars/${ids[i]}/${data[ids[i]].avatar}" alt="${data[ids[i]].username}#${data[ids[i]].discriminator}"><div class="tertiaryColor">${data[ids[i]].username}<span class="secondaryColor">#${data[ids[i]].discriminator}</span></div></div></td><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>${data[ids[i]].votes}</td></tr>`;
 		}
 
 		document.getElementById('server_table_data').innerHTML = html;
