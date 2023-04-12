@@ -244,26 +244,27 @@ function renderMyDiscordServers(){
 		<div class="secondaryBackgroundColor rounded-b-lg">
 			<div class="-mt-px flex">
 				<div class="flex w-0 flex-1">
-					<a href="discord.html?server=${servers[i].id}" class="tertiaryColor passwordsBorderColor relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border-t border-r border-transparent py-4 text-sm font-semibold">
+					<a href="editor.html?type=discord&id=${servers[i].id}" class="tertiaryColor passwordsBorderColor relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border-t border-r border-transparent py-4 text-sm font-semibold">
 						<svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-							<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
-							<path d="M12 9h.01"></path>
-							<path d="M11 12h1v4h1"></path>
+							<path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+							<path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+							<path d="M16 5l3 3"></path>
 						</svg>
-						INFO
+						EDIT
 					</a>
 				</div>
 				<div class="-ml-px flex w-0 flex-1">
-					<a href="https://discord.gg/${servers[i].invite_code}" target="_blank" class="tertiaryColor passwordsBorderColor relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border-t border-transparent py-4 text-sm font-semibold">
+					<a id="discord-delete-${servers[i].id}" class="cursor-pointer tertiaryColor passwordsBorderColor relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border-t border-transparent py-4 text-sm font-semibold">
 						<svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-							<path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
-							<path d="M14 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
-							<path d="M8.5 17c0 1 -1.356 3 -1.832 3c-1.429 0 -2.698 -1.667 -3.333 -3c-.635 -1.667 -.476 -5.833 1.428 -11.5c1.388 -1.015 2.782 -1.34 4.237 -1.5l.975 1.923a11.913 11.913 0 0 1 4.053 0l.972 -1.923c1.5 .16 3.043 .485 4.5 1.5c2 5.667 2.167 9.833 1.5 11.5c-.667 1.333 -2 3 -3.5 3c-.5 0 -2 -2 -2 -3"></path>
-							<path d="M7 16.5c3.5 1 6.5 1 10 0"></path>
+							<path d="M4 7l16 0"></path>
+							<path d="M10 11l0 6"></path>
+							<path d="M14 11l0 6"></path>
+							<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+							<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
 						</svg>
-						JOIN
+						DELETE
 					</a>
 				</div>
 			</div>
@@ -280,12 +281,10 @@ function renderMyDiscordServers(){
 			document.getElementById('discord-server-' + servers[i].id).style = `background-image: url('https://cdn.discordapp.com/banners/${servers[i].guild_id}/${servers[i].banner}');`;
 		}
 
-		/*
 		document.getElementById('discord-delete-' + servers[i].id).addEventListener('click', () => {
 			Utils.changeDialog(7, { type: 'discord', id: servers[i].id });
 			Utils.show('dialog');
 		});
-		*/
 
 		let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
 		if(img.complete){
