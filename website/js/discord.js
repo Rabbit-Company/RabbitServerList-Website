@@ -4,6 +4,7 @@ import Validate from './validate.js';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import { Chart, registerables } from 'chart.js';
+import ColorThief from 'colorthief';
 
 Chart.register(...registerables);
 Utils.initialize();
@@ -411,29 +412,27 @@ function renderServers(servers){
 
 	document.getElementById("discord_table_data").innerHTML = data;
 
-	let copyElements = document.getElementsByClassName('copyText');
-	for(let i = 0; i < copyElements.length; i++){
+	const colorThief = new ColorThief();
+	for(let i = 0; i < servers.length; i++){
 
-		copyElements[i].addEventListener('mouseover', () => {
-			let text = copyElements[i].innerText.replace(' (click to copy)', '');
-			copyElements[i].innerText = text + ' (click to copy)';
-		});
+		if(servers[i].banner !== null){
+			document.getElementById('discord-server-' + servers[i].id).style = `background-image: url('https://cdn.discordapp.com/banners/${servers[i].guild_id}/${servers[i].banner}');`;
+		}
 
-		copyElements[i].addEventListener('mouseout', () => {
-			let text = copyElements[i].innerText.replace(' (click to copy)', '');
-			copyElements[i].innerText = text;
-		});
+		let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
+		if(img.complete){
+			let colors = colorThief.getColor(img);
+			let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
 
-		copyElements[i].addEventListener('click', () => {
-			let text = copyElements[i].innerText.replace(' (click to copy)', '');
-			if(text === 'Copied!') return;
-			Utils.copyToClipboard(text);
-			copyElements[i].innerText = "Copied!";
-			window.setTimeout(() => {
-				copyElements[i].innerText = text;
-			}, 1000);
-		});
+			img.style = `border-color: ${hex} !important;`;
+		}else{
+			img.addEventListener('load', () => {
+				let colors = colorThief.getColor(img);
+				let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
 
+				img.style = `border-color: ${hex} !important;`;
+			});
+		}
 	}
 
 	// Pagination
