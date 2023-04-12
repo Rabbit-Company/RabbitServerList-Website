@@ -97,7 +97,10 @@ function renderServerVote(id, guild_id, icon){
 		<div class="mt-6 mb-6 mx-auto max-w-[468px] text-center">
 			<form id="vote-form" class="w-full">
 				<b>YOU CAN VOTE ONCE A DAY!</b>
-				<img class='rounded-md w-[96px] h-[96px]' width="96" height="96" src='https://cdn.discordapp.com/icons/${guild_id}/${icon}' />
+
+				<div class="mt-3">
+					<img id="discord-server-logo" crossorigin="anonymous" class="bg-gradient-to-b from-[#161b22] to-[#28313e] border tertiaryBorderColor mx-auto w-[96px] h-[96px] rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${guild_id}/${icon}">
+				</div>
 
 				<div id="cf-turnstile" class="cf-turnstile mt-3" data-sitekey="0x4AAAAAAADkDTSJrhqVLN33" data-action="vote" data-theme="dark" data-language="en" data-callback="onloadTurnstileCallback"></div>
 
@@ -110,6 +113,22 @@ function renderServerVote(id, guild_id, icon){
 	`;
 
 	turnstile.render('#cf-turnstile');
+
+	const colorThief = new ColorThief();
+	let img = document.getElementById('discord-server-logo');
+	if(img.complete){
+		let colors = colorThief.getColor(img);
+		let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
+
+		img.style = `border-color: ${hex} !important;`;
+	}else{
+		img.addEventListener('load', () => {
+			let colors = colorThief.getColor(img);
+			let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
+
+			img.style = `border-color: ${hex} !important;`;
+		});
+	}
 
 	document.getElementById("vote-form").addEventListener("submit", e => {
 		e.preventDefault();
