@@ -151,4 +151,9 @@ export default class Validate{
 		return this.discordServerCategoryList.includes(category);
 	}
 
+	static query(query){
+		if(typeof(query) !== 'string') return false;
+		return /^([a-z0-9]{3,29})$/.test(query);
+	}
+
 }

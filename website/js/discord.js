@@ -16,7 +16,21 @@ if(page > 50) page = 50;
 
 let server = (parms.get('server') !== null && Utils.isPositiveInteger(parms.get('server'))) ? parms.get('server') : null;
 let category = (parms.get('category') !== null && Validate.discordServerCategory(parms.get('category'))) ? parms.get('category') : null;
-let query = parms.get('q');
+let query = (parms.get('q') !== null && Validate.query(parms.get('q'))) ? parms.get('q') : null;
+
+// Search
+try{
+	if(query !== null){
+		document.getElementById("search").value = query;
+	}
+
+	document.getElementById("search").addEventListener("keypress", (event) => {
+		if (event.key !== "Enter") return;
+		event.preventDefault();
+		let search = document.getElementById("search").value.split(' ')[0];
+		if(Validate.query(search)) window.location.assign("?q=" + search);
+	});
+}catch{}
 
 function renderServerTableStats(serverData){
 	let tableHtml = "";
@@ -454,18 +468,6 @@ function renderServers(servers){
 			});
 		}
 	}
-
-	// Search
-
-	if(query !== null){
-		document.getElementById("search").value = query;
-	}
-
-	document.getElementById("search").addEventListener("keypress", (event) => {
-		if (event.key !== "Enter") return;
-		event.preventDefault();
-		window.location.assign("?q=" + document.getElementById("search").value);
-	});
 
 	// Pagination
 	if(page !== 1 || servers.length >= 20){
