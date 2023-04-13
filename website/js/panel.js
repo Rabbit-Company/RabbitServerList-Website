@@ -1,6 +1,7 @@
 import Utils from './utils.js';
 import Errors from './errors.js';
 import Validate from './validate.js';
+import ColorThief from 'colorthief';
 
 Utils.initialize();
 Utils.requireAuthentication();
@@ -15,10 +16,25 @@ try{
 	});
 }catch{}
 
+document.getElementById('add-discord-btn').addEventListener('click', () => {
+	if(localStorage.getItem('discord-oauth-token') === null){
+		localStorage.setItem('lastPage', window.location.href);
+		window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=token&scope=identify%20guilds&state=" + localStorage.getItem('userToken');
+		return;
+	}
+	window.location.href = "editor.html?type=discord";
+});
+
 if(localStorage.getItem('my-servers-minecraft') === null){
 	fetchMyMinecraftServers();
 }else{
 	renderMyMinecraftServers();
+}
+
+if(localStorage.getItem('my-servers-discord') === null){
+	fetchMyDiscordServers();
+}else{
+	renderMyDiscordServers();
 }
 
 function fetchMyMinecraftServers(){
@@ -39,6 +55,30 @@ function fetchMyMinecraftServers(){
 		}
 		localStorage.setItem('my-servers-minecraft', JSON.stringify(response.data));
 		renderMyMinecraftServers();
+	}).catch(() => {
+		Utils.changeDialog(1, Errors.get(1009));
+		Utils.show('dialog');
+	});
+}
+
+function fetchMyDiscordServers(){
+	let headers = new Headers();
+	headers.set('Authorization', 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('token')));
+	headers.set('Content-Type', 'application/json');
+
+	fetch('https://api.rabbitserverlist.com/v1/account/servers/discord', {
+		method: 'GET',
+		headers: headers,
+	}).then(result => {
+		return result.json();
+	}).then(response => {
+		if(response.error !== 0){
+			Utils.changeDialog(1, response.info);
+			Utils.show('dialog');
+			return;
+		}
+		localStorage.setItem('my-servers-discord', JSON.stringify(response.data));
+		renderMyDiscordServers();
 	}).catch(() => {
 		Utils.changeDialog(1, Errors.get(1009));
 		Utils.show('dialog');
@@ -175,5 +215,99 @@ function renderMyMinecraftServers(){
 			});
 
 		});
+	}
+}
+
+function renderMyDiscordServers(){
+	let data = "";
+	let servers = JSON.parse(localStorage.getItem('my-servers-discord'));
+
+	for(let i = 0; i < servers.length; i++){
+		let keywords = servers[i].keywords.split(',');
+		let keywordsHTML = "";
+		for(let j = 0; j < keywords.length; j++){
+			if(j >= 5) break;
+			keywordsHTML += "<a href='discord.html?q=" + keywords[j] + "'><span class='inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium grayBadge'>" + keywords[j] + "</span></a>";
+		}
+
+		data += `<li id="discord-server-${servers[i].id}" class="secondaryBackgroundColor col-span-1 flex flex-col divide-y passwordsBorderColor rounded-lg text-center shadow bg-no-repeat bg-center bg-cover">
+		<div class="flex flex-1 flex-col p-8 bg-gradient-to-t from-[#161b22] via-[#1e252e]">
+			<img id="discord-server-${servers[i].id}-logo" crossorigin="anonymous" class="bg-gradient-to-b from-[#161b22] to-[#28313e] border tertiaryBorderColor mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}">
+			<h3 class="mt-6 text-sm font-medium tertiaryColor">${servers[i].name}</h3>
+			<dl class="mt-1 flex flex-grow flex-col justify-between">
+				<dd class="mt-3">
+					<span class="inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium greenBadge">
+						<svg class="h-4 w-4" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+							<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+						</svg>
+						${servers[i].members} / ${servers[i].members_total}
+					</span>
+				</dd>
+				<dd>
+					${keywordsHTML}
+				</dd>
+			</dl>
+		</div>
+		<div class="secondaryBackgroundColor rounded-b-lg">
+			<div class="-mt-px flex">
+				<div class="flex w-0 flex-1">
+					<a href="editor.html?type=discord&id=${servers[i].id}" class="tertiaryColor passwordsBorderColor relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border-t border-r border-transparent py-4 text-sm font-semibold">
+						<svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+							<path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+							<path d="M16 5l3 3"></path>
+						</svg>
+						EDIT
+					</a>
+				</div>
+				<div class="-ml-px flex w-0 flex-1">
+					<a id="discord-delete-${servers[i].id}" class="cursor-pointer tertiaryColor passwordsBorderColor relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border-t border-transparent py-4 text-sm font-semibold">
+						<svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M4 7l16 0"></path>
+							<path d="M10 11l0 6"></path>
+							<path d="M14 11l0 6"></path>
+							<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+							<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+						</svg>
+						DELETE
+					</a>
+				</div>
+			</div>
+		</div>
+	</li>`;
+	}
+
+	document.getElementById("discord_table_data").innerHTML = data;
+
+	const colorThief = new ColorThief();
+	for(let i = 0; i < servers.length; i++){
+
+		if(servers[i].banner !== null){
+			document.getElementById('discord-server-' + servers[i].id).style = `background-image: url('https://cdn.discordapp.com/banners/${servers[i].guild_id}/${servers[i].banner}');`;
+		}
+
+		document.getElementById('discord-delete-' + servers[i].id).addEventListener('click', () => {
+			Utils.changeDialog(7, { type: 'discord', id: servers[i].id });
+			Utils.show('dialog');
+		});
+
+		let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
+		if(img.complete){
+			let colors = colorThief.getColor(img);
+			let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
+
+			img.style = `border-color: ${hex} !important;`;
+		}else{
+			img.addEventListener('load', () => {
+				let colors = colorThief.getColor(img);
+				let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
+
+				img.style = `border-color: ${hex} !important;`;
+			});
+		}
 	}
 }

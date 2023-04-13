@@ -3,6 +3,13 @@ export default class Utils{
 	static initialize(){
 		this.clearOldData();
 
+		let lastPage = localStorage.getItem('lastPage');
+		if(lastPage !== null){
+			localStorage.removeItem('lastPage');
+			window.location.href = lastPage;
+			return;
+		}
+
 		try{
 			let logged = localStorage.getItem('logged');
 			if(logged !== null){
@@ -12,12 +19,20 @@ export default class Utils{
 			}
 		}catch{}
 
+		let userToken = localStorage.getItem('userToken');
+		if(userToken === null){
+			localStorage.setItem('userToken', crypto.randomUUID().replaceAll('-', ''));
+			localStorage.setItem('userToken-time', Date.now());
+		}
+
 		window.setInterval(function() {
 			let logged = localStorage.getItem('logged');
 			if(logged !== null){
 				if((new Date(logged).getTime() + 3_600_000) < new Date().getTime()){
 					localStorage.removeItem('token');
 					localStorage.removeItem('logged');
+					localStorage.removeItem('my-servers-minecraft');
+					localStorage.removeItem('my-servers-discord');
 					location.reload();
 				}
 			}
@@ -35,11 +50,12 @@ export default class Utils{
 		}
 	}
 
-	static logout(){
+	static logout(reload = true){
 		localStorage.removeItem('token');
 		localStorage.removeItem('logged');
 		localStorage.removeItem('my-servers-minecraft');
-		location.reload();
+		localStorage.removeItem('my-servers-discord');
+		if(reload) location.reload();
 	}
 
 	static requireAuthentication(){
@@ -51,8 +67,8 @@ export default class Utils{
 		let req = await fetch("https://api.rabbitserverlist.com/v1/server/" + type + "/" + id);
 		let data = await req.json();
 
-		localStorage.setItem('server-minecraft-' + id, JSON.stringify(data.data));
-		localStorage.setItem('server-minecraft-' + id + '-time', Date.now());
+		localStorage.setItem('server-' + type + '-' + id, JSON.stringify(data.data));
+		localStorage.setItem('server-' + type +'-' + id + '-time', Date.now());
 
 		return data.data;
 	}
@@ -113,6 +129,11 @@ export default class Utils{
 	static isPositiveInteger(s) {
 		return /^\+?[1-9][\d]*$/.test(s);
 	}
+
+	static rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+		const hex = x.toString(16);
+		return hex.length === 1 ? '0' + hex : hex;
+	}).join('');
 
 	static toggleMenu(){
 		if(document.getElementById("mobile-menu").className == 'hidden pt-2 pb-3 space-y-1'){

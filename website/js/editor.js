@@ -4,7 +4,6 @@ import Validate from './validate.js';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 
-
 Utils.initialize();
 Utils.requireAuthentication();
 
@@ -40,7 +39,7 @@ document.getElementById("tabs-1-tab-2").addEventListener("click", () => {
 const parms = new URLSearchParams(window.location.search);
 
 let type = parms.get('type');
-if(type === null || !['minecraft'].includes(type)) location.href = "panel.html";
+if(type === null || !['minecraft', 'discord'].includes(type)) location.href = "panel.html";
 
 let id = (parms.get('id') !== null && Utils.isPositiveInteger(parms.get('id'))) ? parms.get('id') : null;
 let editData = {};
@@ -227,6 +226,46 @@ let serverData = {
 				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><circle cx='8' cy='15' r='4' /><line x1='10.85' y1='12.15' x2='19' y2='4' /><line x1='18' y1='5' x2='20' y2='7' /><line x1='15' y1='8' x2='17' y2='10' />"
 			}
 		}
+	},
+	'discord': {
+		'title1': 'Discord Server',
+		'desc1': '',
+		'inputs': {
+			'server_invite_code': {
+				'type': 'text',
+				'name': 'invite_code',
+				'placeholder': 'Discord Invite Link',
+				'required': true,
+				'validate': {
+					'name': 'discordInviteCode',
+					'errorCode': 1036
+				},
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><circle cx='9' cy='12' r='1' /><circle cx='15' cy='12' r='1' /><path d='M7.5 7.5c3.5 -1 5.5 -1 9 0' /><path d='M7 16.5c3.5 1 6.5 1 10 0' /><path d='M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833 -1.667 3.5 -3c.667 -1.667 .5 -5.833 -1.5 -11.5c-1.457 -1.015 -3 -1.34 -4.5 -1.5l-1 2.5' /><path d='M8.5 17c0 1 -1.356 3 -1.832 3c-1.429 0 -2.698 -1.667 -3.333 -3c-.635 -1.667 -.476 -5.833 1.428 -11.5c1.388 -1.015 2.782 -1.34 4.237 -1.5l1 2.5' />"
+			},
+			'server_category': {
+				'type': 'select',
+				'name': 'category',
+				'placeholder': 'Category',
+				'options': Validate.discordServerCategoryList,
+				'required': true,
+				'validate': {
+					'name': 'discordServerCategory',
+					'errorCode': 1039
+				},
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'/><line x1='9' y1='6' x2='20' y2='6' /><line x1='9' y1='12' x2='20' y2='12' /><line x1='9' y1='18' x2='20' y2='18' /><line x1='5' y1='6' x2='5' y2='6.01' /><line x1='5' y1='12' x2='5' y2='12.01' /><line x1='5' y1='18' x2='5' y2='18.01' />"
+			},
+			'server_keywords': {
+				'type': 'text',
+				'name': 'keywords',
+				'placeholder': 'Keywords',
+				'required': true,
+				'validate': {
+					'name': 'keywords',
+					'errorCode': 1038
+				},
+				'icon': "<path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.117 -6.116a2.025 2.025 0 0 0 -1.431 -.593z'></path><path d='M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116'></path><path d='M6 9h-.01'></path>"
+			}
+		}
 	}
 }
 
@@ -309,6 +348,14 @@ if(type === 'minecraft'){
 			html += `<input type='checkbox' name='categories' value='${category}' ${checked}> ${category}</br>`;
 		});
 	}
+}else if(type === 'discord'){
+	Utils.hide('categoriesSection');
+
+	document.getElementById("server_keywords").addEventListener("input", () => {
+		let keywords = document.getElementById("server_keywords").value;
+		keywords = keywords.replaceAll(' ', ',');
+		document.getElementById("server_keywords").value = keywords.toLowerCase();
+	});
 }
 document.getElementById('categories').innerHTML = html;
 
@@ -343,6 +390,12 @@ function addServer(){
 		data['categories'].push(categoryInputs[i].value);
 	};
 
+	if(type === 'discord'){
+		data['keywords'] = document.getElementById('server_keywords').value.split(',');
+		data['token'] = localStorage.getItem('discord-oauth-token');
+		data['invite_code'] = data['invite_code'].replaceAll('https://discord.gg/', '');
+	}
+
 	data['description'] = document.getElementById('description').value;
 
 	if(type === 'minecraft' && !Validate.minecraftServerCategory(data['categories'])){
@@ -361,13 +414,20 @@ function addServer(){
 	headers.set('Authorization', 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('token')));
 	headers.set('Content-Type', 'application/json');
 
-	fetch('https://api.rabbitserverlist.com/v1/account/servers/minecraft', {
+	fetch('https://api.rabbitserverlist.com/v1/account/servers/' + type, {
 		method: 'POST',
 		headers: headers,
 		body: JSON.stringify(data)
 	}).then(result => {
 		return result.json();
 	}).then(response => {
+
+		if(response.error === 1040){
+			localStorage.setItem('lastPage', window.location.href);
+			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=token&scope=identify%20guilds&state=" + localStorage.getItem('userToken');
+			return;
+		}
+
 		if(response.error !== 0){
 			Utils.changeDialog(1, response.info);
 			Utils.show('dialog');
@@ -413,6 +473,12 @@ function editServer(){
 		data['categories'].push(categoryInputs[i].value);
 	};
 
+	if(type === 'discord'){
+		data['keywords'] = document.getElementById('server_keywords').value.split(',');
+		data['token'] = localStorage.getItem('discord-oauth-token');
+		data['invite_code'] = data['invite_code'].replaceAll('https://discord.gg/', '');
+	}
+
 	data['description'] = document.getElementById('description').value;
 	data['secretToken'] = editData['secretToken'];
 
@@ -432,13 +498,20 @@ function editServer(){
 	headers.set('Authorization', 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('token')));
 	headers.set('Content-Type', 'application/json');
 
-	fetch('https://api.rabbitserverlist.com/v1/server/minecraft/' + id, {
+	fetch('https://api.rabbitserverlist.com/v1/server/' + type + '/' + id, {
 		method: 'POST',
 		headers: headers,
 		body: JSON.stringify(data)
 	}).then(result => {
 		return result.json();
 	}).then(response => {
+
+		if(response.error === 1040){
+			localStorage.setItem('lastPage', window.location.href);
+			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=token&scope=identify%20guilds&state=" + localStorage.getItem('userToken');
+			return;
+		}
+
 		if(response.error !== 0){
 			Utils.changeDialog(1, response.info);
 			Utils.show('dialog');

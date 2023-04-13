@@ -7,11 +7,12 @@
 		<meta name="author" content="Rabbit Company" />
 		<meta name="description" content="Find the best game servers with our top multiplayer server list. We provide the best features to find a server that suits your needs." />
 		<meta name="keywords" content="minecraft, minecraft server list, minecraft multiplayer, minecraft servers, minecraft serverlist, minecraft top list, minecraft toplist" />
-		<link rel="canonical" href="https://rabbitserverlist.com/editor" />
+		<link rel="canonical" href="https://rabbitserverlist.com" />
 		<link rel="shortcut icon" type="image/png" href="images/logo.png"/>
 		<link rel="stylesheet" href="css/tailwind.min.css">
+		<link type="text/css" rel="stylesheet" href="css/index.css">
 		<link id="css-theme" type="text/css" rel="stylesheet" href="css/themes/dark.css">
-		<link rel="stylesheet" href="css/markdown.css">
+		<link type="text/css" rel="stylesheet" href="css/markdown.css">
 	</head>
 	<body class="primaryBackgroundColor">
 		<nav class="secondaryBackgroundColor shadow">
@@ -23,7 +24,7 @@
 						</div>
 						<div class="hidden lg:ml-6 lg:flex lg:space-x-8">
 							<a href="index.html" class="mainMenuLink border-transparent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Minecraft Servers</a>
-							<a href="discord.html" class="mainMenuLink border-transparent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Discord Servers</a>
+							<a href="discord.html" class="mainMenuLinkSelected inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Discord Servers</a>
 						</div>
 					</div>
 					<div class="hidden flex-1 flex items-center justify-center px-2 lg:ml-6 lg:flex lg:justify-end">
@@ -49,11 +50,112 @@
 			<div class="lg:hidden">
 				<div id="mobile-menu" class="hidden pt-2 pb-3 space-y-1">
 					<a href="index.html" class="mainMenuMobileLink block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Minecraft Servers</a>
-					<a href="discord.html" class="mainMenuMobileLink block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Discord Servers</a>
+					<a href="discord.html" class="mainMenuMobileLinkSelected block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Discord Servers</a>
 					<a href="panel.html" class="mainMenuMobileLink block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Panel</a>
 				</div>
 			</div>
 		</nav>
+
+		<h1 class="hidden">Discord Server List</h1>
+
+		<div class="mx-auto mt-10 mb-20 px-2 sm:px-6 lg:px-8">
+			<div class="max-w-7xl mx-auto">
+				<div id="server" class="hidden">
+					<h1 id="server-title" class="text-2xl font-medium mb-2 leading-6 tertiaryColor"></h1>
+					<div class="max-w-7xl mx-auto">
+						<div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
+							<!-- Left column -->
+							<div class="grid grid-cols-1 gap-4 lg:col-span-2">
+								<section aria-labelledby="section-1-title">
+									<h2 class="sr-only" id="section-1-title">Description</h2>
+									<div class="secondaryBackgroundColor overflow-hidden rounded-lg rounded-b-none shadow flex items-center" aria-orientation="horizontal" role="tablist">
+										<button id="tabs-1-tab-1" class="cancelButton rounded-tl border border-transparent px-3 py-1.5 text-sm font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">Description</button>
+										<button id="tabs-1-tab-2" class="cancelButton border-transparent px-3 py-1.5 text-sm font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button">Vote</button>
+										<button id="tabs-1-tab-3" class="cancelButton border border-transparent px-3 py-1.5 text-sm font-medium" aria-controls="tabs-1-panel-3" role="tab" type="button">Stats</button>
+										<div class="ml-auto flex items-center space-x-5"></div>
+									</div>
+									<div class="secondaryBackgroundColor overflow-hidden rounded-lg rounded-t-none shadow">
+										<div id="description" class="tertiaryBackgroundColor tertiaryColor primaryBorderColor markdown relative mx-auto max-w-7xl p-3">
+										</div>
+									</div>
+								</section>
+							</div>
+
+							<!-- Right column -->
+							<div class="grid grid-cols-1 gap-4">
+								<section aria-labelledby="section-2-title">
+									<h2 class="sr-only" id="section-2-title">Server Info</h2>
+									<div class="secondaryBackgroundColor overflow-hidden rounded-lg shadow">
+										<table class="min-w-full passwordsBorderColor">
+											<tbody id="server_table_data" class="secondaryBackgroundColor passwordsBorderColor"></tbody>
+										</table>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="servers">
+					<div class="flex flex-col">
+						<div class="-my-2 overflow-x-auto -mx-2">
+							<div class="py-2 align-middle inline-block min-w-full px-2">
+								<div class="shadow overflow-hidden">
+
+									<div class="mt-2 flex rounded-md shadow-sm">
+										<div class="relative flex flex-grow items-stretch focus-within:z-10">
+											<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+												<svg class="h-6 w-6 secondaryColor" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+													<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+													<path d="M21 21l-6 -6"></path>
+												</svg>
+											</div>
+											<input type="text" name="search" id="search" class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-md block w-full pl-10 px-3 py-2 border focus:outline-none sm:text-sm" placeholder="Search">
+										</div>
+									</div>
+
+									<ul id="discord_table_data" role="list" class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></ul>
+
+									<div id="pagination" class="mt-6 rounded-md hidden flex items-center justify-between shadow passwordsBorderColor secondaryBackgroundColor px-4 py-3 sm:px-6">
+										<div class="flex flex-1 items-center justify-between">
+											<div>
+												<p class="text-sm secondaryColor">
+													Showing from
+													<span id="label-startFrom" class="font-medium">0</span>
+													to
+													<span id="label-stopOn" class="font-medium">0</span>
+													servers
+												</p>
+											</div>
+											<div>
+												<nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+													<a id="pagination-left" href="?page=1" class="relative inline-flex items-center rounded-l-md border primaryBorderColor tertiaryBackgroundColor px-2 py-2 text-sm font-medium secondaryColor focus:z-20">
+														<span class="sr-only">Previous</span>
+														<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+															<path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+														</svg>
+													</a>
+
+													<input id="page" type="number" value="2" min="1" max="50" class="relative inline-flex items-center border primaryBorderColor tertiaryBackgroundColor appearance-none text-center focus:outline-none px-4 py-2 text-sm font-medium secondaryColor">
+
+													<a id="pagination-right" href="?page=3" class="relative inline-flex items-center rounded-r-md border primaryBorderColor tertiaryBackgroundColor px-2 py-2 text-sm font-medium secondaryColor focus:z-20">
+														<span class="sr-only">Next</span>
+														<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+															<path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+														</svg>
+													</a>
+												</nav>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div id="dialog" class="hidden h-screen w-full fixed left-0 top-0 flex justify-center items-center z-10 inset-0 overflow-y-auto" aria-labelledby="dialog-title" role="dialog" aria-modal="true">
 			<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -80,53 +182,6 @@
 						Cancel
 					</button>
 				</div>
-			</div>
-		</div>
-
-		<div class="mx-auto mt-10 mb-20 px-4 sm:px-6 lg:px-8">
-			<div class="max-w-7xl mx-auto">
-				<form id="post_form" class="mt-8 space-y-6">
-					<input type="hidden" name="remember" value="true">
-					<div>
-						<h3 id="title-1" class="text-lg font-medium leading-6 tertiaryColor"></h3>
-						<p id="desc-1" class="mt-1 text-sm secondaryColor"></p>
-					</div>
-					<div id="inputs" class="rounded-md shadow-sm -space-y-px">
-					</div>
-					<div id="categoriesSection">
-						<h3 class="text-lg font-medium leading-6 tertiaryColor">Categories</h3>
-						<p class="mt-1 text-sm secondaryColor">Please select at least one category.</p>
-					</div>
-					<div id="categories" class="secondaryColor">
-					</div>
-					<div>
-						<h3 class="text-lg font-medium leading-6 tertiaryColor">Description</h3>
-						<p class="mt-1 text-sm secondaryColor">Description needs to be between 150 and 10 000 characters long. (Markdown supported)</p>
-					</div>
-					<div>
-						<div class="flex items-center" aria-orientation="horizontal" role="tablist">
-							<button id="tabs-1-tab-1" class="cancelButton rounded-md border border-transparent px-3 py-1.5 text-sm font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">Write</button>
-							<button id="tabs-1-tab-2" class="cancelButton ml-2 rounded-md border border-transparent px-3 py-1.5 text-sm font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button">Preview</button>
-							<div class="ml-auto flex items-center space-x-5"></div>
-						</div>
-						<div class="mt-2">
-							<div id="tabs-1-panel-1" class="-m-0.5 rounded-lg p-0.5" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
-								<label for="description" class="sr-only">Description</label>
-								<div>
-									<textarea rows="20" name="description" id="description" class="tertiaryBackgroundColor tertiaryColor primaryBorderColor appearance-none rounded-none block w-full px-3 py-2 border focus:outline-none focus:z-10 sm:text-sm" placeholder="Write description..."></textarea>
-								</div>
-							</div>
-							<div id="tabs-1-panel-2" class="hidden -m-0.5 rounded-lg p-0.5" aria-labelledby="tabs-1-tab-2" role="tabpanel" tabindex="0">
-								<div id="preview" class="tertiaryBackgroundColor tertiaryColor primaryBorderColor markdown relative mx-auto max-w-7xl p-3">
-									Preview content will render here.
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="mt-2 mb-8 flex justify-end">
-						<button id="btn-add" type="button" class="primaryButton inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm focus:outline-none">Add</button>
-					</div>
-				</form>
 			</div>
 		</div>
 
@@ -178,6 +233,7 @@
 			</div>
 		</footer>
 
-		<script type="module" src="js/editor.js"></script>
+		<script type="module" src="js/discord.js"></script>
+		<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
 	</body>
 </html>
