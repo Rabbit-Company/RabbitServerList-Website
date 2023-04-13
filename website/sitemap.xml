@@ -6,6 +6,11 @@
 	<priority>1.00</priority>
 </url>
 <url>
+	<loc>https://rabbitserverlist.com/discord</loc>
+	<changefreq>daily</changefreq>
+	<priority>1.00</priority>
+</url>
+<url>
 	<loc>https://rabbitserverlist.com/login</loc>
 	<changefreq>weekly</changefreq>
 	<priority>0.60</priority>
