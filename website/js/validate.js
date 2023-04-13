@@ -143,6 +143,7 @@ export default class Validate{
 
 	static discordInviteCode(code){
 		if(typeof(code) !== 'string') return false;
+		if(code.startsWith('https://discord.gg/')) return true;
 		return /^([a-zA-Z0-9\-]{3,29})$/.test(code);
 	}
 

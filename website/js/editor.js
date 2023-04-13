@@ -393,6 +393,7 @@ function addServer(){
 	if(type === 'discord'){
 		data['keywords'] = document.getElementById('server_keywords').value.split(',');
 		data['token'] = localStorage.getItem('discord-oauth-token');
+		data['invite_code'] = data['invite_code'].replaceAll('https://discord.gg/', '');
 	}
 
 	data['description'] = document.getElementById('description').value;
@@ -475,6 +476,7 @@ function editServer(){
 	if(type === 'discord'){
 		data['keywords'] = document.getElementById('server_keywords').value.split(',');
 		data['token'] = localStorage.getItem('discord-oauth-token');
+		data['invite_code'] = data['invite_code'].replaceAll('https://discord.gg/', '');
 	}
 
 	data['description'] = document.getElementById('description').value;
