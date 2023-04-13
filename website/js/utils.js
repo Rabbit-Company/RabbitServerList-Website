@@ -3,6 +3,13 @@ export default class Utils{
 	static initialize(){
 		this.clearOldData();
 
+		let lastPage = localStorage.getItem('lastPage');
+		if(lastPage !== null){
+			localStorage.removeItem('lastPage');
+			window.location.href = lastPage;
+			return;
+		}
+
 		try{
 			let logged = localStorage.getItem('logged');
 			if(logged !== null){
