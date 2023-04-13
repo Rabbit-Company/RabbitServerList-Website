@@ -474,6 +474,7 @@ function editServer(){
 
 	if(type === 'discord'){
 		data['keywords'] = document.getElementById('server_keywords').value.split(',');
+		data['token'] = localStorage.getItem('discord-oauth-token');
 	}
 
 	data['description'] = document.getElementById('description').value;
@@ -502,6 +503,13 @@ function editServer(){
 	}).then(result => {
 		return result.json();
 	}).then(response => {
+
+		if(response.error === 1040){
+			localStorage.setItem('lastPage', window.location.href);
+			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=token&scope=identify%20guilds&state=" + localStorage.getItem('userToken');
+			return;
+		}
+
 		if(response.error !== 0){
 			Utils.changeDialog(1, response.info);
 			Utils.show('dialog');
