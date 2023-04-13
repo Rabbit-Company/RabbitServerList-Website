@@ -189,7 +189,7 @@ function renderServerVote(id, guild_id, icon){
 				Utils.show('dialog');
 				return;
 			}
-			console.log(response);
+
 			Utils.changeDialog(0, 'Vote sent!');
 			Utils.show('dialog');
 		}).catch(() => {
