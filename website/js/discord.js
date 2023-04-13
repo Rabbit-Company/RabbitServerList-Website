@@ -397,8 +397,8 @@ function renderServers(servers){
 
 		data += `<li id="discord-server-${servers[i].id}" class="secondaryBackgroundColor col-span-1 flex flex-col divide-y passwordsBorderColor rounded-lg text-center shadow bg-no-repeat bg-center bg-cover">
 		<div class="flex flex-1 flex-col p-8 bg-gradient-to-t from-[#161b22] via-[#1e252e]">
-			<img id="discord-server-${servers[i].id}-logo" crossorigin="anonymous" class="bg-gradient-to-b from-[#161b22] to-[#28313e] border tertiaryBorderColor mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}">
-			<h3 class="mt-6 text-sm font-medium tertiaryColor">${servers[i].name}</h3>
+			<a href="discord.html?server=${servers[i].id}"><img id="discord-server-${servers[i].id}-logo" crossorigin="anonymous" class="bg-gradient-to-b from-[#161b22] to-[#28313e] border tertiaryBorderColor mx-auto w-[96px] h-[96px] flex-shrink-0 rounded-full" width="96" height="96" src="https://cdn.discordapp.com/icons/${servers[i].guild_id}/${servers[i].icon}" alt="${servers[i].name}"></a>
+			<a href="discord.html?server=${servers[i].id}"><h3 class="mt-6 text-sm font-medium tertiaryColor">${servers[i].name}</h3></a>
 			<dl class="mt-1 flex flex-grow flex-col justify-between">
 				<dd class="mt-3">
 					<span class="inline-flex items-center px-2 py-0.5 m-1 rounded text-xs font-medium greenBadge">
