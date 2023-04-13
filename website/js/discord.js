@@ -455,6 +455,18 @@ function renderServers(servers){
 		}
 	}
 
+	// Search
+
+	if(query !== null){
+		document.getElementById("search").value = query;
+	}
+
+	document.getElementById("search").addEventListener("keypress", (event) => {
+		if (event.key !== "Enter") return;
+		event.preventDefault();
+		window.location.assign("?q=" + document.getElementById("search").value);
+	});
+
 	// Pagination
 	if(page !== 1 || servers.length >= 20){
 		document.getElementById('pagination').style = 'display: block;';
