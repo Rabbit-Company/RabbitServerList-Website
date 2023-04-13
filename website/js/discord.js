@@ -28,7 +28,7 @@ try{
 		if (event.key !== "Enter" && event.key !== " ") return;
 		event.preventDefault();
 		let search = document.getElementById("search").value.split(' ')[0];
-		if(Validate.query(search)) window.location.assign("?q=" + search);
+		if(Validate.query(search) || search.length === 0) window.location.assign("?q=" + search);
 	});
 }catch{}
 
