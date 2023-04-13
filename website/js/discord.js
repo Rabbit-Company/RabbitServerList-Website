@@ -25,7 +25,7 @@ try{
 	}
 
 	document.getElementById("search").addEventListener("keypress", (event) => {
-		if (event.key !== "Enter") return;
+		if (event.key !== "Enter" && event.key !== " ") return;
 		event.preventDefault();
 		let search = document.getElementById("search").value.split(' ')[0];
 		if(Validate.query(search)) window.location.assign("?q=" + search);
