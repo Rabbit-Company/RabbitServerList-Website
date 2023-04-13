@@ -154,8 +154,8 @@ function renderServerVote(id, guild_id, icon){
 			Utils.changeDialog(2, 'Loading...');
 			Utils.show('dialog');
 			localStorage.setItem('lastPage', window.location.href);
-			//window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=token&scope=identify&state=" + localStorage.getItem('userToken');
-			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=token&scope=identify&state=" + localStorage.getItem('userToken');
+			//window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=https%3A%2F%2Frabbitserverlist.com%2Foauth&response_type=token&scope=identify%20guilds&state=" + localStorage.getItem('userToken');
+			window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=token&scope=identify%20guilds&state=" + localStorage.getItem('userToken');
 			return;
 		}
 
@@ -181,7 +181,7 @@ function renderServerVote(id, guild_id, icon){
 
 			if(response.error === 1040){
 				localStorage.setItem('lastPage', window.location.href);
-				window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=token&scope=identify&state=" + localStorage.getItem('userToken');
+				window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=token&scope=identify%20guilds&state=" + localStorage.getItem('userToken');
 				return;
 			}
 

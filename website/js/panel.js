@@ -16,6 +16,15 @@ try{
 	});
 }catch{}
 
+document.getElementById('add-discord-btn').addEventListener('click', () => {
+	if(localStorage.getItem('discord-oauth-token') === null){
+		localStorage.setItem('lastPage', window.location.href);
+		window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1093795826238758962&redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Foauth.html&response_type=token&scope=identify%20guilds&state=" + localStorage.getItem('userToken');
+		return;
+	}
+	window.location.href = "editor.html?type=discord";
+});
+
 if(localStorage.getItem('my-servers-minecraft') === null){
 	fetchMyMinecraftServers();
 }else{
