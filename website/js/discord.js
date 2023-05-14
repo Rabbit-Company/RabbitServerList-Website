@@ -206,7 +206,7 @@ function renderServerVote(id, guild_id, icon){
 		if(response.data.length === 0) return;
 
 		let data = response.data;
-		let ids = Object.keys(data).sort((u1,u2) => data[u1].votes - data[u2].votes);
+		let ids = Object.keys(data).sort((u1,u2) => data[u2].votes - data[u1].votes);
 
 		let html = `<tr><td class='tertiaryColor px-4 py-4 whitespace-nowrap'>TOP 10 VOTERS</td></tr>`;
 		for(let i = 0; i < ids.length; i++){
