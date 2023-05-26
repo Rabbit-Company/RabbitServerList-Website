@@ -128,6 +128,7 @@ function renderServerVote(id, guild_id, icon){
 
 	turnstile.render('#cf-turnstile');
 
+	/*
 	const colorThief = new ColorThief();
 	let img = document.getElementById('discord-server-logo');
 	if(img.complete){
@@ -149,6 +150,7 @@ function renderServerVote(id, guild_id, icon){
 			img.style = `border-color: ${hex} !important;`;
 		});
 	}
+	*/
 
 	document.getElementById("vote-form").addEventListener("submit", e => {
 		e.preventDefault();
@@ -458,13 +460,14 @@ function renderServers(servers){
 
 	document.getElementById("discord_table_data").innerHTML = data;
 
-	const colorThief = new ColorThief();
+	//const colorThief = new ColorThief();
 	for(let i = 0; i < servers.length; i++){
 
 		if(servers[i].banner !== null){
 			document.getElementById('discord-server-' + servers[i].id).style = `background-image: url('https://cdn.discordapp.com/banners/${servers[i].guild_id}/${servers[i].banner}');`;
 		}
 
+		/*
 		let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
 		if(img.complete){
 			let hex = "#FFF";
@@ -485,6 +488,7 @@ function renderServers(servers){
 				img.style = `border-color: ${hex} !important;`;
 			});
 		}
+		*/
 	}
 
 	// Pagination

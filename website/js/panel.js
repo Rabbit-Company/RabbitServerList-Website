@@ -283,7 +283,7 @@ function renderMyDiscordServers(){
 
 	document.getElementById("discord_table_data").innerHTML = data;
 
-	const colorThief = new ColorThief();
+	//const colorThief = new ColorThief();
 	for(let i = 0; i < servers.length; i++){
 
 		if(servers[i].banner !== null){
@@ -295,6 +295,7 @@ function renderMyDiscordServers(){
 			Utils.show('dialog');
 		});
 
+		/*
 		let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
 		if(img.complete){
 			let hex = "#FFF";
@@ -315,5 +316,6 @@ function renderMyDiscordServers(){
 				img.style = `border-color: ${hex} !important;`;
 			});
 		}
+		*/
 	}
 }
