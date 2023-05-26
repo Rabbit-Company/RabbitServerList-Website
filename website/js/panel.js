@@ -297,14 +297,20 @@ function renderMyDiscordServers(){
 
 		let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
 		if(img.complete){
-			let colors = colorThief.getColor(img);
-			let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
+			let hex = "#FFF";
+			try{
+				let colors = colorThief.getColor(img);
+				hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
+			}catch{}
 
 			img.style = `border-color: ${hex} !important;`;
 		}else{
 			img.addEventListener('load', () => {
-				let colors = colorThief.getColor(img);
-				let hex = Utils.rgbToHex(colors[0],colors[1], colors[2]);
+				let hex = "#FFF";
+				try{
+					let colors = colorThief.getColor(img);
+					hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
+				}catch{}
 
 				img.style = `border-color: ${hex} !important;`;
 			});
