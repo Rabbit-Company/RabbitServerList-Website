@@ -128,29 +128,21 @@ function renderServerVote(id, guild_id, icon){
 
 	turnstile.render('#cf-turnstile');
 
-	/*
-	const colorThief = new ColorThief();
-	let img = document.getElementById('discord-server-logo');
-	if(img.complete){
-		let hex = "#FFF";
-		try{
+	try{
+		const colorThief = new ColorThief();
+		let img = document.getElementById('discord-server-logo');
+		if(img.complete){
 			let colors = colorThief.getColor(img);
-			hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
-		}catch{}
-
-		img.style = `border-color: ${hex} !important;`;
-	}else{
-		img.addEventListener('load', () => {
-			let hex = "#FFF";
-			try{
-				let colors = colorThief.getColor(img);
-				hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
-			}catch{}
-
+			let hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
 			img.style = `border-color: ${hex} !important;`;
-		});
-	}
-	*/
+		}else{
+			img.addEventListener('load', () => {
+				let colors = colorThief.getColor(img);
+				let hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
+				img.style = `border-color: ${hex} !important;`;
+			});
+		}
+	}catch{}
 
 	document.getElementById("vote-form").addEventListener("submit", e => {
 		e.preventDefault();
@@ -460,35 +452,27 @@ function renderServers(servers){
 
 	document.getElementById("discord_table_data").innerHTML = data;
 
-	//const colorThief = new ColorThief();
+	const colorThief = new ColorThief();
 	for(let i = 0; i < servers.length; i++){
 
 		if(servers[i].banner !== null){
 			document.getElementById('discord-server-' + servers[i].id).style = `background-image: url('https://cdn.discordapp.com/banners/${servers[i].guild_id}/${servers[i].banner}');`;
 		}
 
-		/*
-		let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
-		if(img.complete){
-			let hex = "#FFF";
-			try{
+		try{
+			let img = document.getElementById('discord-server-' + servers[i].id + '-logo');
+			if(img.complete){
 				let colors = colorThief.getColor(img);
-				hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
-			}catch{}
-
-			img.style = `border-color: ${hex} !important;`;
-		}else{
-			img.addEventListener('load', () => {
-				let hex = "#FFF";
-				try{
-					let colors = colorThief.getColor(img);
-					hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
-				}catch{}
-
+				let hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
 				img.style = `border-color: ${hex} !important;`;
-			});
-		}
-		*/
+			}else{
+				img.addEventListener('load', () => {
+					let colors = colorThief.getColor(img);
+					let hex = Utils.rgbToHex(colors[0], colors[1], colors[2]);
+					img.style = `border-color: ${hex} !important;`;
+				});
+			}
+		}catch{}
 	}
 
 	// Pagination
