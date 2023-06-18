@@ -3,5 +3,5 @@
 	X-Content-Type-Options: nosniff
 	Referrer-Policy: no-referrer
 	X-XSS-Protection: 1; mode=block
-	Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; object-src 'none'; base-uri 'self'; connect-src 'self' https://api.rabbitserverlist.com; font-src 'self'; frame-src 'self' https://challenges.cloudflare.com; img-src 'self' https://api.rabbitserverlist.com https://mc-heads.net https://cdn.discordapp.com; form-action 'self'; manifest-src 'self'; media-src 'self'; worker-src 'none';
+	Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; object-src 'none'; base-uri 'self'; connect-src 'self' https://api.rabbitserverlist.com https://cloudflareinsights.com; font-src 'self'; frame-src 'self' https://challenges.cloudflare.com; img-src 'self' https://api.rabbitserverlist.com https://mc-heads.net https://cdn.discordapp.com; form-action 'self'; manifest-src 'self'; media-src 'self'; worker-src 'none';
 	Permissions-Policy: interest-cohort=()
