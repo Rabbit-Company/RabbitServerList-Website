@@ -414,7 +414,9 @@ function renderServers(servers){
 		data += "</tr>";
 	}
 
-	document.getElementById("table_data").innerHTML = data;
+	setTimeout(()=> {
+		document.getElementById("table_data").innerHTML = data;
+	}, 5000);
 
 	let copyElements = document.getElementsByClassName('copyText');
 	for(let i = 0; i < copyElements.length; i++){
