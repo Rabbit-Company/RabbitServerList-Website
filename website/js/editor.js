@@ -273,7 +273,7 @@ document.getElementById('title-1').innerText = serverData[type].title1;
 document.getElementById('desc-1').innerText = serverData[type].desc1;
 
 if(id !== null){
-	document.getElementById('btn-add').innerText = 'Edit';
+	document.getElementById('btn-add').innerText = 'Save';
 	document.getElementById('description').value = editData['description'];
 }
 
