@@ -392,6 +392,7 @@ function addServer(){
 
 	if(type === 'discord'){
 		data['keywords'] = document.getElementById('server_keywords').value.split(',');
+		data['keywords'].filter((item, index) => data['keywords'].indexOf(item) === index && item !== '');
 		data['token'] = localStorage.getItem('discord-oauth-token');
 		data['invite_code'] = data['invite_code'].replaceAll('https://discord.gg/', '');
 	}
@@ -475,6 +476,7 @@ function editServer(){
 
 	if(type === 'discord'){
 		data['keywords'] = document.getElementById('server_keywords').value.split(',');
+		data['keywords'].filter((item, index) => data['keywords'].indexOf(item) === index && item !== '');
 		data['token'] = localStorage.getItem('discord-oauth-token');
 		data['invite_code'] = data['invite_code'].replaceAll('https://discord.gg/', '');
 	}
