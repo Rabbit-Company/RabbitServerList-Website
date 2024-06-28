@@ -378,7 +378,7 @@ function renderServers(servers){
 		let lazyLoading = (i >= 10) ? "loading='lazy'" : "";
 
 		data += "<tr class='passwordsBorderColor'>";
-		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + (i + 1) + "</span></td>";
+		data += "<td class='px-4 py-4 whitespace-nowrap hidden xl:table-cell'><span class='inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium " + online_color + "'>" + ((page * 20) - 20 + (i + 1)) + "</span></td>";
 		data += "<td class='tertiaryColor px-4 py-4 hidden 2xl:table-cell'><a href='?server=" + servers[i].id + "'>" + servers[i].name + "</a></td>";
 		data += `<td class='sm:w-[500px] text-center px-4 py-4 whitespace-nowrap text-sm text-gray-500'>
 			<div class='hidden sm:block'>
